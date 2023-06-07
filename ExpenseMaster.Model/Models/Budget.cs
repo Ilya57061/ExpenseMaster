@@ -1,13 +1,12 @@
 ﻿
 namespace ExpenseMaster.Model.Models
 {
-    public class Income
+    public class Budget
     {
         public int Id { get; set; }
-        public int UserId { get; set; }
         public string Category { get; set; } = string.Empty;
-        public decimal Amount { get; set; }
-        public DateTime Date { get; set; }
+        public decimal Limit { get; set; }
+        public decimal WarningThreshold { get; set; }
 
         //связь с user
     }
