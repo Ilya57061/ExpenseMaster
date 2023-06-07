@@ -4,10 +4,11 @@ namespace ExpenseMaster.Model.Models
     public class Budget
     {
         public int Id { get; set; }
-        public string Category { get; set; } = string.Empty;
+        //int UserId {get; set;}
+        int CategoryId { get; set; }
         public decimal Limit { get; set; }
         public decimal WarningThreshold { get; set; }
 
-        //связь с user
+        //User? user {get; set;}
     }
 }
