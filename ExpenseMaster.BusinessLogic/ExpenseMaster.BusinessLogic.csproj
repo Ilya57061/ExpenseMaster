@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ExpenseMaster.Common\ExpenseMaster.Common.csproj" />
     <ProjectReference Include="..\ExpenseMaster.Model\ExpenseMaster.Model.csproj" />
   </ItemGroup>
 
