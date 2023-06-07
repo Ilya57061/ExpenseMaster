@@ -5,6 +5,20 @@ VisualStudioVersion = 17.5.33530.505
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpenseMaster", "ExpenseMaster\ExpenseMaster.csproj", "{88432A3C-5386-4490-A7C6-D2EC4EF8BC5E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. ExpenseMaster", "1. ExpenseMaster", "{FE5D901D-43EC-4256-B75E-8549493F89A9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. BusinessLogic", "2. BusinessLogic", "{D7ECCE36-64DB-4C11-8401-8C73C89D55E0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3. Model", "3. Model", "{59F05E29-1D8B-40B4-B83F-3DB8C1363E70}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4. Common", "4. Common", "{36387521-F7F1-4CF6-B8EF-87391F462F5E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpenseMaster.BusinessLogic", "ExpenseMaster.BusinessLogic\ExpenseMaster.BusinessLogic.csproj", "{34B17C3E-4788-4ABB-AECC-D2DFE025DE28}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpenseMaster.Model", "ExpenseMaster.Model\ExpenseMaster.Model.csproj", "{AE6E6EFA-7FE8-405E-8F90-38775F7D3D1A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpenseMaster.Common", "ExpenseMaster.Common\ExpenseMaster.Common.csproj", "{E815A0E6-DCB5-423F-A48F-07C6D017239B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,9 +29,27 @@ Global
 		{88432A3C-5386-4490-A7C6-D2EC4EF8BC5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{88432A3C-5386-4490-A7C6-D2EC4EF8BC5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{88432A3C-5386-4490-A7C6-D2EC4EF8BC5E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34B17C3E-4788-4ABB-AECC-D2DFE025DE28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34B17C3E-4788-4ABB-AECC-D2DFE025DE28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34B17C3E-4788-4ABB-AECC-D2DFE025DE28}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34B17C3E-4788-4ABB-AECC-D2DFE025DE28}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE6E6EFA-7FE8-405E-8F90-38775F7D3D1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE6E6EFA-7FE8-405E-8F90-38775F7D3D1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE6E6EFA-7FE8-405E-8F90-38775F7D3D1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE6E6EFA-7FE8-405E-8F90-38775F7D3D1A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E815A0E6-DCB5-423F-A48F-07C6D017239B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E815A0E6-DCB5-423F-A48F-07C6D017239B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E815A0E6-DCB5-423F-A48F-07C6D017239B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E815A0E6-DCB5-423F-A48F-07C6D017239B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{88432A3C-5386-4490-A7C6-D2EC4EF8BC5E} = {FE5D901D-43EC-4256-B75E-8549493F89A9}
+		{34B17C3E-4788-4ABB-AECC-D2DFE025DE28} = {D7ECCE36-64DB-4C11-8401-8C73C89D55E0}
+		{AE6E6EFA-7FE8-405E-8F90-38775F7D3D1A} = {59F05E29-1D8B-40B4-B83F-3DB8C1363E70}
+		{E815A0E6-DCB5-423F-A48F-07C6D017239B} = {36387521-F7F1-4CF6-B8EF-87391F462F5E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {26A3C971-6AD3-418C-B663-576B3E6C9B25}
