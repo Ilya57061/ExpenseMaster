@@ -7,7 +7,7 @@ namespace ExpenseMaster.Model.Models
         public string GoalName { get; set; } = string.Empty;
         public decimal TargetAmount { get; set; }
         public decimal CurrentAmount { get; set; }
-        
-        //public User? User {get;set;}
+
+        public User? User { get; set; }
     }
 }

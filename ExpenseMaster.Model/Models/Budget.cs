@@ -9,7 +9,7 @@ namespace ExpenseMaster.Model.Models
         public decimal Limit { get; set; }
         public decimal WarningThreshold { get; set; }
 
-        //public User? User {get; set;}
+        public User? User { get; set; }
         public Category? Category { get; set; }
     }
 }

@@ -8,7 +8,11 @@ namespace ExpenseMaster.Model.DatabaseContext
         public ApplicationDatabaseContext(DbContextOptions<ApplicationDatabaseContext> options)
             : base(options)
         {
-            Database.EnsureCreated();
+
+        }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            
         }
         public DbSet<User> Users { get; set; }
         public DbSet<Income> Incomes { get; set; }
