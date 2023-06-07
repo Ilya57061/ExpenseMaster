@@ -15,5 +15,6 @@ namespace ExpenseMaster.Model.DatabaseContext
         public DbSet<Expense> Expenses { get; set; }
         public DbSet<Budget> Budgets { get; set; }
         public DbSet<FinancialGoal> FinancialGoal { get; set; }
+        public DbSet<Category> Category { get; set; }
     }
 }
