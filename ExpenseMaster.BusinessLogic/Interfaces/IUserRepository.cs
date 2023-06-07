@@ -1,4 +1,4 @@
-﻿using ExpenseMaster.Model;
+﻿using ExpenseMaster.Model.Models;
 
 namespace ExpenseMaster.BusinessLogic.Interfaces
 {

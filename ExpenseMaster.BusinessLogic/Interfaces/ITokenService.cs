@@ -1,4 +1,4 @@
-﻿using ExpenseMaster.Model;
+﻿using ExpenseMaster.Model.Models;
 using System.IdentityModel.Tokens.Jwt;
 
 namespace ExpenseMaster.BusinessLogic.Interfaces
