@@ -8,7 +8,7 @@ namespace ExpenseMaster.Model.Models
         public decimal Amount { get; set; }
         public DateTime Date { get; set; }
 
-        //public User? User {get; set;}
+        public User? User { get; set; }
         public Category? Category { get; set; }
     }
 }
