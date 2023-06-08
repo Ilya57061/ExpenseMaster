@@ -1,18 +1,17 @@
-﻿using ExpenseMaster.BusinessLogic.Interfaces;
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 using System.Text;
 
-namespace ExpenseMaster.BusinessLogic.Implementations
+namespace ExpenseMaster.Common.Helpers.Cryptography
 {
-    public class HashService : IHashService
+    public static class PasswordHasher
     {
-        public void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
+        public static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {
             var hmac = new HMACSHA512();
             passwordSalt = hmac.Key;
             passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
         }
-        public bool VerifyPasswordHash(string password, byte[] passwordSalt, byte[] passwordHash)
+        public static bool VerifyPasswordHash(string password, byte[] passwordSalt, byte[] passwordHash)
         {
             var hmac = new HMACSHA512(passwordSalt);
             var hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));

@@ -8,7 +8,6 @@ namespace ExpenseMaster.Configuration
         public static void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
             services.AddControllers();
-            services.AddSingleton<IHashService, HashService>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddTransient<IUserRegistrationService, UserRegistrationService>();
