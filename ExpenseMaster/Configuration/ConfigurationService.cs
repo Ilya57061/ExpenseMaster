@@ -1,5 +1,4 @@
 ﻿using ExpenseMaster.Model.DatabaseContext;
-using Microsoft.EntityFrameworkCore;
 
 namespace ExpenseMaster.Configuration
 {
@@ -7,8 +6,7 @@ namespace ExpenseMaster.Configuration
     {
         public static void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<ApplicationDatabaseContext>(options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"),
-                opt => opt.MigrationsAssembly("ExpenseMaster")));
+            services.AddApplicationDatabase(configuration);
             services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             services.AddEndpointsApiExplorer();

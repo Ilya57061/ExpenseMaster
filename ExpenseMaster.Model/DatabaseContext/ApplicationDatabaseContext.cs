@@ -8,7 +8,6 @@ namespace ExpenseMaster.Model.DatabaseContext
         public ApplicationDatabaseContext(DbContextOptions<ApplicationDatabaseContext> options)
             : base(options)
         {
-
         }
         public DbSet<User> Users { get; set; }
         public DbSet<Income> Incomes { get; set; }
