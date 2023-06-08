@@ -1,9 +1,12 @@
-﻿namespace ExpenseMaster.Configuration
+﻿using ExpenseMaster.Model.DatabaseContext;
+
+namespace ExpenseMaster.Configuration
 {
     public static class ConfigurationService
     {
         public static void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
+            services.AddApplicationDatabase(configuration);
             services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             services.AddEndpointsApiExplorer();
