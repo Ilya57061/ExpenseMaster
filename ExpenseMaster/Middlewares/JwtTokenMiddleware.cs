@@ -27,29 +27,7 @@ namespace ExpenseMaster.Middlewares
                 await context.Response.WriteAsync("Invalid authorization header format");
                 return;
             }
-            string token = authHeader.ToString().Substring(7);
-            try
-            {
-
-                var tokenHandler = new JwtSecurityTokenHandler();
-                var validationParameters = new TokenValidationParameters()
-                {
-                    ValidateIssuerSigningKey = true,
-                    ValidateIssuer = false,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Authentication:Secret"])),
-                    ValidateAudience = false
-                };
-                var principal = tokenHandler.ValidateToken(token, validationParameters, out var validatedToken);
-                context.User = principal;
-
-                await _next(context);
-            }
-            catch (Exception)
-            {
-                context.Response.StatusCode = 401;
-                await context.Response.WriteAsync("Invalid token");
-                return;
-            }
+        
         }
     }
 }
