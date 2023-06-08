@@ -19,11 +19,11 @@ namespace ExpenseMaster.Controllers
             _userRegistrationService = userRegistrationService;
         }
         [HttpPost("Login")]
-        public async Task<IActionResult> Get(UserLoginDto userDto)
+        public async Task<IActionResult> Get(UserLoginDto userLoginDto)
         {
             try
             {
-                var user = await _authService.AuthenticateAsync(userDto);
+                var user = await _authService.AuthenticateAsync(userLoginDto);
                 return Ok(user);
             }
             catch (Exception ex)
@@ -32,12 +32,12 @@ namespace ExpenseMaster.Controllers
             }
         }
         [HttpPost("Registration")]
-        public async Task<IActionResult> Create(UserRegistrationDto user)
+        public async Task<IActionResult> Create(UserRegistrationDto userRegistrationDto)
         {
             try
             {
-                await _userRegistrationService.RegisterAsync(user);
-                return Ok(user);
+                await _userRegistrationService.RegisterAsync(userRegistrationDto);
+                return Ok(userRegistrationDto);
             }
             catch (Exception ex)
             {

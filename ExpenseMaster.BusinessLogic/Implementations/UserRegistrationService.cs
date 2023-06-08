@@ -14,16 +14,16 @@ namespace ExpenseMaster.BusinessLogic.Implementations
             _userRepository = userRepository;
         }
 
-        public async Task<User> RegisterAsync(UserRegistrationDto userDto)
+        public async Task<User> RegisterAsync(UserRegistrationDto userRegistrationDto)
         {
-            if (await _userRepository.GetUserByLoginAsync(userDto.Login) != null)
+            if (await _userRepository.GetUserByLoginAsync(userRegistrationDto.Login) != null)
                 throw new Exception("Пользователь с таким логином уже существует");
 
-            PasswordHasher.CreatePasswordHash(userDto.Password, out byte[] passwordHash, out byte[] passwordSalt);
+            PasswordHasher.CreatePasswordHash(userRegistrationDto.Password, out byte[] passwordHash, out byte[] passwordSalt);
             var user = new User
             {
-                Login = userDto.Login,
-                Email = userDto.Email,
+                Login = userRegistrationDto.Login,
+                Email = userRegistrationDto.Email,
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt
             };

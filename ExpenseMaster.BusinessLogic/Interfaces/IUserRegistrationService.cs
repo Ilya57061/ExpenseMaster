@@ -5,6 +5,6 @@ namespace ExpenseMaster.BusinessLogic.Interfaces
 {
     public interface IUserRegistrationService
     {
-        Task<User> RegisterAsync(UserRegistrationDto userDto);
+        Task<User> RegisterAsync(UserRegistrationDto userRegistrationDto);
     }
 }
