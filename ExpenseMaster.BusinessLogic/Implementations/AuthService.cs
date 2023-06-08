@@ -6,10 +6,10 @@ namespace ExpenseMaster.BusinessLogic.Implementations
 {
     public class AuthService : IAuthService
     {
-        private readonly IUserRepository _userRepository;
         private readonly ITokenService _tokenService;
+        private readonly UserRepository _userRepository;
 
-        public AuthService(IUserRepository userRepository, ITokenService tokenService)
+        public AuthService(UserRepository userRepository, ITokenService tokenService)
         {
             _userRepository = userRepository;
             _tokenService = tokenService;

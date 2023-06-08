@@ -1,18 +1,18 @@
 ﻿using ExpenseMaster.BusinessLogic.Interfaces;
 using ExpenseMaster.Model.Models;
-using ExpenseMaster.Model.DataBaseContext;
+using ExpenseMaster.Model.DatabaseContext;
 using Microsoft.EntityFrameworkCore;
 
 namespace ExpenseMaster.BusinessLogic.Implementations
 {
-    public class UserRepository : IUserRepository
+    public class UserRepository : IRepository<User>
     {
-        private readonly ApplicationDataBaseContext _dbContext;
-        public UserRepository(ApplicationDataBaseContext dbContext)
+        private readonly ApplicationDatabaseContext _dbContext;
+        public UserRepository(ApplicationDatabaseContext dbContext)
         {
             _dbContext = dbContext;
         }
-        public async Task CreateUserAsync(User user)
+        public async Task CreateAsync(User user)
         {
             try
             {
@@ -21,14 +21,14 @@ namespace ExpenseMaster.BusinessLogic.Implementations
             }
             catch (DbUpdateException ex)
             {
-                throw new Exception("Ошибка при создании user", ex);
+                throw new Exception("Ошибка при создании пользователя", ex);
             }
             catch (Exception ex)
             {
                 throw new Exception("Произошла ошибка в процессе создания пользователя", ex);
             }
         }
-        public async Task<User> GetUserByIdAsync(int userId)
+        public async Task<User> GetByIdAsync(int userId)
         {
             try
             {
@@ -36,7 +36,7 @@ namespace ExpenseMaster.BusinessLogic.Implementations
             }
             catch (DbUpdateException ex)
             {
-                throw new Exception("Ошибка при получении user", ex);
+                throw new Exception($"Ошибка при получении пользователя с идентификатором '{userId}'", ex) ;
             }
             catch (Exception ex)
             {
@@ -51,11 +51,11 @@ namespace ExpenseMaster.BusinessLogic.Implementations
             }
             catch (DbUpdateException ex)
             {
-                throw new Exception("Ошибка при получении user по login", ex);
+                throw new Exception("Ошибка при получении пользователя по логину", ex);
             }
             catch (Exception ex)
             {
-                throw new Exception($"Произошла ошибка при получении пользователя по электронной почте '{login}'", ex);
+                throw new Exception($"Произошла ошибка при получении пользователя по логину '{login}'", ex);
             }
         }
         public async Task<User> GetUserByEmailAsync(string email)
@@ -66,14 +66,14 @@ namespace ExpenseMaster.BusinessLogic.Implementations
             }
             catch (DbUpdateException ex)
             {
-                throw new Exception("Ошибка при получении user по mail", ex);
+                throw new Exception("Ошибка при получении пользователя по электронной почте", ex);
             }
             catch (Exception ex)
             {
                 throw new Exception($"Произошла ошибка при получении пользователя по электронной почте '{email}'", ex);
             }
         }
-        public async Task UpdateUserAsync(User user)
+        public async Task UpdateAsync(User user)
         {
             try
             {
@@ -86,10 +86,10 @@ namespace ExpenseMaster.BusinessLogic.Implementations
             }
             catch (Exception ex)
             {
-                throw new Exception("Ошибка в процессе обновления пользователя", ex);
+                throw new Exception("Произошла ошибка в процессе обновления пользователя", ex);
             }
         }
-        public async Task DeleteUserAsync(User user)
+        public async Task DeleteAsync(User user)
         {
             try
             {
@@ -102,7 +102,19 @@ namespace ExpenseMaster.BusinessLogic.Implementations
             }
             catch (Exception ex)
             {
-                throw new Exception("Произошла в процессе удаления пользователя", ex);
+                throw new Exception("Произошла ошибка в процессе удаления пользователя", ex);
+            }
+        }
+
+        public async Task<IEnumerable<User>> GetAllAsync()
+        {
+            try
+            {
+                return await _dbContext.Users.ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Ошибка при получении всех пользователей", ex);
             }
         }
     }

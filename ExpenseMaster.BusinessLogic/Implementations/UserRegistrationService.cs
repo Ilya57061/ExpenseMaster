@@ -7,16 +7,17 @@ namespace ExpenseMaster.BusinessLogic.Implementations
 {
     public class UserRegistrationService : IUserRegistrationService
     {
-        private readonly IUserRepository _userRepository;
+        private readonly IRepository<User> _repository;
 
-        public UserRegistrationService(IUserRepository userRepository)
+        public UserRegistrationService(IRepository<User> repository)
         {
-            _userRepository = userRepository;
+            _repository = repository;
         }
 
         public async Task<User> RegisterAsync(UserRegistrationDto userRegistrationDto)
         {
-            if (await _userRepository.GetUserByLoginAsync(userRegistrationDto.Login) != null)
+            var users = await _repository.GetAllAsync();
+            if (users.Any(u => u.Login == userRegistrationDto.Login))
                 throw new Exception("Пользователь с таким логином уже существует");
 
             PasswordHasher.CreatePasswordHash(userRegistrationDto.Password, out byte[] passwordHash, out byte[] passwordSalt);
@@ -28,7 +29,7 @@ namespace ExpenseMaster.BusinessLogic.Implementations
                 PasswordSalt = passwordSalt
             };
 
-            await _userRepository.CreateUserAsync(user);
+            await _repository.CreateAsync(user);
 
             return user;
         }

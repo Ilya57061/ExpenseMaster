@@ -1,5 +1,6 @@
 ﻿using ExpenseMaster.BusinessLogic.Implementations;
 using ExpenseMaster.BusinessLogic.Interfaces;
+using ExpenseMaster.Model.Models;
 
 namespace ExpenseMaster.Configuration
 {
@@ -9,7 +10,7 @@ namespace ExpenseMaster.Configuration
         {
             services.AddControllers();
             services.AddScoped<ITokenService, TokenService>();
-            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IRepository<User>, UserRepository>();
             services.AddTransient<IUserRegistrationService, UserRegistrationService>();
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

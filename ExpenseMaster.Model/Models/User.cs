@@ -2,7 +2,7 @@
 {
     public class User
     {
-        public int UserId { get; set; }
+        public int Id { get; set; }
         public string Login { get; set; } = string.Empty;
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }
