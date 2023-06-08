@@ -26,7 +26,7 @@ namespace ExpenseMaster.BusinessLogic.Implementations
                 throw new Exception("Неверный пароль");
 
             var token = _tokenService.GetToken(user);
-            var userDto = new UserDto { Login = user.Name, Email = user.Email, AuthorizationHeader = $"Bearer {token}" };
+            var userDto = new UserDto { Login = user.Login, Email = user.Email, AuthorizationHeader = $"Bearer {token}" };
             return userDto;
         }
     }

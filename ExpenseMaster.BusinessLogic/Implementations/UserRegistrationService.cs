@@ -22,7 +22,7 @@ namespace ExpenseMaster.BusinessLogic.Implementations
             PasswordHasher.CreatePasswordHash(userDto.Password, out byte[] passwordHash, out byte[] passwordSalt);
             var user = new User
             {
-                Name = userDto.Login,
+                Login = userDto.Login,
                 Email = userDto.Email,
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt

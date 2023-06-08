@@ -21,7 +21,7 @@ namespace ExpenseMaster.BusinessLogic.Implementations
         public JwtSecurityToken GenerateJwtToken(User user)
         {
             var claims = new List<Claim> {
-            new Claim(JwtRegisteredClaimNames.NameId, user.Name)
+            new Claim(JwtRegisteredClaimNames.NameId, user.Login)
             };
             var creds = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512);
             var tokenDescriptor = new JwtSecurityToken(
