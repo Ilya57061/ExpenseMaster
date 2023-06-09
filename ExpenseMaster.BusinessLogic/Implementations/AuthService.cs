@@ -18,7 +18,7 @@ namespace ExpenseMaster.BusinessLogic.Implementations
             _mapper = mapper;
         }
 
-        public async Task<UserDto> AuthenticateAsync(UserLoginDto userLoginDto)
+        public async Task<SuccesLoginDto> AuthenticateAsync(UserLoginDto userLoginDto)
         {
             var user = await _userRepository.GetUserByLoginAsync(userLoginDto.Login);
 
@@ -34,9 +34,13 @@ namespace ExpenseMaster.BusinessLogic.Implementations
 
             var token = _tokenService.GetToken(user);
             var userDto = _mapper.Map<UserDto>(user);
-            userDto.AuthorizationHeader = $"Bearer {token}";
+            var succesLoginDto = new SuccesLoginDto
+            {
+                Token = token,
+                UserDto = userDto,
+            };
 
-            return userDto;
+            return succesLoginDto;
         }
     }
 }

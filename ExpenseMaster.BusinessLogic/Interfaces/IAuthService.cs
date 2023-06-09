@@ -4,6 +4,6 @@ namespace ExpenseMaster.BusinessLogic.Interfaces
 {
     public interface IAuthService
     {
-        Task<UserDto> AuthenticateAsync(UserLoginDto userLoginDto);
+        Task<SuccesLoginDto> AuthenticateAsync(UserLoginDto userLoginDto);
     }
 }
