@@ -21,6 +21,7 @@ namespace ExpenseMaster.BusinessLogic.Implementations
             _emailAddress = configuration["Email:Address"];
             _emailPassword = configuration["Email:Password"];
         }
+
         public async Task SendEmailAsync(string email, Notification notification)
         {
             var emailMessage = new MimeMessage();
