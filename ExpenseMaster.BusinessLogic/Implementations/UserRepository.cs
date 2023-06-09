@@ -12,6 +12,7 @@ namespace ExpenseMaster.BusinessLogic.Implementations
         {
             _dbContext = dbContext;
         }
+
         public async Task CreateAsync(User user)
         {
             try
@@ -28,6 +29,7 @@ namespace ExpenseMaster.BusinessLogic.Implementations
                 throw new Exception("Произошла ошибка в процессе создания пользователя", ex);
             }
         }
+
         public async Task<User> GetByIdAsync(int userId)
         {
             try
@@ -43,6 +45,7 @@ namespace ExpenseMaster.BusinessLogic.Implementations
                 throw new Exception($"Произошла ошибка при получении пользователя с идентификатором '{userId}'", ex);
             }
         }
+
         public async Task<User> GetUserByLoginAsync(string login)
         {
             try
@@ -58,6 +61,7 @@ namespace ExpenseMaster.BusinessLogic.Implementations
                 throw new Exception($"Произошла ошибка при получении пользователя по логину '{login}'", ex);
             }
         }
+
         public async Task<User> GetUserByEmailAsync(string email)
         {
             try
@@ -73,6 +77,7 @@ namespace ExpenseMaster.BusinessLogic.Implementations
                 throw new Exception($"Произошла ошибка при получении пользователя по электронной почте '{email}'", ex);
             }
         }
+
         public async Task UpdateAsync(User user)
         {
             try
@@ -89,6 +94,7 @@ namespace ExpenseMaster.BusinessLogic.Implementations
                 throw new Exception("Произошла ошибка в процессе обновления пользователя", ex);
             }
         }
+
         public async Task DeleteAsync(User user)
         {
             try

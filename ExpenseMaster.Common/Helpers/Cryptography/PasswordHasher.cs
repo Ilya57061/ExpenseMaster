@@ -11,6 +11,7 @@ namespace ExpenseMaster.Common.Helpers.Cryptography
             passwordSalt = hmac.Key;
             passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
         }
+
         public static bool VerifyPasswordHash(string password, byte[] passwordSalt, byte[] passwordHash)
         {
             var hmac = new HMACSHA512(passwordSalt);

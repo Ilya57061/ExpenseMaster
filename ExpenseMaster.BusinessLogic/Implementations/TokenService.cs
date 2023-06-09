@@ -18,6 +18,7 @@ namespace ExpenseMaster.BusinessLogic.Implementations
             _configuration = configuration;
             _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Authentication:Secret"]));
         }
+
         public JwtSecurityToken GenerateJwtToken(User user)
         {
             var claims = new List<Claim> {
@@ -31,8 +32,10 @@ namespace ExpenseMaster.BusinessLogic.Implementations
                 expires: DateTime.UtcNow.AddMinutes(int.Parse(_configuration["Authentication:TokenLifetimeMinutes"])),
                 signingCredentials: creds,
                 notBefore: DateTime.UtcNow);
+
             return tokenDescriptor;
         }
+
         public string GetUserIdFromToken(string token)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -53,11 +56,13 @@ namespace ExpenseMaster.BusinessLogic.Implementations
 
             return userLogin;
         }
+
         public string GetToken(User user)
         {
             var jwtToken = GenerateJwtToken(user);
             var tokenHandler = new JwtSecurityTokenHandler();
             var encodedJwt = tokenHandler.WriteToken(jwtToken);
+
             return encodedJwt;
         }
     }

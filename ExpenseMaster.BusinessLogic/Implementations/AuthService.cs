@@ -23,14 +23,19 @@ namespace ExpenseMaster.BusinessLogic.Implementations
             var user = await _userRepository.GetUserByLoginAsync(userLoginDto.Login);
 
             if (user == null)
+            {
                 throw new Exception("Пользователь не найден");
+            }
 
             if (!PasswordHasher.VerifyPasswordHash(userLoginDto.Password, user.PasswordHash, user.PasswordSalt))
+            {
                 throw new Exception("Неверный пароль");
+            }
 
             var token = _tokenService.GetToken(user);
             var userDto = _mapper.Map<UserDto>(user);
             userDto.AuthorizationHeader = $"Bearer {token}";
+
             return userDto;
         }
     }
