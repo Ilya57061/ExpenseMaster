@@ -20,22 +20,22 @@ namespace ExpenseMaster.Middlewares
             catch (DbUpdateException)
             {
                 context.Response.StatusCode = 400;
-                await context.Response.WriteAsync("Ошибка при обращении к базе данных.");
+                await context.Response.WriteAsync("Error when accessing the database.");
             }
             catch (ArgumentException)
             {
                 context.Response.StatusCode = 400;
-                await context.Response.WriteAsync("Ошибка в аргументах запроса.");
+                await context.Response.WriteAsync("Error in query arguments.");
             }
             catch (UnauthorizedAccessException)
             {
                 context.Response.StatusCode = 401;
-                await context.Response.WriteAsync("Отказано в доступе.");
+                await context.Response.WriteAsync("Access denied.");
             }
             catch (Exception)
             {
                 context.Response.StatusCode = 500;
-                await context.Response.WriteAsync("Произошла ошибка.");
+                await context.Response.WriteAsync("There was an error.");
             }
         }
     }

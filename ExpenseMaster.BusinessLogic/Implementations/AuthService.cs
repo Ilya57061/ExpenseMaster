@@ -24,12 +24,12 @@ namespace ExpenseMaster.BusinessLogic.Implementations
 
             if (user == null)
             {
-                throw new Exception("Пользователь не найден");
+                throw new Exception("User not found.");
             }
 
             if (!PasswordHasher.VerifyPasswordHash(userLoginDto.Password, user.PasswordHash, user.PasswordSalt))
             {
-                throw new Exception("Неверный пароль");
+                throw new Exception("Incorrect password.");
             }
 
             var token = _tokenService.GetToken(user);

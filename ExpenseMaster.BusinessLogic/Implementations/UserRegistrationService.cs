@@ -22,7 +22,7 @@ namespace ExpenseMaster.BusinessLogic.Implementations
             var users = await _repository.GetAllAsync();
             if (users.Any(u => u.Login == userRegistrationDto.Login))
             {
-                throw new Exception("Пользователь с таким логином уже существует");
+                throw new Exception("A user with this login already exists.");
             }
 
             PasswordHasher.CreatePasswordHash(userRegistrationDto.Password, out byte[] passwordHash, out byte[] passwordSalt);
