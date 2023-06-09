@@ -1,5 +1,6 @@
 ﻿using ExpenseMaster.BusinessLogic.Implementations;
 using ExpenseMaster.BusinessLogic.Interfaces;
+using ExpenseMaster.Middlewares;
 using ExpenseMaster.Model.Models;
 
 namespace ExpenseMaster.Configuration
@@ -34,6 +35,8 @@ namespace ExpenseMaster.Configuration
             app.UseAuthorization();
 
             app.MapControllers();
+
+            app.UseMiddleware<ExceptionHandlingMiddleware>();
         }
     }
 }
