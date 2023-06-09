@@ -1,5 +1,4 @@
-﻿using ExpenseMaster.Model.Configuration;
-using ExpenseMaster.Model.Models;
+﻿using ExpenseMaster.Model.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
@@ -21,6 +20,5 @@ namespace ExpenseMaster.Model.DatabaseContext
         public DbSet<Budget> Budgets { get; set; }
         public DbSet<FinancialGoal> FinancialGoal { get; set; }
         public DbSet<Category> Category { get; set; }
-
     }
 }
