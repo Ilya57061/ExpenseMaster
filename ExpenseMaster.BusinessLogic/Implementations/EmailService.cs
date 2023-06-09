@@ -25,9 +25,7 @@ namespace ExpenseMaster.BusinessLogic.Implementations
         public async Task SendEmailAsync(string email, Notification notification)
         {
             var emailMessage = new MimeMessage();
-
             emailMessage.From.Add(new MailboxAddress(_name, _emailAddress));
-
             emailMessage.To.Add(new MailboxAddress("", email));
             emailMessage.Subject = notification.Subject;
             emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Html)
@@ -38,12 +36,9 @@ namespace ExpenseMaster.BusinessLogic.Implementations
             using (var client = new SmtpClient())
             {
                 await client.ConnectAsync(_host, _port, true);
-
                 await client.AuthenticateAsync(_emailAddress, _emailPassword);
-
                 await client.SendAsync(emailMessage);
-
-               await client.DisconnectAsync(true);
+                await client.DisconnectAsync(true);
             }
         }
     }
