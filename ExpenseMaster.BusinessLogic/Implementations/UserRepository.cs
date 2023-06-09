@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ExpenseMaster.BusinessLogic.Implementations
 {
-    public class UserRepository : IRepository<User>
+    public class UserRepository : IUserRepository
     {
         private readonly ApplicationDatabaseContext _dbContext;
 
