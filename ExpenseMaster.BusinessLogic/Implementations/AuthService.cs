@@ -1,4 +1,5 @@
-﻿using ExpenseMaster.BusinessLogic.Interfaces;
+﻿using AutoMapper;
+using ExpenseMaster.BusinessLogic.Interfaces;
 using ExpenseMaster.Common.Dto;
 using ExpenseMaster.Common.Helpers.Cryptography;
 
@@ -8,11 +9,13 @@ namespace ExpenseMaster.BusinessLogic.Implementations
     {
         private readonly ITokenService _tokenService;
         private readonly UserRepository _userRepository;
+        private readonly IMapper _mapper;
 
-        public AuthService(UserRepository userRepository, ITokenService tokenService)
+        public AuthService(UserRepository userRepository, ITokenService tokenService, IMapper mapper)
         {
             _userRepository = userRepository;
             _tokenService = tokenService;
+            _mapper = mapper;
         }
 
         public async Task<UserDto> AuthenticateAsync(UserLoginDto userLoginDto)
@@ -26,7 +29,8 @@ namespace ExpenseMaster.BusinessLogic.Implementations
                 throw new Exception("Неверный пароль");
 
             var token = _tokenService.GetToken(user);
-            var userDto = new UserDto { Login = user.Login, Email = user.Email, AuthorizationHeader = $"Bearer {token}" };
+            var userDto = _mapper.Map<UserDto>(user);
+            userDto.AuthorizationHeader = $"Bearer {token}";
             return userDto;
         }
     }

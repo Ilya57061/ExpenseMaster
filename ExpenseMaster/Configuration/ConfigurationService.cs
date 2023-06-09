@@ -13,6 +13,8 @@ namespace ExpenseMaster.Configuration
             services.AddScoped<IRepository<User>, UserRepository>();
             services.AddTransient<IUserRegistrationService, UserRegistrationService>();
 
+            services.AddAutoMapper(typeof(ConfigurationService));
+
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
