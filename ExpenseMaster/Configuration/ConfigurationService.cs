@@ -3,7 +3,6 @@ using ExpenseMaster.BusinessLogic.Interfaces;
 using ExpenseMaster.Middlewares;
 ﻿using ExpenseMaster.Model.DatabaseContext;
 
-
 namespace ExpenseMaster.Configuration
 {
     public static class ConfigurationService
