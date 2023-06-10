@@ -2,6 +2,7 @@
 using ExpenseMaster.BusinessLogic.Interfaces;
 using ExpenseMaster.Common.Dto;
 using ExpenseMaster.Common.Helpers.Cryptography;
+using Microsoft.EntityFrameworkCore;
 
 namespace ExpenseMaster.BusinessLogic.Implementations
 {
@@ -20,20 +21,21 @@ namespace ExpenseMaster.BusinessLogic.Implementations
 
         public async Task<SuccesLoginDto> AuthenticateAsync(UserLoginDto userLoginDto)
         {
-            var user = await _userRepository.GetUserByLoginAsync(userLoginDto.Login);
+            var user = await _userRepository.FindByConditionAsync(u=>u.Login == userLoginDto.Login);
+            var firstUser = await user.FirstOrDefaultAsync();
 
-            if (user == null)
+            if (firstUser == null)
             {
                 throw new Exception("User not found.");
             }
 
-            if (!PasswordHasher.VerifyPasswordHash(userLoginDto.Password, user.PasswordHash, user.PasswordSalt))
+            if (!PasswordHasher.VerifyPasswordHash(userLoginDto.Password, firstUser.PasswordHash, firstUser.PasswordSalt))
             {
                 throw new Exception("Incorrect password.");
             }
 
-            var token = _tokenService.GetToken(user);
-            var userDto = _mapper.Map<UserDto>(user);
+            var token = _tokenService.GetToken(firstUser);
+            var userDto = _mapper.Map<UserDto>(firstUser);
             var succesLoginDto = new SuccesLoginDto
             {
                 Token = token,

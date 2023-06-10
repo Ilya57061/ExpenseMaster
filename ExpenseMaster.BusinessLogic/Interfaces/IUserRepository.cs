@@ -2,8 +2,7 @@
 
 namespace ExpenseMaster.BusinessLogic.Interfaces
 {
-    public interface IUserRepository : IRepository<User>
+    public interface IUserRepository : IRepositoryBase<User>
     {
-        Task<User> GetUserByLoginAsync(string login);
     }
 }

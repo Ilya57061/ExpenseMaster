@@ -1,7 +1,6 @@
 ﻿using ExpenseMaster.BusinessLogic.Implementations;
 using ExpenseMaster.BusinessLogic.Interfaces;
 using ExpenseMaster.Middlewares;
-using ExpenseMaster.Model.Models;
 
 namespace ExpenseMaster.Configuration
 {
@@ -11,8 +10,9 @@ namespace ExpenseMaster.Configuration
         {
             services.AddControllers();
             services.AddScoped<ITokenService, TokenService>();
-            services.AddScoped<IRepository<User>, UserRepository>();
             services.AddTransient<IUserRegistrationService, UserRegistrationService>();
+
+            services.ConfigureRepositoryWrapper();
 
             services.AddAutoMapper(typeof(ConfigurationService));
 
@@ -21,6 +21,12 @@ namespace ExpenseMaster.Configuration
             services.AddSwaggerGen();
 
         }
+
+        public static void ConfigureRepositoryWrapper(this IServiceCollection services)
+        {
+            services.AddScoped<IRepositoryWrapper, IRepositoryWrapper>();
+        }
+
         public static void Configure(WebApplication app)
         {
             if (app.Environment.IsDevelopment())

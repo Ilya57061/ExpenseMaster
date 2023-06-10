@@ -8,10 +8,10 @@ namespace ExpenseMaster.BusinessLogic.Implementations
 {
     public class UserRegistrationService : IUserRegistrationService
     {
-        private readonly IRepository<User> _repository;
+        private readonly IRepositoryBase<User> _repository;
         private readonly IMapper _mapper;
 
-        public UserRegistrationService(IRepository<User> repository, IMapper mapper)
+        public UserRegistrationService(IRepositoryBase<User> repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;
@@ -19,7 +19,7 @@ namespace ExpenseMaster.BusinessLogic.Implementations
 
         public async Task<User> RegisterAsync(UserRegistrationDto userRegistrationDto)
         {
-            var users = await _repository.GetAllAsync();
+            var users = await _repository.FindAllAsync();
             if (users.Any(u => u.Login == userRegistrationDto.Login))
             {
                 throw new Exception("A user with this login already exists.");
