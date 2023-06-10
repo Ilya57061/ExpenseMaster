@@ -1,6 +1,8 @@
 ﻿using ExpenseMaster.BusinessLogic.Implementations;
 using ExpenseMaster.BusinessLogic.Interfaces;
 using ExpenseMaster.Middlewares;
+﻿using ExpenseMaster.Model.DatabaseContext;
+
 
 namespace ExpenseMaster.Configuration
 {
@@ -8,6 +10,7 @@ namespace ExpenseMaster.Configuration
     {
         public static void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
+            services.AddApplicationDatabase(configuration);
             services.AddControllers();
             services.AddScoped<ITokenService, TokenService>();
             services.AddTransient<IUserRegistrationService, UserRegistrationService>();
