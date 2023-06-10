@@ -1,4 +1,5 @@
 ﻿using ExpenseMaster.BusinessLogic.Interfaces;
+using ExpenseMaster.Model.DatabaseContext;
 
 namespace ExpenseMaster.BusinessLogic.Repository
 {
@@ -27,7 +28,7 @@ namespace ExpenseMaster.BusinessLogic.Repository
 
         public async Task SaveAsync()
         {
-            return await _appContext.SaveChangesAsync();
+            await _appContext.SaveChangesAsync();
         }
     }
 }

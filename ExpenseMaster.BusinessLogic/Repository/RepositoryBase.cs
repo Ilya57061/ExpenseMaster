@@ -1,4 +1,6 @@
 ﻿using ExpenseMaster.BusinessLogic.Interfaces;
+using ExpenseMaster.Model.DatabaseContext;
+using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
 namespace ExpenseMaster.BusinessLogic.Repository
@@ -14,27 +16,27 @@ namespace ExpenseMaster.BusinessLogic.Repository
 
         public async Task<IQueryable<T>> FindAllAsync()
         {
-            return await AppContext.Set<T>().AsNoTracking();
+            return await Task.FromResult(AppContext.Set<T>().AsNoTracking());
         }
 
         public async Task<IQueryable<T>> FindByConditionAsync(Expression<Func<T, bool>> expression)
         {
-            return await AppContext.Set<T>().Where(expression).AsNoTracking();
+            return await Task.FromResult(AppContext.Set<T>().Where(expression).AsNoTracking());
         }
 
         public async Task CreateAsync(T entity)
         {
-            return await AppContext.Set<T>().Add(entity);
+            await Task.FromResult(AppContext.Set<T>().Add(entity));
         }
 
         public async Task UpdateAsync(T entity)
         {
-            return await AppContext.Set<T>().Update(entity);
+            await Task.FromResult(AppContext.Set<T>().Update(entity));
         }
 
         public async Task DeleteAsync(T entity)
         {
-            return await AppContext.Set<T>().Remove(entity);
+            await Task.FromResult(AppContext.Set<T>().Remove(entity));
         }
     }
 }
