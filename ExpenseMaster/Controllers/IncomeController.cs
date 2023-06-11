@@ -11,6 +11,7 @@ namespace ExpenseMaster.Controllers
     public class IncomeController : Controller
     {
         private readonly IRepositoryWrapper _repositoryWrapper;
+        private readonly IIncomeService _incomeService;
 
         public IncomeController(IRepositoryWrapper repositoryWrapper)
         {
@@ -87,26 +88,14 @@ namespace ExpenseMaster.Controllers
         [HttpGet("incomes/category/{categoryId}")]
         public async Task<IActionResult> GetIncomesByCategory(int categoryId)
         {
-            var incomes = await _repositoryWrapper.Income.FindByConditionAsync(x => x.CategoryId == categoryId);
-            if (incomes == null)
-            {
-                return NotFound();
-            }
-
+            var incomes = await _incomeService.GetIncomesByCategory(categoryId);
             return Ok(incomes);
         }
 
         [HttpGet("incomes/user/{userId}/total")]
         public async Task<IActionResult> CalculateTotalIncomeByUserId(int userId)
         {
-            var incomes = await _repositoryWrapper.Income.FindByConditionAsync(x => x.UserId == userId);
-            if (incomes == null)
-            {
-                return NotFound();
-            }
-
-            decimal totalIncome = incomes.Sum(x => x.Amount);
-
+            var totalIncome = await _incomeService.CalculateTotalIncomeByUserId(userId);
             return Ok(totalIncome);
         }
     }
