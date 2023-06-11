@@ -21,7 +21,6 @@ namespace ExpenseMaster.Configuration
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
-
         }
 
         public static void ConfigureRepositoryWrapper(this IServiceCollection services)
