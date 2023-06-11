@@ -10,11 +10,13 @@ namespace ExpenseMaster.BusinessLogic.Implementations
     {
         private readonly IRepositoryBase<User> _repository;
         private readonly IMapper _mapper;
+        private readonly IRepositoryWrapper _wrapper;
 
-        public UserRegistrationService(IRepositoryBase<User> repository, IMapper mapper)
+        public UserRegistrationService(IRepositoryBase<User> repository, IMapper mapper, IRepositoryWrapper wrapper)
         {
             _repository = repository;
             _mapper = mapper;
+            _wrapper = wrapper;
         }
 
         public async Task<User> RegisterAsync(UserRegistrationDto userRegistrationDto)
@@ -29,6 +31,8 @@ namespace ExpenseMaster.BusinessLogic.Implementations
             var user = _mapper.Map<User>(userRegistrationDto);
 
             await _repository.CreateAsync(user);
+
+            await _wrapper.SaveAsync();
 
             return user;
         }
