@@ -21,21 +21,20 @@ namespace ExpenseMaster.BusinessLogic.Implementations
 
         public async Task<SuccesLoginDto> AuthenticateAsync(UserLoginDto userLoginDto)
         {
-            var user = await _userRepository.FindByConditionAsync(u=>u.Login == userLoginDto.Login);
-            var firstUser = await user.FirstOrDefaultAsync();
+            var user = await (await _userRepository.FindByConditionAsync(u => u.Login == userLoginDto.Login)).FirstOrDefaultAsync();
 
-            if (firstUser == null)
+            if (user == null)
             {
                 throw new Exception("User not found.");
             }
 
-            if (!PasswordHasher.VerifyPasswordHash(userLoginDto.Password, firstUser.PasswordHash, firstUser.PasswordSalt))
+            if (!PasswordHasher.VerifyPasswordHash(userLoginDto.Password, user.PasswordSalt, user.PasswordHash))
             {
                 throw new Exception("Incorrect password.");
             }
 
-            var token = _tokenService.GetToken(firstUser);
-            var userDto = _mapper.Map<UserDto>(firstUser);
+            var token = _tokenService.GetToken(user);
+            var userDto = _mapper.Map<UserDto>(user);
             var succesLoginDto = new SuccesLoginDto
             {
                 Token = token,

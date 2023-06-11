@@ -32,11 +32,11 @@ namespace ExpenseMaster.Middlewares
                 context.Response.StatusCode = 401;
                 await context.Response.WriteAsync("Access denied.");
             }
-            catch (Exception)
-            {
-                context.Response.StatusCode = 500;
-                await context.Response.WriteAsync("There was an error.");
-            }
+            //catch (Exception)
+            //{
+            //    context.Response.StatusCode = 500;
+            //    await context.Response.WriteAsync("There was an error.");
+            //}
         }
     }
 }
