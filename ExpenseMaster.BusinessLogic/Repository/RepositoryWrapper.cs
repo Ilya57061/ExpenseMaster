@@ -7,6 +7,7 @@ namespace ExpenseMaster.BusinessLogic.Repository
     {
         private ApplicationDatabaseContext _appContext;
         private IUserRepository _user;
+        private IIncomeRepository _income;
 
         public IUserRepository User
         {
@@ -18,6 +19,19 @@ namespace ExpenseMaster.BusinessLogic.Repository
                 }
 
                 return _user;
+            }
+        }
+
+        public IIncomeRepository Income
+        {
+            get
+            {
+                if(_income == null)
+                {
+                    _income = new IncomeRepository(_appContext);
+                }
+
+                return _income;
             }
         }
 

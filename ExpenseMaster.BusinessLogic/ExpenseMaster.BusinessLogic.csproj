@@ -15,9 +15,6 @@
   <ItemGroup>
     <ProjectReference Include="..\ExpenseMaster.Common\ExpenseMaster.Common.csproj" />
     <ProjectReference Include="..\ExpenseMaster.Model\ExpenseMaster.Model.csproj" />
-
-    <Folder Include="Implementations\" />
-    <Folder Include="Interfaces\" />
   </ItemGroup>
 
 </Project>
