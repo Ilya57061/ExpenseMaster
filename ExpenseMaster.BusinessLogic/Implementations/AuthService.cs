@@ -9,19 +9,19 @@ namespace ExpenseMaster.BusinessLogic.Implementations
     public class AuthService : IAuthService
     {
         private readonly ITokenService _tokenService;
-        private readonly IUserRepository _userRepository;
+        private readonly IRepositoryWrapper _wrapper;
         private readonly IMapper _mapper;
 
-        public AuthService(IUserRepository userRepository, ITokenService tokenService, IMapper mapper)
+        public AuthService(IRepositoryWrapper wrapper, ITokenService tokenService, IMapper mapper)
         {
-            _userRepository = userRepository;
+            _wrapper = wrapper;
             _tokenService = tokenService;
             _mapper = mapper;
         }
 
         public async Task<SuccesLoginDto> AuthenticateAsync(UserLoginDto userLoginDto)
         {
-            var user = await (await _userRepository.FindByConditionAsync(u => u.Login == userLoginDto.Login)).FirstOrDefaultAsync();
+            var user = await (await _wrapper.User.FindByConditionAsync(u => u.Login == userLoginDto.Login)).FirstOrDefaultAsync();
 
             if (user == null)
             {
