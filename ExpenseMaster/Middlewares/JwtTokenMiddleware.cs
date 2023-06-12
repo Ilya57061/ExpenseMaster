@@ -14,7 +14,7 @@ namespace ExpenseMaster.Middlewares
             _next = next;
             _configuration = configuration;
         }
-        private async Task InvokeAsync(HttpContext context)
+        public async Task InvokeAsync(HttpContext context)
         {
             if (!context.Request.Headers.TryGetValue("Authorization", out StringValues authHeader))
             {
