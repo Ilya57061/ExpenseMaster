@@ -5,13 +5,17 @@ using ExpenseMaster.Common.Mapper;
 using ExpenseMaster.Middlewares;
 using ExpenseMaster.Model.DatabaseContext;
 using ExpenseMaster.Model.Models;
+using Microsoft.Extensions.Configuration;
 
 namespace ExpenseMaster.Configuration
 {
     public static class ConfigurationService
     {
+        private static IConfiguration _configuration;
         public static void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
+            _configuration = configuration;
+
             services.AddApplicationDatabase(configuration);
             services.AddControllers();
             services.AddScoped<ITokenService, TokenService>();
@@ -50,6 +54,9 @@ namespace ExpenseMaster.Configuration
             app.MapControllers();
 
             app.UseMiddleware<ExceptionHandlingMiddleware>();
+
+            app.UseMiddleware<JwtTokenMiddleware>(_configuration);
+
         }
     }
 }
