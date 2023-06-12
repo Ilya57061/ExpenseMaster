@@ -10,6 +10,7 @@ namespace ExpenseMaster.BusinessLogic.Implementations
         {
             _emailService = emailService;
         }
+
         public async Task SendBalanceLowNotification(string userEmail)
         {
             var notificationMessage = "Ваш баланс находится на исходе. Пожалуйста, пополните счет.";
@@ -17,19 +18,6 @@ namespace ExpenseMaster.BusinessLogic.Implementations
             var notification = new Notification { Message = notificationMessage, Subject = notificationSubject };
             await _emailService.SendEmailAsync(userEmail, notification);
         }
-        public async Task SendInsufficientFundsNotification(string userEmail)
-        {
-            var notificationMessage = "Недостаточно средств на вашем счете для выполнения операции.";
-            var notificationSubject = "Уведомление: Недостаточно средств";
-            var notification = new Notification { Message = notificationMessage, Subject = notificationSubject };
-            await _emailService.SendEmailAsync(userEmail, notification);
-        }
-        public async Task SendRechargeNotification(string userEmail, decimal amount)
-        {
-            string notificationMessage = $"Ваш счет был пополнен на сумму {amount}.";
-            var notificationSubject = "Уведомление: Пополнение счета";
-            var notification = new Notification { Message = notificationMessage, Subject = notificationSubject };
-            await _emailService.SendEmailAsync(userEmail, notification);
-        }
+     
     }
 }
