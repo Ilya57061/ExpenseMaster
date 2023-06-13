@@ -10,24 +10,25 @@ namespace ExpenseMaster.Controllers
     [AllowAnonymous]
     public class IncomeController : Controller
     {
-        private readonly IRepositoryWrapper _repositoryWrapper;
         private readonly IIncomeService _incomeService;
 
-        public IncomeController(IRepositoryWrapper repositoryWrapper)
+        public IncomeController(IIncomeService incomeService)
         {
-            _repositoryWrapper = repositoryWrapper;
+            _incomeService = incomeService;
         }
+
         [HttpGet]
         public async Task<IActionResult> GetIncome()
         {
-            var incomes = await _repositoryWrapper.Income.FindAllAsync();
+            var incomes = await _incomeService.GetAllIncomes();
+
             return Ok(incomes);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetIncomeById(int id)
         {
-            var income = await _repositoryWrapper.Income.FindByConditionAsync(x => x.Id == id);
+            var income = await _incomeService.GetIncomeById(id);
             if(income == null)
             {
                 return NotFound();
@@ -44,8 +45,7 @@ namespace ExpenseMaster.Controllers
                 return BadRequest();
             }
 
-            await _repositoryWrapper.Income.CreateAsync(income);
-            await _repositoryWrapper.SaveAsync();
+            await _incomeService.CreateIncome(income);
 
             return CreatedAtAction(nameof(GetIncomeById), new {id = income.Id}, income);
         }
@@ -58,29 +58,27 @@ namespace ExpenseMaster.Controllers
                 return BadRequest();
             }
 
-            var existingIncome = await _repositoryWrapper.Income.FindByConditionAsync(x => x.Id == id);
-            if (existingIncome == null)
-                return NotFound();
-
-            await _repositoryWrapper.Income.UpdateAsync(income);
-            await _repositoryWrapper.SaveAsync();
-
-            return NoContent();
-        }
-
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteIncome(int id)
-        {
-            var existingIncome = await _repositoryWrapper.Income.FindByConditionAsync(x => x.Id == id);
+            var existingIncome = await _incomeService.GetIncomeById(id);
             if (existingIncome == null)
             {
                 return NotFound();
             }
 
-            var incomeToDelete = existingIncome.FirstOrDefault();
+            await _incomeService.UpdateIncome(existingIncome);
 
-            await _repositoryWrapper.Income.DeleteAsync(incomeToDelete);
-            await _repositoryWrapper.SaveAsync();
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteIncome(int id)   
+        {
+            var existingIncome = await _incomeService.GetIncomeById(id);
+            if (existingIncome == null)
+            {
+                return NotFound();
+            }
+
+            await _incomeService.DeleteIncome(existingIncome);
 
             return NoContent();
         }

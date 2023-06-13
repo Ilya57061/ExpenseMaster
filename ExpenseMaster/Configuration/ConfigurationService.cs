@@ -13,6 +13,7 @@ namespace ExpenseMaster.Configuration
             services.AddControllers();
             services.AddScoped<ITokenService, TokenService>();
             services.AddTransient<IUserRegistrationService, UserRegistrationService>();
+            services.AddTransient<IIncomeService, IncomeService>();
 
             services.ConfigureRepositoryWrapper();
 
