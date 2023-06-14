@@ -1,10 +1,11 @@
 ﻿using ExpenseMaster.BusinessLogic.Implementations;
 using ExpenseMaster.BusinessLogic.Interfaces;
-using ExpenseMaster.BusinessLogic.Repository;
+using ExpenseMaster.DAL.Repository;
 using ExpenseMaster.BusinessLogic.Mapper;
 using ExpenseMaster.Middlewares;
 using ExpenseMaster.DAL.DatabaseContext;
 using ExpenseMaster.DAL.Models;
+using ExpenseMaster.DAL.Interfaces;
 
 namespace ExpenseMaster.Configuration
 {

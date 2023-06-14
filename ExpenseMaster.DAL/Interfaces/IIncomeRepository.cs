@@ -1,6 +1,6 @@
 ﻿using ExpenseMaster.DAL.Models;
 
-namespace ExpenseMaster.BusinessLogic.Interfaces
+namespace ExpenseMaster.DAL.Interfaces
 {
     public interface IIncomeRepository : IRepositoryBase<Income>
     {

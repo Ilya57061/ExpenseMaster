@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace ExpenseMaster.BusinessLogic.Interfaces
+namespace ExpenseMaster.DAL.Interfaces
 {
     public interface IRepositoryBase<T>
     {

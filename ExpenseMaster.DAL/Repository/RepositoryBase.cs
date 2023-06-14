@@ -1,9 +1,10 @@
 ﻿using ExpenseMaster.BusinessLogic.Interfaces;
 using ExpenseMaster.DAL.DatabaseContext;
+using ExpenseMaster.DAL.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
-namespace ExpenseMaster.BusinessLogic.Repository
+namespace ExpenseMaster.DAL.Repository
 {
     public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
     {
