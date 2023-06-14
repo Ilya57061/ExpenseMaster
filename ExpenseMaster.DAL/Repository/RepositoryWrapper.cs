@@ -1,7 +1,8 @@
 ﻿using ExpenseMaster.BusinessLogic.Interfaces;
 using ExpenseMaster.DAL.DatabaseContext;
+using ExpenseMaster.DAL.Interfaces;
 
-namespace ExpenseMaster.BusinessLogic.Repository
+namespace ExpenseMaster.DAL.Repository
 {
     public class RepositoryWrapper : IRepositoryWrapper
     {

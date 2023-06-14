@@ -7,13 +7,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExpenseMaster", "ExpenseMas
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. ExpenseMaster", "1. ExpenseMaster", "{FE5D901D-43EC-4256-B75E-8549493F89A9}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BusinessLogic", "BusinessLogic", "{D7ECCE36-64DB-4C11-8401-8C73C89D55E0}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. BusinessLogic", "2. BusinessLogic", "{D7ECCE36-64DB-4C11-8401-8C73C89D55E0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3. DAL", "3. DAL", "{59F05E29-1D8B-40B4-B83F-3DB8C1363E70}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExpenseMaster.BusinessLogic", "ExpenseMaster.BusinessLogic\ExpenseMaster.BusinessLogic.csproj", "{34B17C3E-4788-4ABB-AECC-D2DFE025DE28}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExpenseMaster.DAL", "ExpenseMaster.Model\ExpenseMaster.DAL.csproj", "{AE6E6EFA-7FE8-405E-8F90-38775F7D3D1A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExpenseMaster.DAL", "ExpenseMaster.DAL\ExpenseMaster.DAL.csproj", "{D138E74C-67F5-4BBD-98FD-B2F9F5429BA0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +29,10 @@ Global
 		{34B17C3E-4788-4ABB-AECC-D2DFE025DE28}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{34B17C3E-4788-4ABB-AECC-D2DFE025DE28}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{34B17C3E-4788-4ABB-AECC-D2DFE025DE28}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AE6E6EFA-7FE8-405E-8F90-38775F7D3D1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AE6E6EFA-7FE8-405E-8F90-38775F7D3D1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AE6E6EFA-7FE8-405E-8F90-38775F7D3D1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AE6E6EFA-7FE8-405E-8F90-38775F7D3D1A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D138E74C-67F5-4BBD-98FD-B2F9F5429BA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D138E74C-67F5-4BBD-98FD-B2F9F5429BA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D138E74C-67F5-4BBD-98FD-B2F9F5429BA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D138E74C-67F5-4BBD-98FD-B2F9F5429BA0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -40,7 +40,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{88432A3C-5386-4490-A7C6-D2EC4EF8BC5E} = {FE5D901D-43EC-4256-B75E-8549493F89A9}
 		{34B17C3E-4788-4ABB-AECC-D2DFE025DE28} = {D7ECCE36-64DB-4C11-8401-8C73C89D55E0}
-		{AE6E6EFA-7FE8-405E-8F90-38775F7D3D1A} = {59F05E29-1D8B-40B4-B83F-3DB8C1363E70}
+		{D138E74C-67F5-4BBD-98FD-B2F9F5429BA0} = {59F05E29-1D8B-40B4-B83F-3DB8C1363E70}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {26A3C971-6AD3-418C-B663-576B3E6C9B25}

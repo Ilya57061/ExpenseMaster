@@ -1,4 +1,6 @@
-﻿namespace ExpenseMaster.BusinessLogic.Interfaces
+﻿using ExpenseMaster.DAL.Interfaces;
+
+namespace ExpenseMaster.BusinessLogic.Interfaces
 {
     public interface IRepositoryWrapper
     {
