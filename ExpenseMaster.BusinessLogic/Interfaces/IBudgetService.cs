@@ -4,13 +4,14 @@ namespace ExpenseMaster.BusinessLogic.Interfaces
 {
     public interface IBudgetService
     {
-        Task GetById(int id);
-        Task Create(Budget budget);
-        Task Update(Budget budget);
-        Task Delete(Budget budget);
-        Task<IEnumerable<Budget>> GetByUserId(int userId);
-        Task<List<Budget>> GetBudgetsExceedingThreshold(int userId);
-        Task UpdateWarningThreshold(int budgetId, decimal warningThreshold);
-        Task<decimal> GetBudgetRemainingAmount(int userId);
+        Task<Budget> GetByCategoryIdAsync(int userId, int categoryId);
+        Task<Budget> GetByIdAsync(int id);
+        Task CreateAsync(Budget budget);
+        Task UpdateAsync(Budget budget);
+        Task DeleteAsync(Budget budget);
+        Task<IEnumerable<Budget>> GetByUserIdAsync(int userId);
+        Task UpdateWarningThresholdAsync(int budgetId, decimal warningThreshold);
+        Task<IEnumerable<Budget>> GetBudgetsExceedingThresholdAsync(int userId);
+        Task<decimal> GetBudgetRemainingAmountAsync(int userId);
     }
 }
