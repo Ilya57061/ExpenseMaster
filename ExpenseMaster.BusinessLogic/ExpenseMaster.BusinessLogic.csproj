@@ -15,7 +15,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ExpenseMaster.DAL\ExpenseMaster.DAL.csproj" />
-    <ProjectReference Include="..\ExpenseMaster.Model\ExpenseMaster.DAL.csproj" />
   </ItemGroup>
 
 </Project>
