@@ -12,7 +12,9 @@ namespace ExpenseMaster.BusinessLogic.Implementations
         }
         public async Task<Budget> GetByIdAsync(int id)
         {
-            return await _repositoryWrapper.Budget.GetByIdAsync(id);
+            var budget = await _repositoryWrapper.Budget.GetByIdAsync(id);
+
+            return budget;
         }
         public async Task CreateAsync(Budget budget)
         {
@@ -34,17 +36,23 @@ namespace ExpenseMaster.BusinessLogic.Implementations
 
         public async Task<IEnumerable<Budget>> GetByUserIdAsync(int userId)
         {
-            return await _repositoryWrapper.Budget.GetBudgetsByUserIdAsync(userId);
+            var budgets = await _repositoryWrapper.Budget.GetBudgetsByUserIdAsync(userId);
+
+            return budgets;
         }
 
         public async Task<Budget> GetByCategoryIdAsync(int userId, int categoryId)
         {
-            return await _repositoryWrapper.Budget.GetBudgetByCategoryIdAsync(userId, categoryId);
+            var budgets = await _repositoryWrapper.Budget.GetBudgetByCategoryIdAsync(userId, categoryId);
+
+            return budgets;
         }
 
         public async Task<IEnumerable<Budget>> GetBudgetsExceedingThresholdAsync(int userId)
         {
-            return await _repositoryWrapper.Budget.GetBudgetsExceedingThresholdAsync(userId);
+            var budgets = await _repositoryWrapper.Budget.GetBudgetsExceedingThresholdAsync(userId);
+
+            return budgets;
         }
 
         public async Task UpdateWarningThresholdAsync(int budgetId, decimal warningThreshold)
