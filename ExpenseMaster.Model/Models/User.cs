@@ -1,4 +1,4 @@
-﻿namespace ExpenseMaster.Model.Models
+﻿namespace ExpenseMaster.DAL.Models
 {
     public class User
     {

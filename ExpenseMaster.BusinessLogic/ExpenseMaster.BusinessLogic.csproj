@@ -7,14 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.5" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="7.0.0" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.30.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ExpenseMaster.Common\ExpenseMaster.Common.csproj" />
-    <ProjectReference Include="..\ExpenseMaster.Model\ExpenseMaster.Model.csproj" />
+    <ProjectReference Include="..\ExpenseMaster.Model\ExpenseMaster.DAL.csproj" />
   </ItemGroup>
 
 </Project>

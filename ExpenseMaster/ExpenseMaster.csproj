@@ -20,7 +20,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ExpenseMaster.BusinessLogic\ExpenseMaster.BusinessLogic.csproj" />
-    <ProjectReference Include="..\ExpenseMaster.Model\ExpenseMaster.Model.csproj" />
   </ItemGroup>
 
 </Project>

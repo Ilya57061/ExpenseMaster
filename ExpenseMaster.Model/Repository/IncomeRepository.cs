@@ -1,6 +1,6 @@
 ﻿using ExpenseMaster.BusinessLogic.Interfaces;
-using ExpenseMaster.Model.DatabaseContext;
-using ExpenseMaster.Model.Models;
+using ExpenseMaster.DAL.DatabaseContext;
+using ExpenseMaster.DAL.Models;
 
 namespace ExpenseMaster.BusinessLogic.Repository
 {

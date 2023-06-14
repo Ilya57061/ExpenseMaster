@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using ExpenseMaster.Common.Dto;
-using ExpenseMaster.Common.Helpers.Cryptography;
+using ExpenseMaster.BusinessLogic.Dto;
+using ExpenseMaster.BusinessLogic.Infrastructure.Cryptography;
 using ExpenseMaster.DAL.Models;
 
-namespace ExpenseMaster.Common.Mapper
+namespace ExpenseMaster.BusinessLogic.Mapper
 {
     public class MappingProfile : Profile
     {

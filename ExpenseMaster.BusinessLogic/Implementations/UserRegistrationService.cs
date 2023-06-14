@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using ExpenseMaster.BusinessLogic.Interfaces;
-using ExpenseMaster.Common.Dto;
-using ExpenseMaster.Common.Helpers.Cryptography;
-using ExpenseMaster.Model.Models;
+using ExpenseMaster.BusinessLogic.Infrastructure.Cryptography;
+using ExpenseMaster.DAL.Models;
+using ExpenseMaster.BusinessLogic.Dto;
 
 namespace ExpenseMaster.BusinessLogic.Implementations
 {

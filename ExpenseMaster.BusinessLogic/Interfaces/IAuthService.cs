@@ -1,4 +1,4 @@
-﻿using ExpenseMaster.Common.Dto;
+﻿using ExpenseMaster.BusinessLogic.Dto;
 
 namespace ExpenseMaster.BusinessLogic.Interfaces
 {

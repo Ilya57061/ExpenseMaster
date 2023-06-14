@@ -1,5 +1,5 @@
 ﻿using ExpenseMaster.BusinessLogic.Interfaces;
-using ExpenseMaster.Model.Models;
+using ExpenseMaster.DAL.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -47,7 +47,7 @@ namespace ExpenseMaster.Controllers
 
             await _incomeService.CreateIncome(income);
 
-            return CreatedAtAction(nameof(GetIncomeById), new {id = income.Id}, income);
+            return Ok(income);
         }
 
         [HttpPut("{id}")]

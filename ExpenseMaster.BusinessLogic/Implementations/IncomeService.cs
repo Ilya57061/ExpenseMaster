@@ -1,5 +1,5 @@
 ﻿using ExpenseMaster.BusinessLogic.Interfaces;
-using ExpenseMaster.Model.Models;
+using ExpenseMaster.DAL.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace ExpenseMaster.BusinessLogic.Implementations
