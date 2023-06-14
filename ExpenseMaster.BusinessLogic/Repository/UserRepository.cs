@@ -11,5 +11,11 @@ namespace ExpenseMaster.BusinessLogic.Repository
         {
 
         }
+
+        public async Task<User> GetUserByLoginAsync(string login)
+        {
+            var user = await FindByConditionAsync(u => u.Login == login);
+            return user.FirstOrDefault();
+        }
     }
 }
