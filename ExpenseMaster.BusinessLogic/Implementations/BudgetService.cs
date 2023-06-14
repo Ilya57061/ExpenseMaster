@@ -6,16 +6,19 @@ namespace ExpenseMaster.BusinessLogic.Implementations
     public class BudgetService : IBudgetService
     {
         private readonly IRepositoryWrapper _repositoryWrapper;
+
         public BudgetService(IRepositoryWrapper repositoryWrapper)
         {
             _repositoryWrapper = repositoryWrapper;
         }
+
         public async Task<Budget> GetByIdAsync(int id)
         {
             var budget = await _repositoryWrapper.Budget.GetByIdAsync(id);
 
             return budget;
         }
+
         public async Task CreateAsync(Budget budget)
         {
             _repositoryWrapper.Budget.CreateAsync(budget);
