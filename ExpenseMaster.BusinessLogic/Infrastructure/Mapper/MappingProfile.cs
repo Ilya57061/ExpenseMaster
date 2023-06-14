@@ -24,7 +24,7 @@ namespace ExpenseMaster.BusinessLogic.Mapper
             CreateMap<User, UserDto>()
         .ReverseMap();
 
-            CreateMap<Expense, CreateExpenseDto>()
+            CreateMap<CreateExpenseDto, Expense>()
                 .ReverseMap();
         }
     }

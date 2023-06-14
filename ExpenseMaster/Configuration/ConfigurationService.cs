@@ -22,6 +22,7 @@ namespace ExpenseMaster.Configuration
             services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
             services.AddTransient<IUserRegistrationService, UserRegistrationService>();
             services.AddTransient<IIncomeService, IncomeService>();
+            services.AddTransient<IExpenseService, ExpenseService>();   
 
             services.AddAutoMapper(typeof(MappingProfile).Assembly);
 

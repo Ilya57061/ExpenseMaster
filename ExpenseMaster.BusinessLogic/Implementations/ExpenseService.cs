@@ -11,9 +11,10 @@ namespace ExpenseMaster.BusinessLogic.Implementations
         private readonly IMapper _mapper;
         private readonly IRepositoryWrapper _repositoryWrapper;
 
-        public ExpenseService(IRepositoryWrapper repositoryWrapper)
+        public ExpenseService(IRepositoryWrapper repositoryWrapper, IMapper mapper)
         {
             _repositoryWrapper = repositoryWrapper;
+            _mapper = mapper;
         }
 
         public async Task<IEnumerable<Expense>> GetAllExpenses()
