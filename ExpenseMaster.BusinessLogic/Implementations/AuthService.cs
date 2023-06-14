@@ -21,7 +21,7 @@ namespace ExpenseMaster.BusinessLogic.Implementations
 
         public async Task<SuccesLoginDto> AuthenticateAsync(UserLoginDto userLoginDto)
         {
-            var user = await (await _wrapper.User.FindByConditionAsync(u => u.Login == userLoginDto.Login)).FirstOrDefaultAsync();
+            var user = await _wrapper.User.GetUserByLoginAsync(userLoginDto.Login);
 
             if (user == null)
             {
