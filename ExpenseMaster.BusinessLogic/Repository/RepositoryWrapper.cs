@@ -7,6 +7,7 @@ namespace ExpenseMaster.BusinessLogic.Repository
     {
         private ApplicationDatabaseContext _appContext;
         private IUserRepository _user;
+        private IBudgetRepository _budget;
 
         public IUserRepository User
         {
@@ -18,6 +19,18 @@ namespace ExpenseMaster.BusinessLogic.Repository
                 }
 
                 return _user;
+            }
+        }
+
+        public IBudgetRepository Budget
+        {
+            get
+            {
+                if (_budget == null)
+                {
+                    _budget = new BudgetRepository(_appContext);
+                }
+                return _budget;
             }
         }
 
