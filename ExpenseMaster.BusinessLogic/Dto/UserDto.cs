@@ -1,4 +1,4 @@
-﻿namespace ExpenseMaster.Common.Dto
+﻿namespace ExpenseMaster.BusinessLogic.Dto
 {
     public class UserDto
     {

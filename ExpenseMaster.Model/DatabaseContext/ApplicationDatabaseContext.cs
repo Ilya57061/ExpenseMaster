@@ -1,8 +1,8 @@
-﻿using ExpenseMaster.Model.Models;
+﻿using ExpenseMaster.DAL.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
-namespace ExpenseMaster.Model.DatabaseContext
+namespace ExpenseMaster.DAL.DatabaseContext
 {
     public class ApplicationDatabaseContext : DbContext
     {

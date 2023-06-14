@@ -20,11 +20,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ExpenseMaster.BusinessLogic\ExpenseMaster.BusinessLogic.csproj" />
-    <ProjectReference Include="..\ExpenseMaster.Model\ExpenseMaster.Model.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Controllers\" />
   </ItemGroup>
 
 </Project>

@@ -1,8 +1,8 @@
-﻿using ExpenseMaster.Model.Models;
+﻿using ExpenseMaster.DAL.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace ExpenseMaster.Model.Configuration
+namespace ExpenseMaster.DAL.Configuration
 {
     public class ExpenseConfiguration : IEntityTypeConfiguration<Expense>
     {

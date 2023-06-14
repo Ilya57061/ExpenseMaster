@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace ExpenseMaster.Model.DatabaseContext
+namespace ExpenseMaster.DAL.DatabaseContext
 {
     public static class ApplicationDatabaseExtensions
     {

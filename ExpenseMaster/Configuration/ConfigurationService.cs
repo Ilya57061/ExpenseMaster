@@ -1,10 +1,10 @@
 ﻿using ExpenseMaster.BusinessLogic.Implementations;
 using ExpenseMaster.BusinessLogic.Interfaces;
 using ExpenseMaster.BusinessLogic.Repository;
-using ExpenseMaster.Common.Mapper;
+using ExpenseMaster.BusinessLogic.Mapper;
 using ExpenseMaster.Middlewares;
-using ExpenseMaster.Model.DatabaseContext;
-using ExpenseMaster.Model.Models;
+using ExpenseMaster.DAL.DatabaseContext;
+using ExpenseMaster.DAL.Models;
 
 namespace ExpenseMaster.Configuration
 {
@@ -20,6 +20,7 @@ namespace ExpenseMaster.Configuration
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
             services.AddTransient<IUserRegistrationService, UserRegistrationService>();
+            services.AddTransient<IIncomeService, IncomeService>();
 
             services.AddAutoMapper(typeof(MappingProfile).Assembly);
 
