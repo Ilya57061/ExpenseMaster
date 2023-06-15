@@ -49,6 +49,8 @@ namespace ExpenseMaster.Configuration
             app.MapControllers();
 
             app.UseMiddleware<ExceptionHandlingMiddleware>();
+            app.UseMiddleware<JwtTokenMiddleware>(_configuration);
+            app.UseMiddleware<AuthMiddleware>();
         }
     }
 }
