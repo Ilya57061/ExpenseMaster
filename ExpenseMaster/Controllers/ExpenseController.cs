@@ -22,6 +22,7 @@ namespace ExpenseMaster.Controllers
         public async Task<ActionResult<IEnumerable<Expense>>> GetExpenses()
         {
             var expenses = await _expenseService.GetAllExpenses();
+
             return Ok(expenses);
         }
 
@@ -29,10 +30,7 @@ namespace ExpenseMaster.Controllers
         public async Task<ActionResult<Expense>> GetExpenseById(int id)
         {
             var expense = await _expenseService.GetExpenseById(id);
-            if (expense == null)
-            {
-                return NotFound();
-            }
+
             return Ok(expense);
         }
 
@@ -40,24 +38,17 @@ namespace ExpenseMaster.Controllers
         public async Task<ActionResult<Expense>> CreateExpense(CreateExpenseDto createExpenseDto)
         {
             var expense = await _expenseService.CreateExpense(createExpenseDto);
+
             return Ok(expense);
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<Expense>> UpdateExpense(int id, Expense expense)
+        public async Task<ActionResult<Expense>> UpdateExpense(Expense expense)
         {
-            if (id != expense.Id)
-            {
-                return BadRequest();
-            }
+            var existingExpense = await _expenseService.GetExpenseById(expense.Id);
 
-            var existingExpense = await _expenseService.GetExpenseById(id);
-            if (existingExpense == null)
-            {
-                return NotFound();
-            }
+            var updatedExpense = await _expenseService.UpdateExpense(existingExpense);
 
-            var updatedExpense = await _expenseService.UpdateExpense(expense);
             return Ok(updatedExpense);
         }
 
@@ -65,12 +56,9 @@ namespace ExpenseMaster.Controllers
         public async Task<ActionResult<int>> DeleteExpense(int id)
         {
             var existingExpense = await _expenseService.GetExpenseById(id);
-            if (existingExpense == null)
-            {
-                return NotFound();
-            }
 
             await _expenseService.DeleteExpense(existingExpense);
+
             return Ok(existingExpense.Id);
         }
 
@@ -78,6 +66,7 @@ namespace ExpenseMaster.Controllers
         public async Task<ActionResult<IEnumerable<Expense>>> GetExpensesByCategory(int categoryId)
         {
             var expenses = await _expenseService.GetExpensesByCategory(categoryId);
+
             return Ok(expenses);
         }
 
@@ -85,6 +74,7 @@ namespace ExpenseMaster.Controllers
         public async Task<ActionResult<decimal>> CalculateTotalExpenseByUserId(int userId)
         {
             var totalExpenses = await _expenseService.CalculateTotalExpensesByUserId(userId);
+
             return Ok(totalExpenses);
         }
     }
