@@ -35,28 +35,25 @@ namespace ExpenseMaster.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Expense>> CreateExpense(CreateExpenseDto createExpenseDto)
+        public async Task<ActionResult<Expense>> CreateExpense(CreateExpenseDto expenseDto)
         {
-            var expense = await _expenseService.CreateExpense(createExpenseDto);
+            var expense = await _expenseService.CreateExpense(expenseDto);
 
             return Ok(expense);
         }
 
-        [HttpPut("{id}")]
-        public async Task<ActionResult<Expense>> UpdateExpense(Expense expense)
+        [HttpPut]
+        public async Task<ActionResult<Expense>> UpdateExpense(UpdateExpenseDto updateExpenseDto)
         {
-            var existingExpense = await _expenseService.GetExpenseById(expense.Id);
+            var expense = await _expenseService.UpdateExpense(updateExpenseDto);
 
-            var updatedExpense = await _expenseService.UpdateExpense(existingExpense);
-
-            return Ok(updatedExpense);
+            return Ok(expense);
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult<int>> DeleteExpense(int id)
         {
             var existingExpense = await _expenseService.GetExpenseById(id);
-
             await _expenseService.DeleteExpense(existingExpense);
 
             return Ok(existingExpense.Id);

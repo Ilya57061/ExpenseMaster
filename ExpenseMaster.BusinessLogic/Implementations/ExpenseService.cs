@@ -40,8 +40,16 @@ namespace ExpenseMaster.BusinessLogic.Implementations
             return expense;
         }
 
-        public async Task<Expense> UpdateExpense(Expense expense)
+        public async Task<Expense> UpdateExpense(UpdateExpenseDto updateExpenseDto)
         {
+            var existingExpense = await _repositoryWrapper.Expence.FindByConditionAsync(x=> x.Id == updateExpenseDto.Id);
+            if(existingExpense == null) 
+            {
+                throw new Exception("Expense not found");
+            }
+
+            var expense = _mapper.Map<Expense>(updateExpenseDto);
+
             await _repositoryWrapper.Expence.UpdateAsync(expense);
             await _repositoryWrapper.SaveAsync();
 
