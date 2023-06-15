@@ -33,11 +33,11 @@ namespace ExpenseMaster.Middlewares
 
                 return;
             }
+            
             string token = authHeader.ToString().Substring(7);
 
             try
             {
-
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var validationParameters = new TokenValidationParameters()
                 {
