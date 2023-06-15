@@ -39,7 +39,6 @@ namespace ExpenseMaster.BusinessLogic.Implementations
         public async Task<IEnumerable<FinancialGoal>> GetByTargetAmountAsync(int userId)
         {
             var goals = await _repositoryWrapper.FinancialGoal.GetByUserIdAsync(userId);
-
             var goalsReachedTarget = goals.Where(g => g.CurrentAmount >= g.TargetAmount);
 
             return goalsReachedTarget;
@@ -55,7 +54,6 @@ namespace ExpenseMaster.BusinessLogic.Implementations
         public async Task<decimal> GetTotalProgressAsync(int userId)
         {
             var goals = await _repositoryWrapper.FinancialGoal.GetByUserIdAsync(userId);
-
             decimal totalProgress = goals.Sum(g => g.CurrentAmount);
 
             return totalProgress;
