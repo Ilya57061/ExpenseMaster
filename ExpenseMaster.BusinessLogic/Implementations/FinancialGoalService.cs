@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using ExpenseMaster.BusinessLogic.Dto;
 using ExpenseMaster.BusinessLogic.Interfaces;
 using ExpenseMaster.DAL.Models;
 
@@ -14,9 +15,11 @@ namespace ExpenseMaster.BusinessLogic.Implementations
             _repositoryWrapper = repositoryWrapper;
         }
 
-        public async Task CreateAsync(FinancialGoal financialGoal)
+        public async Task CreateAsync(CreateFinancialGoalDto financialGoal)
         {
-            await _repositoryWrapper.FinancialGoal.CreateAsync(financialGoal);
+            var goal = _mapper.Map<FinancialGoal>(financialGoal);
+
+            await _repositoryWrapper.FinancialGoal.CreateAsync(goal);
             await _repositoryWrapper.SaveAsync();
         }
 
@@ -58,9 +61,11 @@ namespace ExpenseMaster.BusinessLogic.Implementations
             return totalProgress;
         }
 
-        public async Task UpdateAsync(FinancialGoal financialGoal)
+        public async Task UpdateAsync(UpdateFinancialGoalDto financialGoal)
         {
-            await _repositoryWrapper.FinancialGoal.UpdateAsync(financialGoal);
+            var goal = _mapper.Map<FinancialGoal>(financialGoal);
+
+            await _repositoryWrapper.FinancialGoal.UpdateAsync(goal);
             await _repositoryWrapper.SaveAsync();
         }
 
