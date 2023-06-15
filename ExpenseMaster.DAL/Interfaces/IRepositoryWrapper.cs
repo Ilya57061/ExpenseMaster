@@ -7,6 +7,7 @@ namespace ExpenseMaster.BusinessLogic.Interfaces
         IUserRepository User { get; }
         IIncomeRepository Income { get; }
         IExpenceRepository Expence { get; }
+        IBudgetRepository Budget { get; }
         Task SaveAsync();
     }
 }
