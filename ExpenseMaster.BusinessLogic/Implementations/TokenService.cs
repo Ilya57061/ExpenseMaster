@@ -22,7 +22,8 @@ namespace ExpenseMaster.BusinessLogic.Implementations
         public JwtSecurityToken GenerateJwtToken(User user)
         {
             var claims = new List<Claim> {
-            new Claim(JwtRegisteredClaimNames.NameId, user.Login)
+            new Claim(JwtRegisteredClaimNames.NameId, user.Login),
+            new Claim(ClaimTypes.Role, user.Role.Name.ToString()),
             };
             var creds = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512);
             var tokenDescriptor = new JwtSecurityToken(
@@ -34,27 +35,6 @@ namespace ExpenseMaster.BusinessLogic.Implementations
                 notBefore: DateTime.UtcNow);
 
             return tokenDescriptor;
-        }
-
-        public string GetUserIdFromToken(string token)
-        {
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_configuration["Authentication:Secret"]);
-            tokenHandler.ValidateToken(token, new TokenValidationParameters
-            {
-                ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(key),
-                ValidateIssuer = true,
-                ValidIssuer = _configuration["Authentication:Issuer"],
-                ValidateAudience = true,
-                ValidAudience = _configuration["Authentication:Audience"],
-                ClockSkew = TimeSpan.Zero
-            }, out SecurityToken validatedToken);
-
-            var jwtToken = (JwtSecurityToken)validatedToken;
-            var userLogin = jwtToken.Claims.First(x => x.Type == JwtRegisteredClaimNames.NameId).Value;
-
-            return userLogin;
         }
 
         public string GetToken(User user)
