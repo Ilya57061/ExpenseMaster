@@ -15,7 +15,6 @@ namespace ExpenseMaster.Middlewares
 
         public async Task Invoke(HttpContext context)
         {
-
             string authorizationHeader = context.Request.Headers["Authorization"];
             if (string.IsNullOrEmpty(authorizationHeader) || !authorizationHeader.StartsWith("Bearer "))
             {
