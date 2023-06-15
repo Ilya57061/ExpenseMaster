@@ -25,20 +25,20 @@ namespace ExpenseMaster.BusinessLogic.Implementations
         public async Task CreateAsync(CreateBudgetDto budgetDto)
         {
             var budget = _mapper.Map<Budget>(budgetDto);
-            _repositoryWrapper.Budget.CreateAsync(budget);
+            await _repositoryWrapper.Budget.CreateAsync(budget);
             await _repositoryWrapper.SaveAsync();
         }
 
         public async Task UpdateAsync(UpdateBudgetDto budgetDto)
         {
             var budget = _mapper.Map<Budget>(budgetDto);
-            _repositoryWrapper.Budget.UpdateAsync(budget);
+            await _repositoryWrapper.Budget.UpdateAsync(budget);
             await _repositoryWrapper.SaveAsync();
         }
 
         public async Task DeleteAsync(Budget budget)
         {
-            _repositoryWrapper.Budget.DeleteAsync(budget);
+            await _repositoryWrapper.Budget.DeleteAsync(budget);
             await _repositoryWrapper.SaveAsync();
         }
 
@@ -67,7 +67,7 @@ namespace ExpenseMaster.BusinessLogic.Implementations
         {
             var budget = await _repositoryWrapper.Budget.GetByIdAsync(budgetId);
             budget.WarningThreshold = warningThreshold;
-            _repositoryWrapper.Budget.UpdateAsync(budget);
+            await _repositoryWrapper.Budget.UpdateAsync(budget);
             await _repositoryWrapper.SaveAsync();
         }
 
