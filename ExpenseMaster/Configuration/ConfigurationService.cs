@@ -11,8 +11,11 @@ namespace ExpenseMaster.Configuration
 {
     public static class ConfigurationService
     {
+        private static IConfiguration _configuration;
+
         public static void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
+            _configuration = configuration;
             services.AddApplicationDatabase(configuration);
             services.AddControllers();
             services.AddScoped<ITokenService, TokenService>();
