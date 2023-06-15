@@ -1,4 +1,6 @@
-﻿using ExpenseMaster.BusinessLogic.Interfaces;
+﻿using AutoMapper;
+using ExpenseMaster.BusinessLogic.Dto;
+using ExpenseMaster.BusinessLogic.Interfaces;
 using ExpenseMaster.DAL.Models;
 
 namespace ExpenseMaster.BusinessLogic.Implementations
@@ -6,6 +8,7 @@ namespace ExpenseMaster.BusinessLogic.Implementations
     public class BudgetService : IBudgetService
     {
         private readonly IRepositoryWrapper _repositoryWrapper;
+        private readonly IMapper _mapper;
 
         public BudgetService(IRepositoryWrapper repositoryWrapper)
         {
@@ -19,14 +22,16 @@ namespace ExpenseMaster.BusinessLogic.Implementations
             return budget;
         }
 
-        public async Task CreateAsync(Budget budget)
+        public async Task CreateAsync(CreateBudgetDto budgetDto)
         {
+            var budget = _mapper.Map<Budget>(budgetDto);
             _repositoryWrapper.Budget.CreateAsync(budget);
             await _repositoryWrapper.SaveAsync();
         }
 
-        public async Task UpdateAsync(Budget budget)
+        public async Task UpdateAsync(UpdateBudgetDto budgetDto)
         {
+            var budget = _mapper.Map<Budget>(budgetDto);
             _repositoryWrapper.Budget.UpdateAsync(budget);
             await _repositoryWrapper.SaveAsync();
         }

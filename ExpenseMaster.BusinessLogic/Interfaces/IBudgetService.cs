@@ -1,4 +1,5 @@
-﻿using ExpenseMaster.DAL.Models;
+﻿using ExpenseMaster.BusinessLogic.Dto;
+using ExpenseMaster.DAL.Models;
 
 namespace ExpenseMaster.BusinessLogic.Interfaces
 {
@@ -6,8 +7,8 @@ namespace ExpenseMaster.BusinessLogic.Interfaces
     {
         Task<Budget> GetByCategoryIdAsync(int userId, int categoryId);
         Task<Budget> GetByIdAsync(int id);
-        Task CreateAsync(Budget budget);
-        Task UpdateAsync(Budget budget);
+        Task CreateAsync(CreateBudgetDto budgetDto);
+        Task UpdateAsync(UpdateBudgetDto budgetDto);
         Task DeleteAsync(Budget budget);
         Task<IEnumerable<Budget>> GetByUserIdAsync(int userId);
         Task UpdateWarningThresholdAsync(int budgetId, decimal warningThreshold);
