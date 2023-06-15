@@ -1,4 +1,5 @@
-﻿using ExpenseMaster.DAL.Models;
+﻿using ExpenseMaster.BusinessLogic.Dto;
+using ExpenseMaster.DAL.Models;
 
 namespace ExpenseMaster.BusinessLogic.Interfaces
 {
@@ -6,8 +7,8 @@ namespace ExpenseMaster.BusinessLogic.Interfaces
     {
         Task<IEnumerable<Income>> GetAllIncomes();
         Task<Income> GetIncomeById(int id);
-        Task CreateIncome(Income income);
-        Task UpdateIncome(Income income);
+        Task<Income> CreateIncome(CreateIncomeDto createIncomeDto);
+        Task<Income> UpdateIncome(UpdateIncomeDto updateIncomeDto);
         Task DeleteIncome(Income income);
         Task<decimal> CalculateTotalIncomeByUserId(int userId);
         Task<IEnumerable<Income>> GetIncomesByCategory(int categoryId);

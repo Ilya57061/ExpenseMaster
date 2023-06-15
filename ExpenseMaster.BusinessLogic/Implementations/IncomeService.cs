@@ -1,4 +1,6 @@
-﻿using ExpenseMaster.BusinessLogic.Interfaces;
+﻿using AutoMapper;
+using ExpenseMaster.BusinessLogic.Dto;
+using ExpenseMaster.BusinessLogic.Interfaces;
 using ExpenseMaster.DAL.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,10 +9,12 @@ namespace ExpenseMaster.BusinessLogic.Implementations
     public class IncomeService : IIncomeService
     {
         private readonly IRepositoryWrapper _repositoryWrapper;
+        private readonly IMapper _mapper;
 
-        public IncomeService(IRepositoryWrapper repositoryWrapper)
+        public IncomeService(IRepositoryWrapper repositoryWrapper, IMapper mapper)
         {
             _repositoryWrapper = repositoryWrapper;
+            _mapper = mapper;
         }
 
         public async Task<IEnumerable<Income>> GetAllIncomes()
@@ -26,16 +30,30 @@ namespace ExpenseMaster.BusinessLogic.Implementations
             return income;
         }
 
-        public async Task CreateIncome(Income income)
+        public async Task<Income> CreateIncome(CreateIncomeDto createIncomeDto)
         {
+            var income = _mapper.Map<Income>(createIncomeDto);
+
             await _repositoryWrapper.Income.CreateAsync(income);
             await _repositoryWrapper.SaveAsync();
+
+            return income;
         }
 
-        public async Task UpdateIncome(Income income)
+        public async Task<Income> UpdateIncome(UpdateIncomeDto updateIncomeDto)
         {
+            var existingIncome = await _repositoryWrapper.Income.FindByConditionAsync(x => x.Id == updateIncomeDto.Id);
+            if (existingIncome == null)
+            {
+                throw new Exception("Income not found");
+            }
+
+            var income = _mapper.Map<Income>(updateIncomeDto);
+
             await _repositoryWrapper.Income.UpdateAsync(income);
             await _repositoryWrapper.SaveAsync();
+
+            return income;
         }
 
         public async Task DeleteIncome(Income income)
