@@ -10,6 +10,7 @@ namespace ExpenseMaster.DAL.Repository
         private IUserRepository _user;
         private IIncomeRepository _income;
         private IExpenceRepository _expence;
+        private IBudgetRepository _budget;
 
         public IUserRepository User
         {
@@ -46,6 +47,18 @@ namespace ExpenseMaster.DAL.Repository
                 }
 
                 return _expence;
+            }
+        }
+
+        public IBudgetRepository Budget
+        {
+            get
+            {
+                if (_budget == null)
+                {
+                    _budget = new BudgetRepository(_appContext);
+                }
+                return _budget;
             }
         }
 
