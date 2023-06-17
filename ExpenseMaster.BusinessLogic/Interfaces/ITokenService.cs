@@ -1,5 +1,6 @@
 ﻿using ExpenseMaster.DAL.Models;
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 namespace ExpenseMaster.BusinessLogic.Interfaces
 {
@@ -7,5 +8,6 @@ namespace ExpenseMaster.BusinessLogic.Interfaces
     {
         JwtSecurityToken GenerateJwtToken(User user);
         string GetToken(User user);
+        int GetUserIdFromClaims(ClaimsPrincipal claimsPrincipal);
     }
 }

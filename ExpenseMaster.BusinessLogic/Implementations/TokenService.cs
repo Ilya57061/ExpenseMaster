@@ -45,5 +45,13 @@ namespace ExpenseMaster.BusinessLogic.Implementations
 
             return encodedJwt;
         }
+
+        public int GetUserIdFromClaims(ClaimsPrincipal claimsPrincipal)
+        {
+            var userIdClaim = claimsPrincipal.FindFirst(ClaimTypes.NameIdentifier);
+            int userId = int.Parse(userIdClaim.Value);
+            
+            return userId;
+        }
     }
 }
