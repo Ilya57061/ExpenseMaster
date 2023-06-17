@@ -1,6 +1,7 @@
 ﻿using ExpenseMaster.DAL.DatabaseContext;
 using ExpenseMaster.DAL.Interfaces;
 using ExpenseMaster.DAL.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace ExpenseMaster.DAL.Repository
 {
@@ -15,6 +16,7 @@ namespace ExpenseMaster.DAL.Repository
         public async Task<User> GetUserByLoginAsync(string login)
         {
             var user = await FindByConditionAsync(u => u.Login == login);
+
             return user.FirstOrDefault();
         }
     }

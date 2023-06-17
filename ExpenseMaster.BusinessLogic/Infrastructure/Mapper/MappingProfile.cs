@@ -37,6 +37,18 @@ namespace ExpenseMaster.BusinessLogic.Mapper
             CreateMap<Role, RoleDto>()
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name.ToString()))
                 .ReverseMap();
+
+            CreateMap<UserUpdateDto, User>()
+                .ForMember(dest=>dest.PasswordHash, opt=>opt.Ignore())
+                .ForMember(dest=>dest.PasswordSalt, opt=>opt.Ignore())
+                .AfterMap((src,dest) =>
+                {
+                    PasswordHasher.CreatePasswordHash(src.Password, out byte[] passwordHash, out byte[] passwordSalt);
+                    dest.PasswordHash = passwordHash;
+                    dest.PasswordSalt = passwordSalt;
+                })
+                .ReverseMap()
+                .ForMember(dest=>dest.Password, opt =>opt.Ignore());
         }
     }
 }

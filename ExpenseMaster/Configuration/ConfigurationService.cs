@@ -19,6 +19,7 @@ namespace ExpenseMaster.Configuration
             services.AddScoped<IRepositoryBase<User>, UserRepository>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserService, UserService>();
             services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
             services.AddTransient<IUserRegistrationService, UserRegistrationService>();
             services.AddTransient<IIncomeService, IncomeService>();
