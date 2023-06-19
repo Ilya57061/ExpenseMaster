@@ -1,6 +1,6 @@
 ﻿namespace ExpenseMaster.BusinessLogic.Dto
 {
-    public class CreateIncomeDto
+    public class IncomeDto
     {
         public int UserId { get; set; }
         public int CategoryId { get; set; }

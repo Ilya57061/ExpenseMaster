@@ -35,17 +35,17 @@ namespace ExpenseMaster.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Income>> CreatIncome(CreateIncomeDto createIncomeDto)
+        public async Task<ActionResult<Income>> CreatIncome(IncomeDto incomeDto)
         {
-            var income = await _incomeService.CreateIncome(createIncomeDto);
+            var income = await _incomeService.CreateIncome(incomeDto);
 
             return Ok(income);
         }
 
         [HttpPut]
-        public async Task<ActionResult<Income>> UpdateIncome(UpdateIncomeDto updateIncomeDto)
+        public async Task<ActionResult<Income>> UpdateIncome(IncomeWithIdDto incomeWithIdDto)
         {
-            var income = await _incomeService.UpdateIncome(updateIncomeDto);
+            var income = await _incomeService.UpdateIncome(incomeWithIdDto);
 
             return Ok(income);
         }

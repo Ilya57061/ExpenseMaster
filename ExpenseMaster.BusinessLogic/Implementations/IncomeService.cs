@@ -30,9 +30,9 @@ namespace ExpenseMaster.BusinessLogic.Implementations
             return income;
         }
 
-        public async Task<Income> CreateIncome(CreateIncomeDto createIncomeDto)
+        public async Task<Income> CreateIncome(IncomeDto incomeDto)
         {
-            var income = _mapper.Map<Income>(createIncomeDto);
+            var income = _mapper.Map<Income>(incomeDto);
 
             await _repositoryWrapper.Income.CreateAsync(income);
             await _repositoryWrapper.SaveAsync();
@@ -40,15 +40,15 @@ namespace ExpenseMaster.BusinessLogic.Implementations
             return income;
         }
 
-        public async Task<Income> UpdateIncome(UpdateIncomeDto updateIncomeDto)
+        public async Task<Income> UpdateIncome(IncomeWithIdDto incomeWithIdDto)
         {
-            var existingIncome = await _repositoryWrapper.Income.FindByConditionAsync(x => x.Id == updateIncomeDto.Id);
+            var existingIncome = await _repositoryWrapper.Income.FindByConditionAsync(x => x.Id == incomeWithIdDto.Id);
             if (existingIncome == null)
             {
-                throw new Exception("Income not found");
+                throw new InvalidOperationException($"Income with id - {incomeWithIdDto.Id} not found");
             }
 
-            var income = _mapper.Map<Income>(updateIncomeDto);
+            var income = _mapper.Map<Income>(incomeWithIdDto);
 
             await _repositoryWrapper.Income.UpdateAsync(income);
             await _repositoryWrapper.SaveAsync();

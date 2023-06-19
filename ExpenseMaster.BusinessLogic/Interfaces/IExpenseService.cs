@@ -5,12 +5,12 @@ namespace ExpenseMaster.BusinessLogic.Interfaces
 {
     public interface IExpenseService
     {
-        Task<IEnumerable<Expense>> GetAllExpenses();
-        Task<Expense> GetExpenseById(int id);
-        Task<Expense> CreateExpense(CreateExpenseDto createExpenseDto);
-        Task<Expense> UpdateExpense(UpdateExpenseDto updateExpenseDto);
-        Task DeleteExpense(Expense expense);
+        Task<IEnumerable<ExpenseWithIdDto>> GetAllExpenses();
+        Task<ExpenseWithIdDto> GetExpenseById(int id);
+        Task<ExpenseDto> CreateExpense(ExpenseDto ExpenseDto);
+        Task<ExpenseWithIdDto> UpdateExpense(ExpenseWithIdDto expenseWithIdDto);
+        Task DeleteExpense(ExpenseWithIdDto expenseWithIdDto);
         Task<decimal> CalculateTotalExpensesByUserId(int userId);
-        Task<IEnumerable<Expense>> GetExpensesByCategory(int categoryId);
+        Task<IEnumerable<ExpenseDto>> GetExpensesByCategory(int categoryId);
     }
 }

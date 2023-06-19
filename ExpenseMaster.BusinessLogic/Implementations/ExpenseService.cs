@@ -17,48 +17,54 @@ namespace ExpenseMaster.BusinessLogic.Implementations
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<Expense>> GetAllExpenses()
+        public async Task<IEnumerable<ExpenseWithIdDto>> GetAllExpenses()
         {
-            return await _repositoryWrapper.Expence.FindAllAsync();
+            var expenses = await _repositoryWrapper.Expence.FindAllAsync();
+            var expensesWithIdDto = _mapper.Map<IEnumerable<ExpenseWithIdDto>>(expenses);
+
+            return expensesWithIdDto;
         }
 
-        public async Task<Expense> GetExpenseById(int id)
+        public async Task<ExpenseWithIdDto> GetExpenseById(int id)
         {
             var result = await _repositoryWrapper.Expence.FindByConditionAsync(x => x.Id == id);
             var expense = await result.FirstOrDefaultAsync();
+            var expenseDto = _mapper.Map<ExpenseWithIdDto>(expense);
 
-            return expense;
+            return expenseDto;
         }
 
-        public async Task<Expense> CreateExpense(CreateExpenseDto createExpenseDto)
+        public async Task<ExpenseDto> CreateExpense(ExpenseDto expenseDto)
         {
-            var expense = _mapper.Map<Expense>(createExpenseDto);
+            var expense = _mapper.Map<Expense>(expenseDto);
 
             await _repositoryWrapper.Expence.CreateAsync(expense);
             await _repositoryWrapper.SaveAsync();
 
-            return expense;
+            return expenseDto;
         }
 
-        public async Task<Expense> UpdateExpense(UpdateExpenseDto updateExpenseDto)
+        public async Task<ExpenseWithIdDto> UpdateExpense(ExpenseWithIdDto expenseWithIdDto)
         {
-            var existingExpense = await _repositoryWrapper.Expence.FindByConditionAsync(x=> x.Id == updateExpenseDto.Id);
+            var existingExpense = await _repositoryWrapper.Expence.FindByConditionAsync(x=> x.Id == expenseWithIdDto.Id);
             if(existingExpense == null) 
             {
                 throw new Exception("Expense not found");
             }
 
-            var expense = _mapper.Map<Expense>(updateExpenseDto);
+            var expense = _mapper.Map<Expense>(expenseWithIdDto);
 
             await _repositoryWrapper.Expence.UpdateAsync(expense);
             await _repositoryWrapper.SaveAsync();
 
-            return expense;
+            var updateExpense = _mapper.Map<ExpenseWithIdDto>(expense);
+
+            return updateExpense;
         }
 
-        public async Task DeleteExpense(Expense expense)
+        public async Task DeleteExpense(ExpenseWithIdDto expenseWithIdDto)
         {
-            var existingExpense = await _repositoryWrapper.Expence.FindByConditionAsync(x => x.Id == expense.Id);
+            var existingExpense = await _repositoryWrapper.Expence.FindByConditionAsync(x => x.Id == expenseWithIdDto.Id);
             var expenseToDelete = await existingExpense.FirstOrDefaultAsync();
             if (expenseToDelete != null)
             {
@@ -67,11 +73,12 @@ namespace ExpenseMaster.BusinessLogic.Implementations
             }
         }
 
-        public async Task<IEnumerable<Expense>> GetExpensesByCategory(int categoryId)
+        public async Task<IEnumerable<ExpenseDto>> GetExpensesByCategory(int categoryId)
         {
-            var expense = await _repositoryWrapper.Expence.FindByConditionAsync(x => x.CategoryId == categoryId);
+            var expenses = await _repositoryWrapper.Expence.FindByConditionAsync(x => x.CategoryId == categoryId);
+            var expensesDto = _mapper.Map<IEnumerable<ExpenseDto>>(expenses);
 
-            return expense.ToList();
+            return expensesDto;
         }
 
         public async Task<decimal> CalculateTotalExpensesByUserId(int userId)

@@ -7,8 +7,8 @@ namespace ExpenseMaster.BusinessLogic.Interfaces
     {
         Task<IEnumerable<Income>> GetAllIncomes();
         Task<Income> GetIncomeById(int id);
-        Task<Income> CreateIncome(CreateIncomeDto createIncomeDto);
-        Task<Income> UpdateIncome(UpdateIncomeDto updateIncomeDto);
+        Task<Income> CreateIncome(IncomeDto createIncomeDto);
+        Task<Income> UpdateIncome(IncomeWithIdDto updateIncomeDto);
         Task DeleteIncome(Income income);
         Task<decimal> CalculateTotalIncomeByUserId(int userId);
         Task<IEnumerable<Income>> GetIncomesByCategory(int categoryId);

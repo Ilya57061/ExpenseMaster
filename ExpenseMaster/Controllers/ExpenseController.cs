@@ -19,23 +19,23 @@ namespace ExpenseMaster.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Expense>>> GetExpenses()
+        public async Task<ActionResult<IEnumerable<ExpenseWithIdDto>>> GetExpenses()
         {
-            var expenses = await _expenseService.GetAllExpenses();
+            var expensesWithIdDto = await _expenseService.GetAllExpenses();
 
-            return Ok(expenses);
+            return Ok(expensesWithIdDto);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Expense>> GetExpenseById(int id)
+        public async Task<ActionResult<ExpenseWithIdDto>> GetExpenseById(int id)
         {
-            var expense = await _expenseService.GetExpenseById(id);
+            var expenseWithIdDto = await _expenseService.GetExpenseById(id);
 
-            return Ok(expense);
+            return Ok(expenseWithIdDto);
         }
 
         [HttpPost]
-        public async Task<ActionResult<Expense>> CreateExpense(CreateExpenseDto expenseDto)
+        public async Task<ActionResult<ExpenseDto>> CreateExpense(ExpenseDto expenseDto)
         {
             var expense = await _expenseService.CreateExpense(expenseDto);
 
@@ -43,9 +43,9 @@ namespace ExpenseMaster.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult<Expense>> UpdateExpense(UpdateExpenseDto updateExpenseDto)
+        public async Task<ActionResult<ExpenseWithIdDto>> UpdateExpense(ExpenseWithIdDto expenseWithIdDto)
         {
-            var expense = await _expenseService.UpdateExpense(updateExpenseDto);
+            var expense = await _expenseService.UpdateExpense(expenseWithIdDto);
 
             return Ok(expense);
         }
@@ -60,11 +60,11 @@ namespace ExpenseMaster.Controllers
         }
 
         [HttpGet("category/{categoryId}")]
-        public async Task<ActionResult<IEnumerable<Expense>>> GetExpensesByCategory(int categoryId)
+        public async Task<ActionResult<IEnumerable<ExpenseDto>>> GetExpensesByCategory(int categoryId)
         {
-            var expenses = await _expenseService.GetExpensesByCategory(categoryId);
+            var expensesDto = await _expenseService.GetExpensesByCategory(categoryId);
 
-            return Ok(expenses);
+            return Ok(expensesDto);
         }
 
         [HttpGet("user/{userId}/total")]
