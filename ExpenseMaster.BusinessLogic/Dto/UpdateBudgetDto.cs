@@ -1,6 +1,8 @@
-﻿namespace ExpenseMaster.BusinessLogic.Dto
+﻿using ExpenseMaster.BusinessLogic.AbstractDto;
+
+namespace ExpenseMaster.BusinessLogic.Dto
 {
-    public class UpdateBudgetDto : CreateBudgetDto
+    public class UpdateBudgetDto : BudgetDto
     {
         public int Id { get; set; }
     }

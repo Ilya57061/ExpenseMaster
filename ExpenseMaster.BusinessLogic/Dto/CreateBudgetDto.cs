@@ -1,10 +1,9 @@
-﻿namespace ExpenseMaster.BusinessLogic.Dto
+﻿using ExpenseMaster.BusinessLogic.AbstractDto;
+
+namespace ExpenseMaster.BusinessLogic.Dto
 {
-    public class CreateBudgetDto
+    public class CreateBudgetDto : BudgetDto
     {
-        public int UserId { get; set; }
-        public int CategoryId { get; set; }
-        public decimal Limit { get; set; }
-        public decimal WarningThreshold { get; set; }
+
     }
 }
