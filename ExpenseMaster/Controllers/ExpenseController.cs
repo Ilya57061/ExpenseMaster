@@ -1,6 +1,5 @@
 ﻿using ExpenseMaster.BusinessLogic.Dto;
 using ExpenseMaster.BusinessLogic.Interfaces;
-using ExpenseMaster.DAL.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
