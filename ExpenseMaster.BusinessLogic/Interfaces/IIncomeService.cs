@@ -5,12 +5,12 @@ namespace ExpenseMaster.BusinessLogic.Interfaces
 {
     public interface IIncomeService
     {
-        Task<IEnumerable<Income>> GetAllIncomes();
-        Task<Income> GetIncomeById(int id);
-        Task<Income> CreateIncome(IncomeDto createIncomeDto);
-        Task<Income> UpdateIncome(IncomeWithIdDto updateIncomeDto);
-        Task DeleteIncome(Income income);
+        Task<IEnumerable<IncomeWithIdDto>> GetAllIncomes();
+        Task<IncomeWithIdDto> GetIncomeById(int id);
+        Task<IncomeDto> CreateIncome(IncomeDto IncomeDto);
+        Task<IncomeWithIdDto> UpdateIncome(IncomeWithIdDto incomeWithIdDto);
+        Task DeleteIncome(IncomeWithIdDto incomeWithIdDto);
         Task<decimal> CalculateTotalIncomeByUserId(int userId);
-        Task<IEnumerable<Income>> GetIncomesByCategory(int categoryId);
+        Task<IEnumerable<IncomeDto>> GetIncomesByCategory(int categoryId);
     }
 }

@@ -19,23 +19,23 @@ namespace ExpenseMaster.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Income>>> GetIncomes()
+        public async Task<ActionResult<IEnumerable<IncomeWithIdDto>>> GetIncomes()
         {
-            var incomes = await _incomeService.GetAllIncomes();
+            var incomesWithIdDto = await _incomeService.GetAllIncomes();
 
-            return Ok(incomes);
+            return Ok(incomesWithIdDto);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Income>> GetIncomeById(int id)
+        public async Task<ActionResult<IncomeWithIdDto>> GetIncomeById(int id)
         {
-            var income = await _incomeService.GetIncomeById(id);
+            var incomeWithIdDto = await _incomeService.GetIncomeById(id);
 
-            return Ok(income);
+            return Ok(incomeWithIdDto);
         }
 
         [HttpPost]
-        public async Task<ActionResult<Income>> CreatIncome(IncomeDto incomeDto)
+        public async Task<ActionResult<IncomeDto>> CreateIncome(IncomeDto incomeDto)
         {
             var income = await _incomeService.CreateIncome(incomeDto);
 
@@ -43,7 +43,7 @@ namespace ExpenseMaster.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult<Income>> UpdateIncome(IncomeWithIdDto incomeWithIdDto)
+        public async Task<ActionResult<IncomeWithIdDto>> UpdateIncome(IncomeWithIdDto incomeWithIdDto)
         {
             var income = await _incomeService.UpdateIncome(incomeWithIdDto);
 
@@ -60,11 +60,11 @@ namespace ExpenseMaster.Controllers
         }
 
         [HttpGet("category/{categoryId}")]
-        public async Task<ActionResult<IEnumerable<Income>>> GetIncomesByCategory(int categoryId)
+        public async Task<ActionResult<IEnumerable<IncomeDto>>> GetIncomesByCategory(int categoryId)
         {
-            var incomes = await _incomeService.GetIncomesByCategory(categoryId);
+            var incomesDto = await _incomeService.GetIncomesByCategory(categoryId);
 
-            return Ok(incomes);
+            return Ok(incomesDto);
         }
 
         [HttpGet("user/{userId}/total")]

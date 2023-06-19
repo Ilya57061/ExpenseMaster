@@ -31,11 +31,21 @@ namespace ExpenseMaster.BusinessLogic.Implementations
             var expense = await result.FirstOrDefaultAsync();
             var expenseDto = _mapper.Map<ExpenseWithIdDto>(expense);
 
+            if (expenseDto == null)
+            {
+                throw new InvalidOperationException($"Expense with id - {id} not found");
+            }
+
             return expenseDto;
         }
 
         public async Task<ExpenseDto> CreateExpense(ExpenseDto expenseDto)
         {
+            if (expenseDto == null)
+            {
+                throw new ArgumentNullException(nameof(expenseDto));
+            }
+
             var expense = _mapper.Map<Expense>(expenseDto);
 
             await _repositoryWrapper.Expence.CreateAsync(expense);
@@ -46,10 +56,16 @@ namespace ExpenseMaster.BusinessLogic.Implementations
 
         public async Task<ExpenseWithIdDto> UpdateExpense(ExpenseWithIdDto expenseWithIdDto)
         {
+            if (expenseWithIdDto == null)
+            {
+                throw new ArgumentNullException(nameof(expenseWithIdDto));
+            }
+
             var existingExpense = await _repositoryWrapper.Expence.FindByConditionAsync(x=> x.Id == expenseWithIdDto.Id);
+
             if(existingExpense == null) 
             {
-                throw new Exception("Expense not found");
+                throw new InvalidOperationException($"Expense with id - {expenseWithIdDto.Id} not found");
             }
 
             var expense = _mapper.Map<Expense>(expenseWithIdDto);
@@ -64,17 +80,30 @@ namespace ExpenseMaster.BusinessLogic.Implementations
 
         public async Task DeleteExpense(ExpenseWithIdDto expenseWithIdDto)
         {
+            if (expenseWithIdDto == null)
+            {
+                throw new ArgumentNullException(nameof(expenseWithIdDto));
+            }
+
             var existingExpense = await _repositoryWrapper.Expence.FindByConditionAsync(x => x.Id == expenseWithIdDto.Id);
             var expenseToDelete = await existingExpense.FirstOrDefaultAsync();
-            if (expenseToDelete != null)
+
+            if (expenseToDelete == null)
             {
-                await _repositoryWrapper.Expence.DeleteAsync(expenseToDelete);
-                await _repositoryWrapper.SaveAsync();
+                throw new InvalidOperationException($"Expense with id - {expenseWithIdDto.Id} not found");
             }
+
+            await _repositoryWrapper.Expence.DeleteAsync(expenseToDelete);
+            await _repositoryWrapper.SaveAsync();
         }
 
         public async Task<IEnumerable<ExpenseDto>> GetExpensesByCategory(int categoryId)
         {
+            if (categoryId <= 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(categoryId), "Category ID must be a positive integer.");
+            }
+
             var expenses = await _repositoryWrapper.Expence.FindByConditionAsync(x => x.CategoryId == categoryId);
             var expensesDto = _mapper.Map<IEnumerable<ExpenseDto>>(expenses);
 
@@ -83,6 +112,11 @@ namespace ExpenseMaster.BusinessLogic.Implementations
 
         public async Task<decimal> CalculateTotalExpensesByUserId(int userId)
         {
+            if (userId <= 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(userId), "User ID must be a positive integer.");
+            }
+
             var expenses = await _repositoryWrapper.Expence.FindByConditionAsync(x => x.UserId == userId);
             decimal totalExpenses = expenses.Sum(x => x.Amount);
 
