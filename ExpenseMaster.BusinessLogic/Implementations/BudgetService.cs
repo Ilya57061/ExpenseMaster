@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using ExpenseMaster.BusinessLogic.AbstractDto;
 using ExpenseMaster.BusinessLogic.Dto;
 using ExpenseMaster.BusinessLogic.Interfaces;
 using ExpenseMaster.DAL.Models;
@@ -10,16 +11,18 @@ namespace ExpenseMaster.BusinessLogic.Implementations
         private readonly IRepositoryWrapper _repositoryWrapper;
         private readonly IMapper _mapper;
 
-        public BudgetService(IRepositoryWrapper repositoryWrapper)
+        public BudgetService(IRepositoryWrapper repositoryWrapper, IMapper mapper)
         {
             _repositoryWrapper = repositoryWrapper;
+            _mapper = mapper;
         }
 
-        public async Task<Budget> GetByIdAsync(int id)
+        public async Task<BudgetDto> GetByIdAsync(int id)
         {
             var budget = await _repositoryWrapper.Budget.GetByIdAsync(id);
+            var budgetDto = _mapper.Map<BudgetDto>(budget);
 
-            return budget;
+            return budgetDto;
         }
 
         public async Task CreateAsync(CreateBudgetDto budgetDto)
@@ -42,25 +45,28 @@ namespace ExpenseMaster.BusinessLogic.Implementations
             await _repositoryWrapper.SaveAsync();
         }
 
-        public async Task<IEnumerable<Budget>> GetByUserIdAsync(int userId)
+        public async Task<IEnumerable<BudgetDto>> GetByUserIdAsync(int userId)
         {
             var budgets = await _repositoryWrapper.Budget.GetBudgetsByUserIdAsync(userId);
+            var budgetDto = _mapper.Map<IEnumerable<BudgetDto>>(budgets);
 
-            return budgets;
+            return budgetDto;
         }
 
-        public async Task<Budget> GetByCategoryIdAsync(int userId, int categoryId)
+        public async Task<IEnumerable<BudgetDto>> GetByCategoryIdAsync(int userId, int categoryId)
         {
             var budgets = await _repositoryWrapper.Budget.GetBudgetByCategoryIdAsync(userId, categoryId);
+            var budgetDto = _mapper.Map<IEnumerable<BudgetDto>>(budgets);
 
-            return budgets;
+            return budgetDto;
         }
 
-        public async Task<IEnumerable<Budget>> GetBudgetsExceedingThresholdAsync(int userId)
+        public async Task<IEnumerable<BudgetDto>> GetBudgetsExceedingThresholdAsync(int userId)
         {
             var budgets = await _repositoryWrapper.Budget.GetBudgetsExceedingThresholdAsync(userId);
+            var budgetDto = _mapper.Map<IEnumerable<BudgetDto>>(budgets);
 
-            return budgets;
+            return budgetDto;
         }
 
         public async Task UpdateWarningThresholdAsync(int budgetId, decimal warningThreshold)
