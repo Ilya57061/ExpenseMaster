@@ -8,15 +8,16 @@ namespace ExpenseMaster.BusinessLogic.Implementations
 {
     public class EmailService : IEmailService
     {
-        private const int _port = 465;
-        private const string _host = "smtp.gmail.com";
-
+        private readonly string _port;
+        private readonly string _host;
         private readonly string _name;
         private readonly string _emailAddress;
         private readonly string _emailPassword;
 
         public EmailService(IConfiguration configuration)
         {
+            _host = configuration["Email:Host"];
+            _port = configuration["Email:Port"];
             _name = configuration["Email:Name"];
             _emailAddress = configuration["Email:Address"];
             _emailPassword = configuration["Email:Password"];
@@ -35,7 +36,7 @@ namespace ExpenseMaster.BusinessLogic.Implementations
 
             using (var client = new SmtpClient())
             {
-                await client.ConnectAsync(_host, _port, true);
+                await client.ConnectAsync(_host, int.Parse(_port), true);
                 await client.AuthenticateAsync(_emailAddress, _emailPassword);
                 await client.SendAsync(emailMessage);
                 await client.DisconnectAsync(true);
