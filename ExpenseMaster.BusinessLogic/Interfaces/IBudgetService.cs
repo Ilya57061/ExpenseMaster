@@ -6,14 +6,14 @@ namespace ExpenseMaster.BusinessLogic.Interfaces
 {
     public interface IBudgetService
     {
-        Task<IEnumerable<BudgetDto>> GetByCategoryIdAsync(int userId, int categoryId);
-        Task<BudgetDto> GetByIdAsync(int id);
+        Task<IEnumerable<ReturnBudgetDto>> GetByCategoryIdAsync(int userId, int categoryId);
+        Task<ReturnBudgetDto> GetByIdAsync(int id);
         Task CreateAsync(CreateBudgetDto budgetDto);
         Task UpdateAsync(UpdateBudgetDto budgetDto);
         Task DeleteAsync(int id);
-        Task<IEnumerable<BudgetDto>> GetByUserIdAsync(int userId);
+        Task<IEnumerable<ReturnBudgetDto>> GetByUserIdAsync(int userId);
         Task UpdateWarningThresholdAsync(int budgetId, decimal warningThreshold);
-        Task<IEnumerable<BudgetDto>> GetBudgetsExceedingThresholdAsync(int userId);
+        Task<IEnumerable<ReturnBudgetDto>> GetBudgetsExceedingThresholdAsync(int userId);
         Task<decimal> GetBudgetRemainingAmountAsync(int userId);
     }
 }

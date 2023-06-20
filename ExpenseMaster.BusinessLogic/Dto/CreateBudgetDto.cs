@@ -2,7 +2,7 @@
 
 namespace ExpenseMaster.BusinessLogic.Dto
 {
-    public class CreateBudgetDto : BudgetDto
+    public class CreateBudgetDto : BaseBudgetDto
     {
 
     }

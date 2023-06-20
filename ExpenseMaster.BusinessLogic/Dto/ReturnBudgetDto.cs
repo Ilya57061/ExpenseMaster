@@ -2,8 +2,7 @@
 
 namespace ExpenseMaster.BusinessLogic.Dto
 {
-    public class UpdateBudgetDto : BaseBudgetDto
+    public class ReturnBudgetDto : BaseBudgetDto
     {
-        public int Id { get; set; }
     }
 }

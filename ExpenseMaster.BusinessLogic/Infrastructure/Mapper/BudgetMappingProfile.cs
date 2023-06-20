@@ -15,7 +15,7 @@ namespace ExpenseMaster.BusinessLogic.Infrastructure.Mapper
             CreateMap<Budget, UpdateBudgetDto>()
                 .ReverseMap();
 
-            CreateMap<Budget, BudgetDto>()
+            CreateMap<Budget, ReturnBudgetDto>()
                 .ReverseMap();
         }
     }

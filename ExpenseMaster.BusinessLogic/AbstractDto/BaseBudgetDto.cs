@@ -1,6 +1,6 @@
 ﻿namespace ExpenseMaster.BusinessLogic.AbstractDto
 {
-    public abstract class BudgetDto
+    public abstract class BaseBudgetDto
     {
         public int UserId { get; set; }
         public int CategoryId { get; set; }

@@ -20,7 +20,7 @@ namespace ExpenseMaster.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<BudgetDto>> GetByIdAsync(int id)
+        public async Task<ActionResult<ReturnBudgetDto>> GetByIdAsync(int id)
         {
             var budget = await _budgetService.GetByIdAsync(id);
 
@@ -28,7 +28,7 @@ namespace ExpenseMaster.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<CreateBudgetDto>> CreateAsync([FromBody] CreateBudgetDto budget)
+        public async Task<ActionResult<ReturnBudgetDto>> CreateAsync([FromBody] CreateBudgetDto budget)
         {
             await _budgetService.CreateAsync(budget);
 
@@ -52,7 +52,7 @@ namespace ExpenseMaster.Controllers
         }
 
         [HttpGet("{userId}")]
-        public async Task<ActionResult<IEnumerable<BudgetDto>>> GetByUserIdAsync(int userId)
+        public async Task<ActionResult<IEnumerable<ReturnBudgetDto>>> GetByUserIdAsync(int userId)
         {
             var budgets = await _budgetService.GetByUserIdAsync(userId);
 
@@ -60,7 +60,7 @@ namespace ExpenseMaster.Controllers
         }
 
         [HttpGet("{userId}/category/{categoryId}")]
-        public async Task<ActionResult<IEnumerable<BudgetDto>>> GetByCategoryIdAsync(int userId, int categoryId)
+        public async Task<ActionResult<IEnumerable<ReturnBudgetDto>>> GetByCategoryIdAsync(int userId, int categoryId)
         {
             var budget = await _budgetService.GetByCategoryIdAsync(userId, categoryId);
 
@@ -68,7 +68,7 @@ namespace ExpenseMaster.Controllers
         }
 
         [HttpGet("{userId}/exceeding-threshold")]
-        public async Task<ActionResult<IEnumerable<BudgetDto>>> GetBudgetsExceedingThresholdAsync(int userId)
+        public async Task<ActionResult<IEnumerable<ReturnBudgetDto>>> GetBudgetsExceedingThresholdAsync(int userId)
         {
             var budgets = await _budgetService.GetBudgetsExceedingThresholdAsync(userId);
 
