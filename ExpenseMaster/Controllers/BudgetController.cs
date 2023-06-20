@@ -24,11 +24,6 @@ namespace ExpenseMaster.Controllers
         {
             var budget = await _budgetService.GetByIdAsync(id);
 
-            if (budget == null)
-            {
-                return NotFound();
-            }
-
             return budget;
         }
 
@@ -41,13 +36,8 @@ namespace ExpenseMaster.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateAsync(int id, [FromBody] UpdateBudgetDto budget)
+        public async Task<IActionResult> UpdateAsync([FromBody] UpdateBudgetDto budget)
         {
-            if (id != budget.Id)
-            {
-                return BadRequest();
-            }
-
             await _budgetService.UpdateAsync(budget);
 
             return NoContent();
