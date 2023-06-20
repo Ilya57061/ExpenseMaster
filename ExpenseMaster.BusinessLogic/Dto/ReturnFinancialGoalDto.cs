@@ -3,7 +3,6 @@
 namespace ExpenseMaster.BusinessLogic.Dto
 {
     public class ReturnFinancialGoalDto : BaseFinancialGoalDto
-
     {
     }
 }

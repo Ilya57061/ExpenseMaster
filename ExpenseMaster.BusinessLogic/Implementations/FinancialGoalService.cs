@@ -10,9 +10,10 @@ namespace ExpenseMaster.BusinessLogic.Implementations
         private readonly IRepositoryWrapper _repositoryWrapper;
         private readonly IMapper _mapper;
 
-        public FinancialGoalService(IRepositoryWrapper repositoryWrapper)
+        public FinancialGoalService(IRepositoryWrapper repositoryWrapper, IMapper mapper)
         {
             _repositoryWrapper = repositoryWrapper;
+            _mapper = mapper;
         }
 
         public async Task CreateAsync(CreateFinancialGoalDto financialGoal)
@@ -23,33 +24,48 @@ namespace ExpenseMaster.BusinessLogic.Implementations
             await _repositoryWrapper.SaveAsync();
         }
 
-        public async Task DeleteAsync(FinancialGoal financialGoal)
+        public async Task DeleteAsync(int id)
         {
+            var financialGoal = await _repositoryWrapper.FinancialGoal.GetByIdAsync(id);
+
+            if (financialGoal == null)
+            {
+                throw new InvalidOperationException($"FinancialGoal with id - {id} was not found");
+            }
+
             await _repositoryWrapper.FinancialGoal.DeleteAsync(financialGoal);
             await _repositoryWrapper.SaveAsync();
         }
 
-        public async Task<FinancialGoal> GetByIdAsync(int id)
+        public async Task<ReturnFinancialGoalDto> GetByIdAsync(int id)
         {
             var financialGoal = await _repositoryWrapper.FinancialGoal.GetByIdAsync(id);
 
-            return financialGoal;
+            if (financialGoal == null)
+            {
+                throw new InvalidOperationException($"FinancialGoal with UserId - {id} was not found");
+            }
+
+            var financialGoalDto = _mapper.Map<ReturnFinancialGoalDto>(financialGoal);
+
+            return financialGoalDto;
         }
 
-        public async Task<IEnumerable<FinancialGoal>> GetByTargetAmountAsync(int userId)
+        public async Task<IEnumerable<ReturnFinancialGoalDto>> GetByTargetAmountAsync(int userId)
         {
             var goals = await _repositoryWrapper.FinancialGoal.GetByUserIdAsync(userId);
-
             var goalsReachedTarget = goals.Where(g => g.CurrentAmount >= g.TargetAmount);
+            var financialGoalDto = _mapper.Map<IEnumerable<ReturnFinancialGoalDto>>(goalsReachedTarget);
 
-            return goalsReachedTarget;
+            return financialGoalDto;
         }
 
-        public async Task<IEnumerable<FinancialGoal>> GetByUserIdAsync(int userId)
+        public async Task<IEnumerable<ReturnFinancialGoalDto>> GetByUserIdAsync(int userId)
         {
-            var financailGoals = await _repositoryWrapper.FinancialGoal.GetByUserIdAsync(userId);
+            var financialGoals = await _repositoryWrapper.FinancialGoal.GetByUserIdAsync(userId);
+            var financialGoalDto = _mapper.Map<IEnumerable<ReturnFinancialGoalDto>>(financialGoals);
 
-            return financailGoals;
+            return financialGoalDto;
         }
 
         public async Task<decimal> GetTotalProgressAsync(int userId)
@@ -75,12 +91,12 @@ namespace ExpenseMaster.BusinessLogic.Implementations
 
             if (financialGoal == null)
             {
-                throw new ArgumentException("Invalid goalId");
+                throw new InvalidOperationException($"FinancialGoal with Id - {goalId} was not found");
             }
 
             financialGoal.CurrentAmount = currentAmount;
 
-            _repositoryWrapper.FinancialGoal.UpdateAsync(financialGoal);
+            await _repositoryWrapper.FinancialGoal.UpdateAsync(financialGoal);
             await _repositoryWrapper.SaveAsync();
         }
     }

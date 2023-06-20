@@ -29,14 +29,13 @@ namespace ExpenseMaster.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var financialGoal = await _financialGoalService.GetByIdAsync(id);
-            await _financialGoalService.DeleteAsync(financialGoal);
+            await _financialGoalService.DeleteAsync(id);
 
             return Ok();
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<FinancialGoal>> GetById(int id)
+        public async Task<ActionResult<ReturnFinancialGoalDto>> GetById(int id)
         {
             var financialGoal = await _financialGoalService.GetByIdAsync(id);
 
@@ -77,7 +76,7 @@ namespace ExpenseMaster.Controllers
         [HttpPatch("{id}/currentAmount")]
         public async Task<IActionResult> UpdateCurrentAmount([FromBody] UpdateCurrentAmountDto updateCurrentAmountDto)
         {
-            await _financialGoalService.UpdateCurrentAmountAsync(updateCurrentAmountDto.CurrentAmount);
+            await _financialGoalService.UpdateCurrentAmountAsync(updateCurrentAmountDto.Id, updateCurrentAmountDto.CurrentAmount);
 
             return Ok();
         }

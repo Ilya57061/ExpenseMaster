@@ -1,6 +1,6 @@
 ﻿namespace ExpenseMaster.BusinessLogic.AbstractDto
 {
-    public class BaseFinancialGoalDto
+    public abstract class BaseFinancialGoalDto
     {
         public int UserId { get; set; }
         public string GoalName { get; set; } = string.Empty;
