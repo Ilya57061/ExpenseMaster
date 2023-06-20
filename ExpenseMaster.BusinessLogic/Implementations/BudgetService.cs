@@ -20,6 +20,10 @@ namespace ExpenseMaster.BusinessLogic.Implementations
         public async Task<BudgetDto> GetByIdAsync(int id)
         {
             var budget = await _repositoryWrapper.Budget.GetByIdAsync(id);
+            if (budget == null)
+            {
+                throw new InvalidOperationException($"Budget with id - {id} was not found");
+            }
             var budgetDto = _mapper.Map<BudgetDto>(budget);
 
             return budgetDto;
@@ -39,8 +43,13 @@ namespace ExpenseMaster.BusinessLogic.Implementations
             await _repositoryWrapper.SaveAsync();
         }
 
-        public async Task DeleteAsync(Budget budget)
+        public async Task DeleteAsync(int id)
         {
+            var budget = await _repositoryWrapper.Budget.GetByIdAsync(id);
+            if (budget == null)
+            {
+                throw new InvalidOperationException($"Budget with id - {id} was not found");
+            }
             await _repositoryWrapper.Budget.DeleteAsync(budget);
             await _repositoryWrapper.SaveAsync();
         }
@@ -48,6 +57,10 @@ namespace ExpenseMaster.BusinessLogic.Implementations
         public async Task<IEnumerable<BudgetDto>> GetByUserIdAsync(int userId)
         {
             var budgets = await _repositoryWrapper.Budget.GetBudgetsByUserIdAsync(userId);
+            if (budgets == null)
+            {
+                throw new InvalidOperationException($"Budgets with UserId - {userId} was not found");
+            }
             var budgetDto = _mapper.Map<IEnumerable<BudgetDto>>(budgets);
 
             return budgetDto;

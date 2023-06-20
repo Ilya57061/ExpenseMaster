@@ -56,14 +56,7 @@ namespace ExpenseMaster.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync(int id)
         {
-            var budget = await _budgetService.GetByIdAsync(id);
-
-            if (budget == null)
-            {
-                return NotFound();
-            }
-
-            await _budgetService.DeleteAsync(budget);
+            await _budgetService.DeleteAsync(id);
 
             return NoContent();
         }
@@ -77,16 +70,11 @@ namespace ExpenseMaster.Controllers
         }
 
         [HttpGet("{userId}/category/{categoryId}")]
-        public async Task<ActionResult<BudgetDto>> GetByCategoryIdAsync(int userId, int categoryId)
+        public async Task<ActionResult<IEnumerable<BudgetDto>>> GetByCategoryIdAsync(int userId, int categoryId)
         {
             var budget = await _budgetService.GetByCategoryIdAsync(userId, categoryId);
 
-            if (budget == null)
-            {
-                return NotFound();
-            }
-
-            return budget;
+            return Ok(budget);
         }
 
         [HttpGet("{userId}/exceeding-threshold")]

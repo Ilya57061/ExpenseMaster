@@ -10,7 +10,7 @@ namespace ExpenseMaster.BusinessLogic.Interfaces
         Task<BudgetDto> GetByIdAsync(int id);
         Task CreateAsync(CreateBudgetDto budgetDto);
         Task UpdateAsync(UpdateBudgetDto budgetDto);
-        Task DeleteAsync(Budget budget);
+        Task DeleteAsync(int id);
         Task<IEnumerable<BudgetDto>> GetByUserIdAsync(int userId);
         Task UpdateWarningThresholdAsync(int budgetId, decimal warningThreshold);
         Task<IEnumerable<BudgetDto>> GetBudgetsExceedingThresholdAsync(int userId);
