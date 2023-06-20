@@ -71,7 +71,6 @@ namespace ExpenseMaster.BusinessLogic.Implementations
         public async Task<decimal> GetTotalProgressAsync(int userId)
         {
             var goals = await _repositoryWrapper.FinancialGoal.GetByUserIdAsync(userId);
-
             decimal totalProgress = goals.Sum(g => g.CurrentAmount);
 
             return totalProgress;
