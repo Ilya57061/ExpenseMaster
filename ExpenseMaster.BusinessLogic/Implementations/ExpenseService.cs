@@ -17,26 +17,26 @@ namespace ExpenseMaster.BusinessLogic.Implementations
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<ExpenseWithIdDto>> GetAllExpenses()
+        public async Task<IEnumerable<ExpenseItemDto>> GetAllExpenses()
         {
             var expenses = await _repositoryWrapper.Expence.FindAllAsync();
-            var expensesWithIdDto = _mapper.Map<IEnumerable<ExpenseWithIdDto>>(expenses);
+            var expensesItemDto = _mapper.Map<IEnumerable<ExpenseItemDto>>(expenses);
 
-            return expensesWithIdDto;
+            return expensesItemDto;
         }
 
-        public async Task<ExpenseWithIdDto> GetExpenseById(int id)
+        public async Task<ExpenseItemDto> GetExpenseById(int id)
         {
             var result = await _repositoryWrapper.Expence.FindByConditionAsync(x => x.Id == id);
             var expense = await result.FirstOrDefaultAsync();
-            var expenseDto = _mapper.Map<ExpenseWithIdDto>(expense);
+            var expenseItemDto = _mapper.Map<ExpenseItemDto>(expense);
 
-            if (expenseDto == null)
+            if (expenseItemDto == null)
             {
                 throw new InvalidOperationException($"Expense with id - {id} not found");
             }
 
-            return expenseDto;
+            return expenseItemDto;
         }
 
         public async Task<ExpenseDto> CreateExpense(ExpenseDto expenseDto)
@@ -54,43 +54,43 @@ namespace ExpenseMaster.BusinessLogic.Implementations
             return expenseDto;
         }
 
-        public async Task<ExpenseWithIdDto> UpdateExpense(ExpenseWithIdDto expenseWithIdDto)
+        public async Task<ExpenseItemDto> UpdateExpense(ExpenseItemDto expenseItemDto)
         {
-            if (expenseWithIdDto == null)
+            if (expenseItemDto == null)
             {
-                throw new ArgumentNullException(nameof(expenseWithIdDto));
+                throw new ArgumentNullException(nameof(expenseItemDto));
             }
 
-            var existingExpense = await _repositoryWrapper.Expence.FindByConditionAsync(x=> x.Id == expenseWithIdDto.Id);
+            var existingExpense = await _repositoryWrapper.Expence.FindByConditionAsync(x=> x.Id == expenseItemDto.Id);
 
             if(existingExpense == null) 
             {
-                throw new InvalidOperationException($"Expense with id - {expenseWithIdDto.Id} not found");
+                throw new InvalidOperationException($"Expense with id - {expenseItemDto.Id} not found");
             }
 
-            var expense = _mapper.Map<Expense>(expenseWithIdDto);
+            var expense = _mapper.Map<Expense>(expenseItemDto);
 
             await _repositoryWrapper.Expence.UpdateAsync(expense);
             await _repositoryWrapper.SaveAsync();
 
-            var updateExpense = _mapper.Map<ExpenseWithIdDto>(expense);
+            var updateExpense = _mapper.Map<ExpenseItemDto>(expense);
 
             return updateExpense;
         }
 
-        public async Task DeleteExpense(ExpenseWithIdDto expenseWithIdDto)
+        public async Task DeleteExpense(ExpenseItemDto expenseItemDto)
         {
-            if (expenseWithIdDto == null)
+            if (expenseItemDto == null)
             {
-                throw new ArgumentNullException(nameof(expenseWithIdDto));
+                throw new ArgumentNullException(nameof(expenseItemDto));
             }
 
-            var existingExpense = await _repositoryWrapper.Expence.FindByConditionAsync(x => x.Id == expenseWithIdDto.Id);
+            var existingExpense = await _repositoryWrapper.Expence.FindByConditionAsync(x => x.Id == expenseItemDto.Id);
             var expenseToDelete = await existingExpense.FirstOrDefaultAsync();
 
             if (expenseToDelete == null)
             {
-                throw new InvalidOperationException($"Expense with id - {expenseWithIdDto.Id} not found");
+                throw new InvalidOperationException($"Expense with id - {expenseItemDto.Id} not found");
             }
 
             await _repositoryWrapper.Expence.DeleteAsync(expenseToDelete);

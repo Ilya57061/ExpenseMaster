@@ -18,19 +18,19 @@ namespace ExpenseMaster.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<IncomeWithIdDto>>> GetIncomes()
+        public async Task<ActionResult<IEnumerable<IncomeItemDto>>> GetIncomes()
         {
-            var incomesWithIdDto = await _incomeService.GetAllIncomes();
+            var incomesItemDto = await _incomeService.GetAllIncomes();
 
-            return Ok(incomesWithIdDto);
+            return Ok(incomesItemDto);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<IncomeWithIdDto>> GetIncomeById(int id)
+        public async Task<ActionResult<IncomeItemDto>> GetIncomeById(int id)
         {
-            var incomeWithIdDto = await _incomeService.GetIncomeById(id);
+            var incomeItemDto = await _incomeService.GetIncomeById(id);
 
-            return Ok(incomeWithIdDto);
+            return Ok(incomeItemDto);
         }
 
         [HttpPost]
@@ -42,9 +42,9 @@ namespace ExpenseMaster.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult<IncomeWithIdDto>> UpdateIncome(IncomeWithIdDto incomeWithIdDto)
+        public async Task<ActionResult<IncomeItemDto>> UpdateIncome(IncomeItemDto incomeItemDto)
         {
-            var income = await _incomeService.UpdateIncome(incomeWithIdDto);
+            var income = await _incomeService.UpdateIncome(incomeItemDto);
 
             return Ok(income);
         }

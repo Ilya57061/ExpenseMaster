@@ -17,21 +17,21 @@ namespace ExpenseMaster.BusinessLogic.Implementations
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<IncomeWithIdDto>> GetAllIncomes()
+        public async Task<IEnumerable<IncomeItemDto>> GetAllIncomes()
         {
             var incomes =  await _repositoryWrapper.Income.FindAllAsync();
-            var incomesWithIdDto = _mapper.Map<IEnumerable<IncomeWithIdDto>>(incomes);
+            var incomesItemDto = _mapper.Map<IEnumerable<IncomeItemDto>>(incomes);
 
-            return incomesWithIdDto;
+            return incomesItemDto;
         }
 
-        public async Task<IncomeWithIdDto> GetIncomeById(int id)
+        public async Task<IncomeItemDto> GetIncomeById(int id)
         {
             var result = await _repositoryWrapper.Income.FindByConditionAsync(x => x.Id == id);
             var income = await result.FirstOrDefaultAsync();
-            var incomeDto = _mapper.Map<IncomeWithIdDto>(income);
+            var incomeItemDto = _mapper.Map<IncomeItemDto>(income);
 
-            return incomeDto;
+            return incomeItemDto;
         }
 
         public async Task<IncomeDto> CreateIncome(IncomeDto incomeDto)
@@ -49,38 +49,38 @@ namespace ExpenseMaster.BusinessLogic.Implementations
             return incomeDto;
         }
 
-        public async Task<IncomeWithIdDto> UpdateIncome(IncomeWithIdDto incomeWithIdDto)
+        public async Task<IncomeItemDto> UpdateIncome(IncomeItemDto incomeItemDto)
         {
-            if (incomeWithIdDto == null)
+            if (incomeItemDto == null)
             {
-                throw new ArgumentNullException(nameof(incomeWithIdDto));
+                throw new ArgumentNullException(nameof(incomeItemDto));
             }
 
-            var existingIncome = await _repositoryWrapper.Income.FindByConditionAsync(x => x.Id == incomeWithIdDto.Id);
+            var existingIncome = await _repositoryWrapper.Income.FindByConditionAsync(x => x.Id == incomeItemDto.Id);
 
             if (existingIncome == null)
             {
-                throw new InvalidOperationException($"Income with id - {incomeWithIdDto.Id} not found");
+                throw new InvalidOperationException($"Income with id - {incomeItemDto.Id} not found");
             }
 
-            var income = _mapper.Map<Income>(incomeWithIdDto);
+            var income = _mapper.Map<Income>(incomeItemDto);
 
             await _repositoryWrapper.Income.UpdateAsync(income);
             await _repositoryWrapper.SaveAsync();
 
-            var updateIncome = _mapper.Map<IncomeWithIdDto>(income);
+            var updateIncome = _mapper.Map<IncomeItemDto>(income);
 
             return updateIncome;
         }
 
-        public async Task DeleteIncome(IncomeWithIdDto incomeWithIdDto)
+        public async Task DeleteIncome(IncomeItemDto incomeItemDto)
         {
-            if (incomeWithIdDto == null)
+            if (incomeItemDto == null)
             {
-                throw new ArgumentNullException(nameof(incomeWithIdDto));
+                throw new ArgumentNullException(nameof(incomeItemDto));
             }
 
-            var existingIncome = await _repositoryWrapper.Income.FindByConditionAsync(x => x.Id == incomeWithIdDto.Id);
+            var existingIncome = await _repositoryWrapper.Income.FindByConditionAsync(x => x.Id == incomeItemDto.Id);
             var incomeToDelete = await existingIncome.FirstOrDefaultAsync();
 
             if (incomeToDelete != null)

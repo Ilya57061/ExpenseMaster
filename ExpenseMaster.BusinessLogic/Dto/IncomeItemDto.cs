@@ -2,7 +2,8 @@
 
 namespace ExpenseMaster.BusinessLogic.Dto
 {
-    public class IncomeDto : TransactionDto
+    public class IncomeItemDto : TransactionDto
     {
+        public int Id { get; set; }
     }
 }

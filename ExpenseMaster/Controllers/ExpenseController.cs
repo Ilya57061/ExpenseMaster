@@ -18,19 +18,19 @@ namespace ExpenseMaster.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ExpenseWithIdDto>>> GetExpenses()
+        public async Task<ActionResult<IEnumerable<ExpenseItemDto>>> GetExpenses()
         {
-            var expensesWithIdDto = await _expenseService.GetAllExpenses();
+            var expensesItemDto = await _expenseService.GetAllExpenses();
 
-            return Ok(expensesWithIdDto);
+            return Ok(expensesItemDto);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<ExpenseWithIdDto>> GetExpenseById(int id)
+        public async Task<ActionResult<ExpenseItemDto>> GetExpenseById(int id)
         {
-            var expenseWithIdDto = await _expenseService.GetExpenseById(id);
+            var expenseItemDto = await _expenseService.GetExpenseById(id);
 
-            return Ok(expenseWithIdDto);
+            return Ok(expenseItemDto);
         }
 
         [HttpPost]
@@ -42,9 +42,9 @@ namespace ExpenseMaster.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult<ExpenseWithIdDto>> UpdateExpense(ExpenseWithIdDto expenseWithIdDto)
+        public async Task<ActionResult<ExpenseItemDto>> UpdateExpense(ExpenseItemDto expenseItemDto)
         {
-            var expense = await _expenseService.UpdateExpense(expenseWithIdDto);
+            var expense = await _expenseService.UpdateExpense(expenseItemDto);
 
             return Ok(expense);
         }
