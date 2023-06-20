@@ -2,7 +2,8 @@
 
 namespace ExpenseMaster.BusinessLogic.Dto
 {
-    public class CreateFinancialGoalDto : BaseFinancialGoalDto
+    public class ReturnFinancialGoalDto : BaseFinancialGoalDto
+
     {
     }
 }

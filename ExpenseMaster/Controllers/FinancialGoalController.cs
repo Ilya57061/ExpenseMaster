@@ -30,12 +30,6 @@ namespace ExpenseMaster.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var financialGoal = await _financialGoalService.GetByIdAsync(id);
-
-            if (financialGoal == null)
-            {
-                return NotFound();
-            }
-
             await _financialGoalService.DeleteAsync(financialGoal);
 
             return Ok();
@@ -45,11 +39,6 @@ namespace ExpenseMaster.Controllers
         public async Task<ActionResult<FinancialGoal>> GetById(int id)
         {
             var financialGoal = await _financialGoalService.GetByIdAsync(id);
-
-            if (financialGoal == null)
-            {
-                return NotFound();
-            }
 
             return financialGoal;
         }
@@ -78,41 +67,17 @@ namespace ExpenseMaster.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] UpdateFinancialGoalDto financialGoalDto)
+        public async Task<IActionResult> Update([FromBody] UpdateFinancialGoalDto financialGoalDto)
         {
-            if (id != financialGoalDto.Id)
-            {
-                return BadRequest();
-            }
-
-            var existingGoal = await _financialGoalService.GetByIdAsync(id);
-
-            if (existingGoal == null)
-            {
-                return NotFound();
-            }
-
             await _financialGoalService.UpdateAsync(financialGoalDto);
 
             return Ok();
         }
 
         [HttpPatch("{id}/currentAmount")]
-        public async Task<IActionResult> UpdateCurrentAmount(int id, [FromBody] UpdateCurrentAmountDto updateCurrentAmountDto)
+        public async Task<IActionResult> UpdateCurrentAmount([FromBody] UpdateCurrentAmountDto updateCurrentAmountDto)
         {
-            if (id != updateCurrentAmountDto.Id)
-            {
-                return BadRequest();
-            }
-
-            var existingGoal = await _financialGoalService.GetByIdAsync(id);
-
-            if (existingGoal == null)
-            {
-                return NotFound();
-            }
-
-            await _financialGoalService.UpdateCurrentAmountAsync(id, updateCurrentAmountDto.CurrentAmount);
+            await _financialGoalService.UpdateCurrentAmountAsync(updateCurrentAmountDto.CurrentAmount);
 
             return Ok();
         }
