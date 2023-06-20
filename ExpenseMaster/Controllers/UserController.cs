@@ -1,6 +1,5 @@
 ﻿using ExpenseMaster.BusinessLogic.Dto;
 using ExpenseMaster.BusinessLogic.Interfaces;
-using ExpenseMaster.DAL.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,7 +18,7 @@ namespace ExpenseMaster.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetAllUsers()
+        public async Task<ActionResult<IEnumerable<UserDto>>> GetAllUsers()
         {
             var users = await _userService.GetAllUsersAsync();
 
@@ -27,7 +26,7 @@ namespace ExpenseMaster.Controllers
         }
 
         [HttpGet("{login}")]
-        public async Task<ActionResult<IEnumerable<User>>> GetUsersByLogin(string login)
+        public async Task<ActionResult<IEnumerable<UserDto>>> GetUsersByLogin(string login)
         {
             var users = await _userService.GetUsersByLoginAsync(login);
 
@@ -37,14 +36,13 @@ namespace ExpenseMaster.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<int>> DeleteUser(int id)
         {
-            var existingUser = await _userService.GetUserByIdAsync(id);
-            await _userService.DeleteUserAsync(existingUser);
+            await _userService.DeleteUserAsync(id);
 
-            return Ok(existingUser.Id);
+            return Ok(id);
         }
 
         [HttpPut]
-        public async Task<ActionResult<User>> UpdateUserAsync(UserUpdateDto userUpdateDto)
+        public async Task<ActionResult<UserDto>> UpdateUserAsync(UserUpdateDto userUpdateDto)
         {
             var user = await _userService.UpdateUserAsync(userUpdateDto);
 

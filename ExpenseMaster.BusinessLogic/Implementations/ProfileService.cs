@@ -2,6 +2,7 @@
 using ExpenseMaster.BusinessLogic.Dto;
 using ExpenseMaster.BusinessLogic.Interfaces;
 using ExpenseMaster.DAL.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace ExpenseMaster.BusinessLogic.Implementations
 {
@@ -16,23 +17,51 @@ namespace ExpenseMaster.BusinessLogic.Implementations
             _mapper = mapper;
         }
 
-        public async Task<User> UpdateProfileAsync(UserRegistrationDto userRegistrationDto, User existingUser)
+        public async Task<UserRegistrationDto> UpdateProfileAsync(UserRegistrationDto userRegistrationDto, int userId)
         {
+            var result = await _repositoryWrapper.User.FindByConditionAsync(u => u.Id == userId);
+            var existingUser = await result.FirstOrDefaultAsync();
+
             _mapper.Map(userRegistrationDto, existingUser);
+
+            if (userRegistrationDto == null)
+            {
+                throw new InvalidOperationException($"User with id - {userId} not found");
+            }
 
             await _repositoryWrapper.User.UpdateAsync(existingUser);
             await _repositoryWrapper.SaveAsync();
 
-            return existingUser;
+            var updatedUserDto = _mapper.Map<User, UserRegistrationDto>(existingUser);
+
+            return updatedUserDto;
         }
 
-        public async Task DeleteProfileAsync(User user)
+        public async Task DeleteProfileAsync(UserRegistrationDto existingUserDto)
         {
-            if (user != null)
+            var existingUser = _mapper.Map<UserRegistrationDto, User>(existingUserDto);
+
+            if (existingUser == null)
             {
-                await _repositoryWrapper.User.DeleteAsync(user);
-                await _repositoryWrapper.SaveAsync();
+                throw new InvalidOperationException($"User {existingUserDto.Login} not found");
             }
+
+            await _repositoryWrapper.User.DeleteAsync(existingUser);
+            await _repositoryWrapper.SaveAsync();
+        }
+
+        public async Task<UserRegistrationDto> GetUserByIdAsync(int id)
+        {
+            var result = await _repositoryWrapper.User.FindByConditionAsync(u => u.Id == id);
+            var user = await result.FirstOrDefaultAsync();
+            var userRegistrationDto = _mapper.Map<UserRegistrationDto>(user);
+
+            if (userRegistrationDto==null)
+            {
+                throw new InvalidOperationException($"User with id - {id} not found");
+            }
+
+            return userRegistrationDto;
         }
     }
 }

@@ -15,9 +15,12 @@ namespace ExpenseMaster.DAL.Repository
 
         public async Task<User> GetUserByLoginAsync(string login)
         {
-            var user = await FindByConditionAsync(u => u.Login == login);
+            var result = await FindByConditionAsync(u => u.Login == login);
+            var user = await result.Include(u => u.Role)
+        .AsNoTracking()
+        .SingleOrDefaultAsync();
 
-            return user.FirstOrDefault();
+            return user;
         }
     }
 }

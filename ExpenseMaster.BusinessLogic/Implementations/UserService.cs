@@ -17,42 +17,62 @@ namespace ExpenseMaster.BusinessLogic.Implementations
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<User>> GetAllUsersAsync()
+        public async Task<IEnumerable<UserDto>> GetAllUsersAsync()
         {
-            return await _repositoryWrapper.User.FindAllAsync();
+            var users = await _repositoryWrapper.User.FindAllAsync();
+            var usersDto = _mapper.Map<IEnumerable<UserDto>>(users);
+
+            return usersDto;
         }
 
-        public async Task<IEnumerable<User>> GetUsersByLoginAsync(string login)
+        public async Task<IEnumerable<UserDto>> GetUsersByLoginAsync(string login)
         {
-            return await _repositoryWrapper.User.FindByConditionAsync(u => u.Login.ToLower().Contains(login.ToLower()));
+            var users = await _repositoryWrapper.User.FindByConditionAsync(u => u.Login.ToLower().Contains(login.ToLower()));
+            var usersDto = _mapper.Map<IEnumerable<UserDto>>(users);
+
+            if (usersDto == null)
+            {
+                throw new InvalidOperationException($"User with login - {login} not found");
+            }
+
+            return usersDto;
         }
 
-        public async Task<User> GetUserByIdAsync(int id)
+        public async Task<UserDto> GetUserByIdAsync(int id)
         {
             var result = await _repositoryWrapper.User.FindByConditionAsync(u => u.Id == id);
             var user = await result.FirstOrDefaultAsync();
+            var userDto = _mapper.Map<UserDto>(user);
 
-            return user;
+            if (userDto == null)
+            {
+                throw new InvalidOperationException($"User with id - {id} not found");
+            }
+
+            return userDto;
         }
 
-        public async Task DeleteUserAsync(User user)
+        public async Task DeleteUserAsync(int userId)
         {
-            var existingUser = await _repositoryWrapper.User.FindByConditionAsync(x => x.Id == user.Id);
+            var existingUser = await _repositoryWrapper.User.FindByConditionAsync(x => x.Id == userId);
             var userToDelete = await existingUser.FirstOrDefaultAsync();
 
-            if (userToDelete != null)
+            if (userToDelete == null)
             {
-                await _repositoryWrapper.User.DeleteAsync(userToDelete);
-                await _repositoryWrapper.SaveAsync();
+                throw new InvalidOperationException($"User with id - {userId} not found");
             }
+
+            await _repositoryWrapper.User.DeleteAsync(userToDelete);
+            await _repositoryWrapper.SaveAsync();
         }
 
-        public async Task<User> UpdateUserAsync(UserUpdateDto userUpdateDto)
+        public async Task<UserDto> UpdateUserAsync(UserUpdateDto userUpdateDto)
         {
             var existingUser = await _repositoryWrapper.User.FindByConditionAsync(u => u.Id == userUpdateDto.Id);
+
             if (existingUser == null)
             {
-                throw new Exception("User not found");
+                throw new InvalidOperationException($"User with id - {userUpdateDto.Id} not found");
             }
 
             var user = _mapper.Map<User>(userUpdateDto);
@@ -60,7 +80,9 @@ namespace ExpenseMaster.BusinessLogic.Implementations
             await _repositoryWrapper.User.UpdateAsync(user);
             await _repositoryWrapper.SaveAsync();
 
-            return user;
+            var userDto = _mapper.Map<UserDto>(user);
+
+            return userDto;
         }
     }
 }

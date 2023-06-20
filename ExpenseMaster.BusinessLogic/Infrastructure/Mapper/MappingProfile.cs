@@ -7,16 +7,8 @@ namespace ExpenseMaster.BusinessLogic.Mapper
 {
     public class MappingProfile : Profile
     {
-        private readonly IMapper _mapper;
-
-        public MappingProfile() : this(null)
+        public MappingProfile()
         {
-
-        }
-        public MappingProfile(IMapper mapper)
-        {
-            _mapper= mapper;
-
             CreateMap<UserRegistrationDto, User>()
             .ForMember(dest => dest.PasswordHash, opt => opt.Ignore())
             .ForMember(dest => dest.PasswordSalt, opt => opt.Ignore())
@@ -31,7 +23,6 @@ namespace ExpenseMaster.BusinessLogic.Mapper
             .ForMember(dest => dest.Password, opt => opt.Ignore());
 
             CreateMap<User, UserDto>()
-    .ForMember(dest => dest.Role, opt => opt.MapFrom(src => _mapper.Map<RoleDto>(src.Role)))
     .ReverseMap();
 
             CreateMap<Role, RoleDto>()
