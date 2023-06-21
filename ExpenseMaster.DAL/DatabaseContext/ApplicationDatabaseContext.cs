@@ -6,6 +6,10 @@ namespace ExpenseMaster.DAL.DatabaseContext
 {
     public class ApplicationDatabaseContext : DbContext
     {
+        public ApplicationDatabaseContext()
+        {
+            
+        }
         public ApplicationDatabaseContext(DbContextOptions<ApplicationDatabaseContext> options)
             : base(options)
         {
