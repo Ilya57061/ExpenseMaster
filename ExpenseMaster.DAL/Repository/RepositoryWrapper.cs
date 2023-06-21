@@ -61,6 +61,8 @@ namespace ExpenseMaster.DAL.Repository
                     _budget = new BudgetRepository(_appContext);
                 }
                 return _budget;
+            }
+        }
 
         public IFinancialGoalRepository FinancialGoal
         {
