@@ -34,7 +34,7 @@ namespace ExpenseMaster.BusinessLogic.Implementations
             return incomeItemDto;
         }
 
-        public async Task<IncomeDto> CreateIncome(IncomeDto incomeDto)
+        public async Task<IncomeItemDto> CreateIncome(IncomeDto incomeDto)
         {
             if (incomeDto == null)
             {
@@ -46,7 +46,9 @@ namespace ExpenseMaster.BusinessLogic.Implementations
             await _repositoryWrapper.Income.CreateAsync(income);
             await _repositoryWrapper.SaveAsync();
 
-            return incomeDto;
+            var createdIncome = _mapper.Map<IncomeItemDto>(income);
+
+            return createdIncome;
         }
 
         public async Task<IncomeItemDto> UpdateIncome(IncomeItemDto incomeItemDto)

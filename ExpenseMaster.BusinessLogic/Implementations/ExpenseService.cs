@@ -39,7 +39,7 @@ namespace ExpenseMaster.BusinessLogic.Implementations
             return expenseItemDto;
         }
 
-        public async Task<ExpenseDto> CreateExpense(ExpenseDto expenseDto)
+        public async Task<ExpenseItemDto> CreateExpense(ExpenseDto expenseDto)
         {
             if (expenseDto == null)
             {
@@ -51,7 +51,9 @@ namespace ExpenseMaster.BusinessLogic.Implementations
             await _repositoryWrapper.Expence.CreateAsync(expense);
             await _repositoryWrapper.SaveAsync();
 
-            return expenseDto;
+            var createdExpense = _mapper.Map<ExpenseItemDto>(expense);
+
+            return createdExpense;
         }
 
         public async Task<ExpenseItemDto> UpdateExpense(ExpenseItemDto expenseItemDto)

@@ -14,8 +14,6 @@ namespace ExpenseMaster.DAL.DatabaseContext
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-
-            Seed.SeedData.Initialize(modelBuilder);
         }
 
         public DbSet<User> Users { get; set; }

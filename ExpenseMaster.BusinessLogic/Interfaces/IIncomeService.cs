@@ -7,7 +7,7 @@ namespace ExpenseMaster.BusinessLogic.Interfaces
     {
         Task<IEnumerable<IncomeItemDto>> GetAllIncomes();
         Task<IncomeItemDto> GetIncomeById(int id);
-        Task<IncomeDto> CreateIncome(IncomeDto IncomeDto);
+        Task<IncomeItemDto> CreateIncome(IncomeDto IncomeDto);
         Task<IncomeItemDto> UpdateIncome(IncomeItemDto incomeItemDto);
         Task DeleteIncome(IncomeItemDto incomeItemDto);
         Task<decimal> CalculateTotalIncomeByUserId(int userId);

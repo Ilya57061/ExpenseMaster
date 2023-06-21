@@ -34,7 +34,7 @@ namespace ExpenseMaster.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<ExpenseDto>> CreateExpense(ExpenseDto expenseDto)
+        public async Task<ActionResult<ExpenseItemDto>> CreateExpense(ExpenseDto expenseDto)
         {
             var expense = await _expenseService.CreateExpense(expenseDto);
 

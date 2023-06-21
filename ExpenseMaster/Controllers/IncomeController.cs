@@ -34,7 +34,7 @@ namespace ExpenseMaster.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<IncomeDto>> CreateIncome(IncomeDto incomeDto)
+        public async Task<ActionResult<IncomeItemDto>> CreateIncome(IncomeDto incomeDto)
         {
             var income = await _incomeService.CreateIncome(incomeDto);
 

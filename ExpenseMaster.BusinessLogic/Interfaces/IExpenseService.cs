@@ -7,7 +7,7 @@ namespace ExpenseMaster.BusinessLogic.Interfaces
     {
         Task<IEnumerable<ExpenseItemDto>> GetAllExpenses();
         Task<ExpenseItemDto> GetExpenseById(int id);
-        Task<ExpenseDto> CreateExpense(ExpenseDto ExpenseDto);
+        Task<ExpenseItemDto> CreateExpense(ExpenseDto ExpenseDto);
         Task<ExpenseItemDto> UpdateExpense(ExpenseItemDto expenseItemDto);
         Task DeleteExpense(ExpenseItemDto expenseItemDto);
         Task<decimal> CalculateTotalExpensesByUserId(int userId);
