@@ -10,6 +10,7 @@ namespace ExpenseMaster.DAL.Repository
         private IUserRepository _user;
         private IIncomeRepository _income;
         private IExpenceRepository _expence;
+        private IFinancialGoalRepository _financialGoal;
 
         public IUserRepository User
         {
@@ -46,6 +47,19 @@ namespace ExpenseMaster.DAL.Repository
                 }
 
                 return _expence;
+            }
+        }
+
+        public IFinancialGoalRepository FinancialGoal
+        {
+            get
+            {
+                if (_financialGoal == null)
+                {
+                    _financialGoal = new FinancialGoalRepository(_appContext);
+                }
+
+                return _financialGoal;
             }
         }
 
