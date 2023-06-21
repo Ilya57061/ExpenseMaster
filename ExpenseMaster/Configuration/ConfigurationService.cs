@@ -23,6 +23,7 @@ namespace ExpenseMaster.Configuration
             services.AddTransient<IUserRegistrationService, UserRegistrationService>();
             services.AddTransient<IIncomeService, IncomeService>();
             services.AddTransient<IBudgetService, BudgetService>();
+            services.AddTransient<IFinancialGoalService, FinancialGoalService>();
 
             services.AddAutoMapper(typeof(MappingProfile).Assembly);
 

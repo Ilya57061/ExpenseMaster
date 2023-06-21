@@ -8,6 +8,7 @@ namespace ExpenseMaster.BusinessLogic.Interfaces
         IIncomeRepository Income { get; }
         IExpenceRepository Expence { get; }
         IBudgetRepository Budget { get; }
+        IFinancialGoalRepository FinancialGoal { get; }
         Task SaveAsync();
     }
 }
