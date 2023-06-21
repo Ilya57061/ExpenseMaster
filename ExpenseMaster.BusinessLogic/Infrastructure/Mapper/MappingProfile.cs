@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using ExpenseMaster.BusinessLogic.AbstractDto;
 using ExpenseMaster.BusinessLogic.Dto;
 using ExpenseMaster.BusinessLogic.Infrastructure.Cryptography;
 using ExpenseMaster.DAL.Models;
