@@ -3,6 +3,7 @@ using ExpenseMaster.BusinessLogic.Interfaces;
 using ExpenseMaster.DAL.Interfaces;
 using ExpenseMaster.DAL.Models;
 using ExpenseMaster.DAL.Repository;
+using ExpenseMaster.DAL.Seed;
 
 namespace ExpenseMaster.Configuration
 {

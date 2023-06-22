@@ -4,6 +4,7 @@ using ExpenseMaster.DAL.DatabaseContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ExpenseMaster.Migrations
 {
     [DbContext(typeof(ApplicationDatabaseContext))]
-    partial class ApplicationDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20230615095145_AddRoles")]
+    partial class AddRoles
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -67,33 +70,6 @@ namespace ExpenseMaster.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Category 1"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Category 2"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Category 3"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Category 4"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "Category 5"
-                        });
                 });
 
             modelBuilder.Entity("ExpenseMaster.DAL.Models.Expense", b =>
@@ -123,48 +99,6 @@ namespace ExpenseMaster.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Expenses", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Amount = 100.00m,
-                            CategoryId = 1,
-                            Date = new DateTime(2023, 6, 15, 15, 52, 20, 84, DateTimeKind.Local).AddTicks(2975),
-                            UserId = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Amount = 50.00m,
-                            CategoryId = 2,
-                            Date = new DateTime(2023, 6, 15, 15, 52, 20, 84, DateTimeKind.Local).AddTicks(2987),
-                            UserId = 1
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Amount = 75.00m,
-                            CategoryId = 1,
-                            Date = new DateTime(2023, 6, 15, 15, 52, 20, 84, DateTimeKind.Local).AddTicks(2988),
-                            UserId = 2
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Amount = 120.00m,
-                            CategoryId = 3,
-                            Date = new DateTime(2023, 6, 15, 15, 52, 20, 84, DateTimeKind.Local).AddTicks(2989),
-                            UserId = 2
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Amount = 200.00m,
-                            CategoryId = 2,
-                            Date = new DateTime(2023, 6, 15, 15, 52, 20, 84, DateTimeKind.Local).AddTicks(2990),
-                            UserId = 3
-                        });
                 });
 
             modelBuilder.Entity("ExpenseMaster.DAL.Models.FinancialGoal", b =>
@@ -222,48 +156,6 @@ namespace ExpenseMaster.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Incomes", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Amount = 1000.00m,
-                            CategoryId = 1,
-                            Date = new DateTime(2023, 6, 15, 15, 52, 20, 84, DateTimeKind.Local).AddTicks(3003),
-                            UserId = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Amount = 750.00m,
-                            CategoryId = 2,
-                            Date = new DateTime(2023, 6, 15, 15, 52, 20, 84, DateTimeKind.Local).AddTicks(3004),
-                            UserId = 1
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Amount = 500.00m,
-                            CategoryId = 1,
-                            Date = new DateTime(2023, 6, 15, 15, 52, 20, 84, DateTimeKind.Local).AddTicks(3005),
-                            UserId = 2
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Amount = 1200.00m,
-                            CategoryId = 3,
-                            Date = new DateTime(2023, 6, 15, 15, 52, 20, 84, DateTimeKind.Local).AddTicks(3006),
-                            UserId = 2
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Amount = 800.00m,
-                            CategoryId = 2,
-                            Date = new DateTime(2023, 6, 15, 15, 52, 20, 84, DateTimeKind.Local).AddTicks(3006),
-                            UserId = 3
-                        });
                 });
 
             modelBuilder.Entity("ExpenseMaster.DAL.Models.Role", b =>

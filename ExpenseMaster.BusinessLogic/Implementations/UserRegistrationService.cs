@@ -22,14 +22,14 @@ namespace ExpenseMaster.BusinessLogic.Implementations
             var users = await _wrapper.User.FindAllAsync();
             if (users.Any(u => u.Login == userRegistrationDto.Login))
             {
-                throw new Exception("A user with this login already exists.");
+                throw new InvalidOperationException($"User with login - {userRegistrationDto.Login} already exists.");
             }
 
             PasswordHasher.CreatePasswordHash(userRegistrationDto.Password, out byte[] passwordHash, out byte[] passwordSalt);
+
             var user = _mapper.Map<User>(userRegistrationDto);
 
             await _wrapper.User.CreateAsync(user);
-
             await _wrapper.SaveAsync();
 
             return user;

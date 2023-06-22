@@ -1,5 +1,5 @@
-﻿using ExpenseMaster.BusinessLogic.Interfaces;
-using ExpenseMaster.DAL.Models;
+﻿using ExpenseMaster.BusinessLogic.Dto;
+using ExpenseMaster.BusinessLogic.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,83 +18,60 @@ namespace ExpenseMaster.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetIncome()
+        public async Task<ActionResult<IEnumerable<IncomeItemDto>>> GetIncomes()
         {
-            var incomes = await _incomeService.GetAllIncomes();
+            var incomesItemDto = await _incomeService.GetAllIncomes();
 
-            return Ok(incomes);
+            return Ok(incomesItemDto);
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetIncomeById(int id)
+        public async Task<ActionResult<IncomeItemDto>> GetIncomeById(int id)
         {
-            var income = await _incomeService.GetIncomeById(id);
-            if(income == null)
-            {
-                return NotFound();
-            }
+            var incomeItemDto = await _incomeService.GetIncomeById(id);
 
-            return Ok(income);
+            return Ok(incomeItemDto);
         }
-        
+
         [HttpPost]
-        public async Task<IActionResult> CreateIncome(Income income)
+        public async Task<ActionResult<IncomeItemDto>> CreateIncome(IncomeDto incomeDto)
         {
-            if(income == null)
-            {
-                return BadRequest();
-            }
-
-            await _incomeService.CreateIncome(income);
+            var income = await _incomeService.CreateIncome(incomeDto);
 
             return Ok(income);
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateIncome(int id, Income income)
+        [HttpPut]
+        public async Task<ActionResult<IncomeItemDto>> UpdateIncome(IncomeItemDto incomeItemDto)
         {
-            if (income == null || income.Id != id)
-            {
-                return BadRequest();
-            }
+            var income = await _incomeService.UpdateIncome(incomeItemDto);
 
-            var existingIncome = await _incomeService.GetIncomeById(id);
-            if (existingIncome == null)
-            {
-                return NotFound();
-            }
-
-            await _incomeService.UpdateIncome(existingIncome);
-
-            return NoContent();
+            return Ok(income);
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteIncome(int id)   
+        public async Task<ActionResult<int>> DeleteIncome(int id)
         {
             var existingIncome = await _incomeService.GetIncomeById(id);
-            if (existingIncome == null)
-            {
-                return NotFound();
-            }
-
             await _incomeService.DeleteIncome(existingIncome);
 
-            return NoContent();
+            return Ok(existingIncome.Id);
         }
 
-        [HttpGet("incomes/category/{categoryId}")]
-        public async Task<IActionResult> GetIncomesByCategory(int categoryId)
+        [HttpGet("category/{categoryId}")]
+        public async Task<ActionResult<IEnumerable<IncomeDto>>> GetIncomesByCategory(int categoryId)
         {
-            var incomes = await _incomeService.GetIncomesByCategory(categoryId);
-            return Ok(incomes);
+            var incomesDto = await _incomeService.GetIncomesByCategory(categoryId);
+
+            return Ok(incomesDto);
         }
 
-        [HttpGet("incomes/user/{userId}/total")]
-        public async Task<IActionResult> CalculateTotalIncomeByUserId(int userId)
+        [HttpGet("user/{userId}/total")]
+        public async Task<ActionResult<decimal>> CalculateTotalIncomeByUserId(int userId)
         {
-            var totalIncome = await _incomeService.CalculateTotalIncomeByUserId(userId);
-            return Ok(totalIncome);
+            var totalIncomes = await _incomeService.CalculateTotalIncomeByUserId(userId);
+
+            return Ok(totalIncomes);
         }
     }
 }

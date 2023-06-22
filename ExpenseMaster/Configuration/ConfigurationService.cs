@@ -1,5 +1,6 @@
 ﻿using ExpenseMaster.Middlewares;
 using ExpenseMaster.DAL.DatabaseContext;
+using ExpenseMaster.DAL.Seed;
 
 namespace ExpenseMaster.Configuration
 {
@@ -16,7 +17,7 @@ namespace ExpenseMaster.Configuration
             services.AddCustomLogging();
         }
 
-        public static void Configure(WebApplication app)
+        public static void Configure(WebApplication app, IServiceProvider serviceProvider)
         {
             if (app.Environment.IsDevelopment())
             {
@@ -31,7 +32,18 @@ namespace ExpenseMaster.Configuration
 
             app.MapControllers();
 
+            ConfigureDataSeeder(serviceProvider);
+
             app.UseMiddleware<ExceptionHandlingMiddleware>();
+        }
+        public static void ConfigureDataSeeder(IServiceProvider serviceProvider)
+        {
+            using (var scope = serviceProvider.CreateScope())
+            {
+                var context = scope.ServiceProvider.GetRequiredService<ApplicationDatabaseContext>();
+                var dataSeeder = new DataSeeder(context);
+                dataSeeder.Initialize();
+            }
         }
     }
 }
