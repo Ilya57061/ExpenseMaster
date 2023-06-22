@@ -6,8 +6,6 @@ using ExpenseMaster.DAL.DatabaseContext;
 using ExpenseMaster.DAL.Models;
 using ExpenseMaster.DAL.Interfaces;
 using ExpenseMaster.DAL.Seed;
-using Microsoft.Extensions.DependencyInjection;
-using System;
 using ExpenseMaster.BusinessLogic.Infrastructure.Mapper;
 
 
@@ -26,11 +24,11 @@ namespace ExpenseMaster.Configuration
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IProfileService, ProfileService>();
             services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
+            services.AddScoped<IProfileService, ProfileService>();
+            services.AddScoped<DataSeeder>();
             services.AddTransient<IUserRegistrationService, UserRegistrationService>();
             services.AddTransient<IIncomeService, IncomeService>();
             services.AddTransient<IExpenseService, ExpenseService>();
-            services.AddScoped<DataSeeder>();
-
             services.AddTransient<IBudgetService, BudgetService>();
             services.AddTransient<IFinancialGoalService, FinancialGoalService>();
 

@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using ExpenseMaster.BusinessLogic.AbstractDto;
 using ExpenseMaster.BusinessLogic.Dto;
 using ExpenseMaster.BusinessLogic.Interfaces;
 using ExpenseMaster.DAL.Models;
@@ -88,23 +87,6 @@ namespace ExpenseMaster.BusinessLogic.Implementations
             budget.WarningThreshold = warningThreshold;
             await _repositoryWrapper.Budget.UpdateAsync(budget);
             await _repositoryWrapper.SaveAsync();
-        }
-
-        public async Task<decimal> GetBudgetRemainingAmountAsync(int userId)
-        {
-            var userBudgets = await _repositoryWrapper.Budget.GetBudgetsByUserIdAsync(userId);
-            decimal totalExpenses = 0;
-
-            foreach (var budget in userBudgets)
-            {
-                decimal categoryExpenses = await _repositoryWrapper.Expense.GetTotalExpensesByCategoryAsync(userId, budget.CategoryId);
-                totalExpenses += categoryExpenses;
-            }
-
-            decimal totalBudget = userBudgets.Sum(b => b.Limit);
-            decimal remainingAmount = totalBudget - totalExpenses;
-
-            return remainingAmount;
         }
     }
 }

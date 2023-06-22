@@ -1,6 +1,4 @@
-﻿using ExpenseMaster.BusinessLogic.AbstractDto;
-using ExpenseMaster.BusinessLogic.Dto;
-using ExpenseMaster.DAL.Models;
+﻿using ExpenseMaster.BusinessLogic.Dto;
 
 namespace ExpenseMaster.BusinessLogic.Interfaces
 {
@@ -14,6 +12,5 @@ namespace ExpenseMaster.BusinessLogic.Interfaces
         Task<IEnumerable<ReturnBudgetDto>> GetByUserIdAsync(int userId);
         Task UpdateWarningThresholdAsync(int budgetId, decimal warningThreshold);
         Task<IEnumerable<ReturnBudgetDto>> GetBudgetsExceedingThresholdAsync(int userId);
-        Task<decimal> GetBudgetRemainingAmountAsync(int userId);
     }
 }
