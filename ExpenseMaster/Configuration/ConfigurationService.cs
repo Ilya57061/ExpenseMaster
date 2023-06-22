@@ -24,6 +24,8 @@ namespace ExpenseMaster.Configuration
             services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
             services.AddTransient<IUserRegistrationService, UserRegistrationService>();
             services.AddTransient<IIncomeService, IncomeService>();
+            services.AddTransient<IBudgetService, BudgetService>();
+            services.AddTransient<IFinancialGoalService, FinancialGoalService>();
 
             services.AddAutoMapper(typeof(UserMappingProfile).Assembly);
             services.AddAutoMapper(typeof(RoleMappingProfile).Assembly);
