@@ -1,7 +1,5 @@
-﻿using ExpenseMaster.BusinessLogic.AbstractDto;
-using ExpenseMaster.BusinessLogic.Dto;
+﻿using ExpenseMaster.BusinessLogic.Dto;
 using ExpenseMaster.BusinessLogic.Interfaces;
-using ExpenseMaster.DAL.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -81,14 +79,6 @@ namespace ExpenseMaster.Controllers
             await _budgetService.UpdateWarningThresholdAsync(budgetId, warningThreshold);
 
             return NoContent();
-        }
-
-        [HttpGet("{userId}/remaining-amount")]
-        public async Task<ActionResult<decimal>> GetBudgetRemainingAmountAsync(int userId)
-        {
-            var remainingAmount = await _budgetService.GetBudgetRemainingAmountAsync(userId);
-
-            return Ok(remainingAmount);
         }
     }
 }
