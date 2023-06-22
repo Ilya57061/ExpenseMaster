@@ -24,6 +24,8 @@ namespace ExpenseMaster.Configuration
             services.AddTransient<IBudgetService, BudgetService>();
             services.AddTransient<IFinancialGoalService, FinancialGoalService>();
             services.AddTransient<IExpenseService, ExpenseService>();
+            services.AddTransient<INotificationService, NotificationService>();
+            services.AddTransient<IEmailService, EmailService>();
         }
     }
 }
