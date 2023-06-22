@@ -95,11 +95,11 @@ namespace ExpenseMaster.BusinessLogic.Implementations
             var userBudgets = await _repositoryWrapper.Budget.GetBudgetsByUserIdAsync(userId);
             decimal totalExpenses = 0;
 
-            foreach (var budget in userBudgets)
-            {
-                decimal categoryExpenses = await _repositoryWrapper.Expense.GetTotalExpensesByCategoryAsync(userId, budget.CategoryId);
-                totalExpenses += categoryExpenses;
-            }
+            //foreach (var budget in userBudgets)
+            //{
+            //    decimal categoryExpenses = await _repositoryWrapper.Expense.GetTotalExpensesByCategoryAsync(userId, budget.CategoryId);
+            //    totalExpenses += categoryExpenses;
+            //}
 
             decimal totalBudget = userBudgets.Sum(b => b.Limit);
             decimal remainingAmount = totalBudget - totalExpenses;
