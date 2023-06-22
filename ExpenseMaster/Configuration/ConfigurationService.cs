@@ -13,6 +13,7 @@ namespace ExpenseMaster.Configuration
             services.AddCustomAutoMapper();
             services.AddEndpointsApiExplorer();
             services.AddCustomSwagger();
+            services.AddCustomLogging();
         }
 
         public static void Configure(WebApplication app)
