@@ -18,20 +18,7 @@ namespace ExpenseMaster.Configuration
             services.AddEndpointsApiExplorer();
             services.AddCustomSwagger();
             services.AddCustomLogging();
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            .AddJwtBearer(options =>
-                {
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8
-              .GetBytes(configuration.GetSection("Authentication:Secret").Value)),
-                        ValidateIssuer = true,
-                        ValidateAudience = true,
-                        ValidIssuer = configuration["Authentication:Issuer"],
-                        ValidAudience = configuration["Authentication:Audience"]
-                    };
-                });
+            services.AddCustomAuthentication(configuration);
         }
 
         public static void Configure(WebApplication app, IServiceProvider serviceProvider)
@@ -51,20 +38,8 @@ namespace ExpenseMaster.Configuration
             }
 
             app.MapControllers();
-
-            ConfigureDataSeeder(serviceProvider);
-
+            app.ConfigureDataSeeder();
             app.UseMiddleware<ExceptionHandlingMiddleware>();
-        }
-      
-        public static void ConfigureDataSeeder(IServiceProvider serviceProvider)
-        {
-            using (var scope = serviceProvider.CreateScope())
-            {
-                var context = scope.ServiceProvider.GetRequiredService<ApplicationDatabaseContext>();
-                var dataSeeder = new DataSeeder(context);
-                dataSeeder.Initialize();
-            }
         }
     }
 }

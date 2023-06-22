@@ -15,7 +15,7 @@ namespace ExpenseMaster.DAL.Seed
             SeedCategories();
             SeedExpenses();
             SeedIncomes();
-            _context.SaveChanges();
+            //_context.SaveChanges();
         }
 
         public void SeedCategories()
