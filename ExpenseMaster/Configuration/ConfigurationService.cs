@@ -1,13 +1,12 @@
-﻿using ExpenseMaster.BusinessLogic.Implementations;
-using ExpenseMaster.BusinessLogic.Interfaces;
-using ExpenseMaster.DAL.Repository;
-using ExpenseMaster.Middlewares;
+﻿using ExpenseMaster.Middlewares;
 using ExpenseMaster.DAL.DatabaseContext;
-using ExpenseMaster.DAL.Models;
-using ExpenseMaster.DAL.Interfaces;
 using ExpenseMaster.DAL.Seed;
 using ExpenseMaster.BusinessLogic.Infrastructure.Mapper;
-
+using ExpenseMaster.BusinessLogic.Interfaces;
+using ExpenseMaster.BusinessLogic.Implementations;
+using ExpenseMaster.DAL.Interfaces;
+using ExpenseMaster.DAL.Repository;
+using ExpenseMaster.DAL.Models;
 
 namespace ExpenseMaster.Configuration
 {
@@ -36,8 +35,11 @@ namespace ExpenseMaster.Configuration
             services.AddAutoMapper(typeof(UserMappingProfile).Assembly);
             services.AddAutoMapper(typeof(RoleMappingProfile).Assembly);
 
+            services.AddCustomServices();
+            services.AddCustomAutoMapper();
             services.AddEndpointsApiExplorer();
-            services.AddSwaggerGen();
+            services.AddCustomSwagger();
+            services.AddCustomLogging();
         }
 
         public static void Configure(WebApplication app, IServiceProvider serviceProvider)
