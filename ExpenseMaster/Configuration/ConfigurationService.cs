@@ -6,6 +6,7 @@ using ExpenseMaster.Middlewares;
 using ExpenseMaster.DAL.DatabaseContext;
 using ExpenseMaster.DAL.Models;
 using ExpenseMaster.DAL.Interfaces;
+using ExpenseMaster.BusinessLogic.Infrastructure.Mapper;
 
 namespace ExpenseMaster.Configuration
 {
@@ -26,6 +27,8 @@ namespace ExpenseMaster.Configuration
             services.AddTransient<IFinancialGoalService, FinancialGoalService>();
 
             services.AddAutoMapper(typeof(MappingProfile).Assembly);
+            services.AddAutoMapper(typeof(BudgetMappingProfile).Assembly);
+            services.AddAutoMapper(typeof(FinancialGoalMappingProfile).Assembly);
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             services.AddEndpointsApiExplorer();
