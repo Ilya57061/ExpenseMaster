@@ -16,15 +16,7 @@ namespace ExpenseMaster.Configuration
         {
             services.AddApplicationDatabase(configuration);
             services.AddControllers();
-            services.AddScoped<ITokenService, TokenService>();
-            services.AddScoped<IRepositoryBase<User>, UserRepository>();
-            services.AddScoped<IAuthService, AuthService>();
-            services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
-            services.AddTransient<IUserRegistrationService, UserRegistrationService>();
-            services.AddTransient<IIncomeService, IncomeService>();
-            services.AddTransient<IBudgetService, BudgetService>();
-            services.AddTransient<IFinancialGoalService, FinancialGoalService>();
+            services.AddCustomServices();
 
             services.AddAutoMapper(typeof(MappingProfile).Assembly);
             services.AddAutoMapper(typeof(BudgetMappingProfile).Assembly);
