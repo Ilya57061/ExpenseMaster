@@ -15,10 +15,12 @@ namespace ExpenseMaster.Configuration
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
+            services.AddScoped<DataSeeder>();
             services.AddTransient<IUserRegistrationService, UserRegistrationService>();
             services.AddTransient<IIncomeService, IncomeService>();
             services.AddTransient<IBudgetService, BudgetService>();
             services.AddTransient<IFinancialGoalService, FinancialGoalService>();
+            services.AddTransient<IExpenseService, ExpenseService>();
         }
     }
 }

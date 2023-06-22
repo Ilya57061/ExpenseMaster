@@ -10,6 +10,8 @@ namespace ExpenseMaster.Configuration
             services.AddAutoMapper(typeof(MappingProfile).Assembly);
             services.AddAutoMapper(typeof(BudgetMappingProfile).Assembly);
             services.AddAutoMapper(typeof(FinancialGoalMappingProfile).Assembly);
+            services.AddAutoMapper(typeof(UserMappingProfile).Assembly);
+            services.AddAutoMapper(typeof(RoleMappingProfile).Assembly);
         }
     }
 }
