@@ -2,8 +2,8 @@
 
 namespace ExpenseMaster.BusinessLogic.Dto
 {
-    public class UserLoginDto : BaseUserDto
+    public class UpdateBudgetDto : BaseBudgetDto
     {
-        public string Password { get; set; } = string.Empty;
+        public int Id { get; set; }
     }
 }

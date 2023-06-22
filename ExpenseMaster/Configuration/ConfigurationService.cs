@@ -1,7 +1,6 @@
 ﻿using ExpenseMaster.BusinessLogic.Implementations;
 using ExpenseMaster.BusinessLogic.Interfaces;
 using ExpenseMaster.DAL.Repository;
-using ExpenseMaster.BusinessLogic.Mapper;
 using ExpenseMaster.Middlewares;
 using ExpenseMaster.DAL.DatabaseContext;
 using ExpenseMaster.DAL.Models;
@@ -9,6 +8,8 @@ using ExpenseMaster.DAL.Interfaces;
 using ExpenseMaster.DAL.Seed;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using ExpenseMaster.BusinessLogic.Infrastructure.Mapper;
+
 
 namespace ExpenseMaster.Configuration
 {
@@ -22,13 +23,20 @@ namespace ExpenseMaster.Configuration
             services.AddScoped<IRepositoryBase<User>, UserRepository>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IProfileService, ProfileService>();
             services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
             services.AddTransient<IUserRegistrationService, UserRegistrationService>();
             services.AddTransient<IIncomeService, IncomeService>();
             services.AddTransient<IExpenseService, ExpenseService>();
             services.AddScoped<DataSeeder>();
 
-            services.AddAutoMapper(typeof(MappingProfile).Assembly);
+            services.AddTransient<IBudgetService, BudgetService>();
+            services.AddTransient<IFinancialGoalService, FinancialGoalService>();
+
+
+            services.AddAutoMapper(typeof(UserMappingProfile).Assembly);
+            services.AddAutoMapper(typeof(RoleMappingProfile).Assembly);
 
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
