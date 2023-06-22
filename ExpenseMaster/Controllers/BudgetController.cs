@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ExpenseMaster.Controllers
 {
     [ApiController]
-    [Route("public")]
+    [Route("[controller]")]
     [AllowAnonymous]
     public class BudgetController : Controller
     {
