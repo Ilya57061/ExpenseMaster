@@ -12,10 +12,10 @@ namespace ExpenseMaster.BusinessLogic.Implementations
             _emailService = emailService;
         }
 
-        public async Task SendBalanceLowNotification(string userEmail)
+        public async Task SendExpenseExceededNotification(string userEmail)
         {
-            var notificationMessage = "Ваш баланс находится на исходе. Пожалуйста, пополните счет.";
-            var notificationSubject = "Уведомление: Баланс на исходе";
+            var notificationMessage = "Ваши расходы превышают доходы!";
+            var notificationSubject = "Уведомление о расходах.";
             var notification = new Notification { Message = notificationMessage, Subject = notificationSubject };
             await _emailService.SendEmailAsync(userEmail, notification);
         }

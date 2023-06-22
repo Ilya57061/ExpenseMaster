@@ -56,6 +56,7 @@ namespace ExpenseMaster.Configuration
 
             app.UseMiddleware<ExceptionHandlingMiddleware>();
         }
+      
         public static void ConfigureDataSeeder(IServiceProvider serviceProvider)
         {
             using (var scope = serviceProvider.CreateScope())

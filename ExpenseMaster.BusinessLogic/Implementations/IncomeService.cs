@@ -107,15 +107,9 @@ namespace ExpenseMaster.BusinessLogic.Implementations
 
         public async Task<decimal> CalculateTotalIncomeByUserId(int userId)
         {
-            if (userId <= 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(userId), "User ID must be a positive integer.");
-            }
+            var totalIncomes = await _repositoryWrapper.Income.CalculateTotalIncomeByUserId(userId);
 
-            var incomes = await _repositoryWrapper.Income.FindByConditionAsync(x => x.UserId == userId);
-            decimal totalIncome = incomes.Sum(x => x.Amount);
-
-            return totalIncome;
+            return totalIncomes;
         }
     }
 }
