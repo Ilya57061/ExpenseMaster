@@ -1,12 +1,5 @@
-﻿using ExpenseMaster.BusinessLogic.Implementations;
-using ExpenseMaster.BusinessLogic.Interfaces;
-using ExpenseMaster.DAL.Repository;
-using ExpenseMaster.BusinessLogic.Mapper;
-using ExpenseMaster.Middlewares;
+﻿using ExpenseMaster.Middlewares;
 using ExpenseMaster.DAL.DatabaseContext;
-using ExpenseMaster.DAL.Models;
-using ExpenseMaster.DAL.Interfaces;
-using ExpenseMaster.BusinessLogic.Infrastructure.Mapper;
 
 namespace ExpenseMaster.Configuration
 {
@@ -19,7 +12,7 @@ namespace ExpenseMaster.Configuration
             services.AddCustomServices();
             services.AddCustomAutoMapper();
             services.AddEndpointsApiExplorer();
-            services.AddSwaggerGen();
+            services.AddCustomSwagger();
         }
 
         public static void Configure(WebApplication app)
