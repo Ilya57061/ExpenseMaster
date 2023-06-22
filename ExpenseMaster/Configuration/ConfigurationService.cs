@@ -5,7 +5,11 @@ using ExpenseMaster.Middlewares;
 using ExpenseMaster.DAL.DatabaseContext;
 using ExpenseMaster.DAL.Models;
 using ExpenseMaster.DAL.Interfaces;
+using ExpenseMaster.DAL.Seed;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 using ExpenseMaster.BusinessLogic.Infrastructure.Mapper;
+
 
 namespace ExpenseMaster.Configuration
 {
@@ -24,18 +28,21 @@ namespace ExpenseMaster.Configuration
             services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
             services.AddTransient<IUserRegistrationService, UserRegistrationService>();
             services.AddTransient<IIncomeService, IncomeService>();
+            services.AddTransient<IExpenseService, ExpenseService>();
+            services.AddScoped<DataSeeder>();
+
             services.AddTransient<IBudgetService, BudgetService>();
             services.AddTransient<IFinancialGoalService, FinancialGoalService>();
+
 
             services.AddAutoMapper(typeof(UserMappingProfile).Assembly);
             services.AddAutoMapper(typeof(RoleMappingProfile).Assembly);
 
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
         }
 
-        public static void Configure(WebApplication app)
+        public static void Configure(WebApplication app, IServiceProvider serviceProvider)
         {
             if (app.Environment.IsDevelopment())
             {
@@ -50,7 +57,18 @@ namespace ExpenseMaster.Configuration
 
             app.MapControllers();
 
+            ConfigureDataSeeder(serviceProvider);
+
             app.UseMiddleware<ExceptionHandlingMiddleware>();
+        }
+        public static void ConfigureDataSeeder(IServiceProvider serviceProvider)
+        {
+            using (var scope = serviceProvider.CreateScope())
+            {
+                var context = scope.ServiceProvider.GetRequiredService<ApplicationDatabaseContext>();
+                var dataSeeder = new DataSeeder(context);
+                dataSeeder.Initialize();
+            }
         }
     }
 }

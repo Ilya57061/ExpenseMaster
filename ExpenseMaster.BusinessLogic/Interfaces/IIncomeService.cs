@@ -1,15 +1,16 @@
-﻿using ExpenseMaster.DAL.Models;
+﻿using ExpenseMaster.BusinessLogic.Dto;
+using ExpenseMaster.DAL.Models;
 
 namespace ExpenseMaster.BusinessLogic.Interfaces
 {
     public interface IIncomeService
     {
-        Task<IEnumerable<Income>> GetAllIncomes();
-        Task<Income> GetIncomeById(int id);
-        Task CreateIncome(Income income);
-        Task UpdateIncome(Income income);
-        Task DeleteIncome(Income income);
+        Task<IEnumerable<IncomeItemDto>> GetAllIncomes();
+        Task<IncomeItemDto> GetIncomeById(int id);
+        Task<IncomeItemDto> CreateIncome(IncomeDto IncomeDto);
+        Task<IncomeItemDto> UpdateIncome(IncomeItemDto incomeItemDto);
+        Task DeleteIncome(IncomeItemDto incomeItemDto);
         Task<decimal> CalculateTotalIncomeByUserId(int userId);
-        Task<IEnumerable<Income>> GetIncomesByCategory(int categoryId);
+        Task<IEnumerable<IncomeDto>> GetIncomesByCategory(int categoryId);
     }
 }
