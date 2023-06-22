@@ -10,11 +10,13 @@ namespace ExpenseMaster.BusinessLogic.Implementations
     {
         private readonly IMapper _mapper;
         private readonly IRepositoryWrapper _repositoryWrapper;
+        private readonly INotificationService _notificationService;
 
-        public ExpenseService(IRepositoryWrapper repositoryWrapper, IMapper mapper)
+        public ExpenseService(IRepositoryWrapper repositoryWrapper, IMapper mapper, INotificationService notificationService)
         {
             _repositoryWrapper = repositoryWrapper;
             _mapper = mapper;
+            _notificationService = notificationService;
         }
 
         public async Task<IEnumerable<ExpenseItemDto>> GetAllExpenses()
@@ -53,7 +55,24 @@ namespace ExpenseMaster.BusinessLogic.Implementations
 
             var createdExpense = _mapper.Map<ExpenseItemDto>(expense);
 
+            await CheckExpenseExceeded(expense.UserId);
+
             return createdExpense;
+        }
+
+        public async Task CheckExpenseExceeded(int userId)
+        {
+            var expensesTotal = await _repositoryWrapper.Expence.CalculateTotalExpensesByUserId(userId);
+
+            var incomesTotal = await _repositoryWrapper.Income.CalculateTotalIncomeByUserId(userId);
+
+            if (expensesTotal > incomesTotal)   
+            {
+                var existingUser = await _repositoryWrapper.User.FindByConditionAsync(x=> x.Id == userId);
+                var user = existingUser.FirstOrDefault();
+
+                await _notificationService.SendExpenseExceededNotification(user.Email);
+            }
         }
 
         public async Task<ExpenseItemDto> UpdateExpense(ExpenseItemDto expenseItemDto)
@@ -114,13 +133,7 @@ namespace ExpenseMaster.BusinessLogic.Implementations
 
         public async Task<decimal> CalculateTotalExpensesByUserId(int userId)
         {
-            if (userId <= 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(userId), "User ID must be a positive integer.");
-            }
-
-            var expenses = await _repositoryWrapper.Expence.FindByConditionAsync(x => x.UserId == userId);
-            decimal totalExpenses = expenses.Sum(x => x.Amount);
+            var totalExpenses = await _repositoryWrapper.Expence.CalculateTotalExpensesByUserId(userId);
 
             return totalExpenses;
         }
