@@ -17,12 +17,7 @@ namespace ExpenseMaster.Configuration
             services.AddApplicationDatabase(configuration);
             services.AddControllers();
             services.AddCustomServices();
-
-            services.AddAutoMapper(typeof(MappingProfile).Assembly);
-            services.AddAutoMapper(typeof(BudgetMappingProfile).Assembly);
-            services.AddAutoMapper(typeof(FinancialGoalMappingProfile).Assembly);
-
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+            services.AddCustomAutoMapper();
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
         }
