@@ -36,6 +36,17 @@ namespace ExpenseMaster.BusinessLogic.Infrastructure.Mapper
                 })
                 .ReverseMap()
                 .ForMember(dest => dest.Password, opt => opt.Ignore());
+
+            CreateMap<User, ProfileDto>()
+            .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
+            .ForMember(dest => dest.Login, opt => opt.MapFrom(src => src.Login))
+            .ReverseMap()
+            .ForMember(dest => dest.Id, opt => opt.Ignore())
+            .ForMember(dest => dest.Role, opt => opt.Ignore())
+            .ForMember(dest => dest.RoleId, opt => opt.Ignore())
+            .ForMember(dest => dest.PasswordHash, opt => opt.Ignore())
+            .ForMember(dest => dest.PasswordSalt, opt => opt.Ignore());
+
         }
     }
 }

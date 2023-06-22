@@ -16,13 +16,15 @@ namespace ExpenseMaster.BusinessLogic.Implementations
         public TokenService(IConfiguration configuration)
         {
             _configuration = configuration;
-            _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Authentication:Secret"]));
+            var authenticationSection = _configuration.GetSection("Authentication");
+            _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authenticationSection["Secret"]));
         }
 
         public JwtSecurityToken GenerateJwtToken(User user)
         {
             var claims = new List<Claim> {
-            new Claim(JwtRegisteredClaimNames.NameId, user.Login),
+            new Claim(JwtRegisteredClaimNames.Name, user.Login),
+            new Claim(JwtRegisteredClaimNames.NameId, user.Id.ToString()),
             new Claim(ClaimTypes.Role, user.Role.Name.ToString()),
             };
             var creds = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512);

@@ -44,7 +44,7 @@ namespace ExpenseMaster.BusinessLogic.Implementations
             var user = await result.FirstOrDefaultAsync();
             var userDto = _mapper.Map<UserDto>(user);
 
-            if (userDto == null)
+            if (user == null)
             {
                 throw new InvalidOperationException($"User with id - {id} not found");
             }
