@@ -1,11 +1,11 @@
 ﻿using ExpenseMaster.BusinessLogic.Implementations;
 using ExpenseMaster.BusinessLogic.Interfaces;
 using ExpenseMaster.DAL.Repository;
-using ExpenseMaster.BusinessLogic.Mapper;
 using ExpenseMaster.Middlewares;
 using ExpenseMaster.DAL.DatabaseContext;
 using ExpenseMaster.DAL.Models;
 using ExpenseMaster.DAL.Interfaces;
+using ExpenseMaster.BusinessLogic.Infrastructure.Mapper;
 
 namespace ExpenseMaster.Configuration
 {
@@ -19,13 +19,16 @@ namespace ExpenseMaster.Configuration
             services.AddScoped<IRepositoryBase<User>, UserRepository>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IProfileService, ProfileService>();
             services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
             services.AddTransient<IUserRegistrationService, UserRegistrationService>();
             services.AddTransient<IIncomeService, IncomeService>();
             services.AddTransient<IBudgetService, BudgetService>();
             services.AddTransient<IFinancialGoalService, FinancialGoalService>();
 
-            services.AddAutoMapper(typeof(MappingProfile).Assembly);
+            services.AddAutoMapper(typeof(UserMappingProfile).Assembly);
+            services.AddAutoMapper(typeof(RoleMappingProfile).Assembly);
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             services.AddEndpointsApiExplorer();
