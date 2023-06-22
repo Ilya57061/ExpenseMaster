@@ -12,7 +12,7 @@ namespace ExpenseMaster.BusinessLogic.Implementations
             _emailService = emailService;
         }
 
-        public async Task SendBalanceLowNotification(string userEmail)
+        public async Task SendExpenseExceededNotification(string userEmail)
         {
             var notificationMessage = "Ваш баланс находится на исходе. Пожалуйста, пополните счет.";
             var notificationSubject = "Уведомление: Баланс на исходе";
