@@ -17,6 +17,7 @@ namespace ExpenseMaster.Configuration
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
             services.AddScoped<IProfileService, ProfileService>();
+            services.AddScoped<IUserService, UserService>();
             services.AddScoped<DataSeeder>();
             services.AddTransient<IUserRegistrationService, UserRegistrationService>();
             services.AddTransient<IIncomeService, IncomeService>();

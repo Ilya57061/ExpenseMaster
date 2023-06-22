@@ -1,6 +1,9 @@
 ﻿using ExpenseMaster.Middlewares;
 using ExpenseMaster.DAL.DatabaseContext;
 using ExpenseMaster.DAL.Seed;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace ExpenseMaster.Configuration
 {
@@ -15,20 +18,37 @@ namespace ExpenseMaster.Configuration
             services.AddEndpointsApiExplorer();
             services.AddCustomSwagger();
             services.AddCustomLogging();
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8
+              .GetBytes(configuration.GetSection("Authentication:Secret").Value)),
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidIssuer = configuration["Authentication:Issuer"],
+                        ValidAudience = configuration["Authentication:Audience"]
+                    };
+                });
         }
 
         public static void Configure(WebApplication app, IServiceProvider serviceProvider)
         {
-            if (app.Environment.IsDevelopment())
-            {
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            }
-
             app.UseHttpsRedirection();
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            if (app.Environment.IsDevelopment())
+            {
+                app.UseSwagger();
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                });
+            }
 
             app.MapControllers();
 

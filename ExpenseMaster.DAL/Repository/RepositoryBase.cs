@@ -1,5 +1,4 @@
-﻿using ExpenseMaster.BusinessLogic.Interfaces;
-using ExpenseMaster.DAL.DatabaseContext;
+﻿using ExpenseMaster.DAL.DatabaseContext;
 using ExpenseMaster.DAL.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;

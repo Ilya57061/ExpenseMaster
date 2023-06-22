@@ -1,5 +1,4 @@
 ﻿using ExpenseMaster.BusinessLogic.Dto;
-using ExpenseMaster.DAL.Models;
 
 namespace ExpenseMaster.BusinessLogic.Interfaces
 {

@@ -20,23 +20,23 @@ namespace ExpenseMaster.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<UserRegistrationDto>> GetProfileAsync()
+        public async Task<ActionResult<ProfileDto>> GetProfileAsync()
         {
             int userId = _tokenService.GetUserIdFromClaims(User);
 
-            var userRegistrationDto = _profileService.GetUserByIdAsync(userId);
+            var user = await _profileService.GetUserByIdAsync(userId);
 
-            return Ok(userRegistrationDto);
+            return Ok(user);
         }
 
         [HttpPut]
-        public async Task<ActionResult<UserRegistrationDto>> UpdateProfileAsync(UserRegistrationDto userRegistrationDto)
+        public async Task<ActionResult<ProfileDto>> UpdateProfileAsync(ProfileDto profileDto)
         {
             int userId = _tokenService.GetUserIdFromClaims(User);
 
-            var updatedUserDto = await _profileService.UpdateProfileAsync(userRegistrationDto, userId);
+            var updatedProfileDto = await _profileService.UpdateProfileAsync(profileDto, userId);
 
-            return Ok(updatedUserDto);
+            return Ok(updatedProfileDto);
         }
 
         [HttpDelete]
@@ -44,11 +44,19 @@ namespace ExpenseMaster.Controllers
         {
             int userId = _tokenService.GetUserIdFromClaims(User);
 
-            var existingUser = await _profileService.GetUserByIdAsync(userId);
-
-            await _profileService.DeleteProfileAsync(existingUser);
+            await _profileService.DeleteProfileAsync(userId);
 
             return Unauthorized();
+        }
+
+        [HttpPut("UpdatePassword")]
+        public async Task<ActionResult<ProfileDto>> UpdatePassword(UpdateProfilePasswordDto updatePasswordDto)
+        {
+            int userId = _tokenService.GetUserIdFromClaims(User);
+
+            var profileDto = await _profileService.UpdatePasswordAsync(updatePasswordDto, userId);
+
+            return Ok(profileDto);
         }
     }
 }
