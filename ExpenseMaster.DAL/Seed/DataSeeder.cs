@@ -40,11 +40,11 @@ namespace ExpenseMaster.DAL.Seed
             {
                 var expenses = new List<Expense>()
                 {
-                    new Expense { UserId = 1, CategoryId = 1, Amount = 100.00m, Date = DateTime.Now },
-                    new Expense { UserId = 1, CategoryId = 2, Amount = 50.00m, Date = DateTime.Now },
-                    new Expense { UserId = 2, CategoryId = 1, Amount = 75.00m, Date = DateTime.Now },
-                    new Expense { UserId = 2, CategoryId = 3, Amount = 120.00m, Date = DateTime.Now },
-                    new Expense { UserId = 3, CategoryId = 2, Amount = 200.00m, Date = DateTime.Now }
+                    new Expense { UserId = 1, CategoryId = 16, Amount = 100.00m, Date = DateTime.Now },
+                    new Expense { UserId = 1, CategoryId = 17, Amount = 50.00m, Date = DateTime.Now },
+                    new Expense { UserId = 2, CategoryId = 18, Amount = 75.00m, Date = DateTime.Now },
+                    new Expense { UserId = 2, CategoryId = 19, Amount = 120.00m, Date = DateTime.Now },
+                    new Expense { UserId = 3, CategoryId = 20, Amount = 200.00m, Date = DateTime.Now }
                 };
                 _context.Expenses.AddRange(expenses);
             }
@@ -56,11 +56,11 @@ namespace ExpenseMaster.DAL.Seed
             {
                 var incomes = new List<Income>()
                 {
-                    new Income { UserId = 1, CategoryId = 1, Amount = 1000.00m, Date = DateTime.Now },
-                    new Income { UserId = 1, CategoryId = 2, Amount = 750.00m, Date = DateTime.Now },
-                    new Income { UserId = 2, CategoryId = 1, Amount = 500.00m, Date = DateTime.Now },
-                    new Income { UserId = 2, CategoryId = 3, Amount = 1200.00m, Date = DateTime.Now },
-                    new Income { UserId = 3, CategoryId = 2, Amount = 800.00m, Date = DateTime.Now }
+                    new Income { UserId = 1, CategoryId = 16, Amount = 1000.00m, Date = DateTime.Now },
+                    new Income { UserId = 1, CategoryId = 17, Amount = 750.00m, Date = DateTime.Now },
+                    new Income { UserId = 2, CategoryId = 18, Amount = 500.00m, Date = DateTime.Now },
+                    new Income { UserId = 2, CategoryId = 19, Amount = 1200.00m, Date = DateTime.Now },
+                    new Income { UserId = 3, CategoryId = 20, Amount = 800.00m, Date = DateTime.Now }
                 };
                 _context.Incomes.AddRange(incomes);
             }

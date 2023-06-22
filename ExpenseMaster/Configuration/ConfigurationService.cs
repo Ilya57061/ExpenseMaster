@@ -7,6 +7,9 @@ using ExpenseMaster.BusinessLogic.Implementations;
 using ExpenseMaster.DAL.Interfaces;
 using ExpenseMaster.DAL.Repository;
 using ExpenseMaster.DAL.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace ExpenseMaster.Configuration
 {
@@ -25,6 +28,8 @@ namespace ExpenseMaster.Configuration
             services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
             services.AddScoped<IProfileService, ProfileService>();
             services.AddScoped<DataSeeder>();
+            services.AddTransient<INotificationService, NotificationService>();
+            services.AddTransient<IEmailService,EmailService>();
             services.AddTransient<IUserRegistrationService, UserRegistrationService>();
             services.AddTransient<IIncomeService, IncomeService>();
             services.AddTransient<IExpenseService, ExpenseService>();
@@ -40,6 +45,21 @@ namespace ExpenseMaster.Configuration
             services.AddEndpointsApiExplorer();
             services.AddCustomSwagger();
             services.AddCustomLogging();
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8
+    .GetBytes(configuration.GetSection("Authentication:Secret").Value)),
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidIssuer = configuration["Authentication:Issuer"],
+        ValidAudience = configuration["Authentication:Audience"]
+    };
+});
         }
 
         public static void Configure(WebApplication app, IServiceProvider serviceProvider)
