@@ -38,8 +38,8 @@ namespace ExpenseMaster.BusinessLogic.Implementations
 
             if (profileDto.Login != existingUser.Login)
             {
-                var emailExists = await _repositoryWrapper.User.FindByConditionAsync(u => u.Login == profileDto.Login);
-                if (emailExists != null)
+                var loginExists = await _repositoryWrapper.User.FindByConditionAsync(u => u.Login == profileDto.Login);
+                if (loginExists != null)
                 {
                     throw new InvalidOperationException($"Login '{profileDto.Login}' is already taken by another user.");
                 }
@@ -93,6 +93,11 @@ namespace ExpenseMaster.BusinessLogic.Implementations
 
             var result = await _repositoryWrapper.User.FindByConditionAsync(u => u.Id == userId);
             var existingUser = await result.FirstOrDefaultAsync();
+
+            if (existingUser==null)
+            {
+                throw new InvalidOperationException($"User with id - {userId} not found");
+            }
 
             if (!PasswordHasher.VerifyPasswordHash(updatePasswordDto.OldPassword, existingUser.PasswordSalt, existingUser.PasswordHash))
             {
