@@ -1,9 +1,5 @@
 ﻿using ExpenseMaster.Middlewares;
 using ExpenseMaster.DAL.DatabaseContext;
-using ExpenseMaster.DAL.Seed;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
 
 namespace ExpenseMaster.Configuration
 {

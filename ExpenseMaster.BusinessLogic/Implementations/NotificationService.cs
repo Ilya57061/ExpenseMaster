@@ -14,8 +14,8 @@ namespace ExpenseMaster.BusinessLogic.Implementations
 
         public async Task SendExpenseExceededNotification(string userEmail)
         {
-            var notificationMessage = "Ваши расходы превышают доходы!";
-            var notificationSubject = "Уведомление о расходах.";
+            var notificationMessage = "Your expenses exceed your income!";
+            var notificationSubject = "Notification of expenses.";
             var notification = new Notification { Message = notificationMessage, Subject = notificationSubject };
             await _emailService.SendEmailAsync(userEmail, notification);
         }

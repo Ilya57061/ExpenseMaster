@@ -6,8 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace ExpenseMaster.Controllers
 {
     [ApiController]
-    [Route("public/expenses")]
-    [AllowAnonymous]
+    [Route("[controller]")]
+    [Authorize]
     public class ExpenseController : ControllerBase
     {
         private readonly IExpenseService _expenseService;

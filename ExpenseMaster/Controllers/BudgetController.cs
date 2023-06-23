@@ -7,7 +7,7 @@ namespace ExpenseMaster.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    [AllowAnonymous]
+    [Authorize]
     public class BudgetController : Controller
     {
         private readonly IBudgetService _budgetService;
