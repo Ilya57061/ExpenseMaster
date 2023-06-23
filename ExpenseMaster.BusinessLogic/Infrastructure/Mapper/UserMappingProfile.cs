@@ -18,7 +18,7 @@ namespace ExpenseMaster.BusinessLogic.Infrastructure.Mapper
                 dest.PasswordHash = passwordHash;
                 dest.PasswordSalt = passwordSalt;
             })
-            .ForMember(dest => dest.RoleId, opt => opt.MapFrom(_ => 2))
+            .ForMember(dest => dest.RoleId, opt => opt.MapFrom(_ => 1))
             .ReverseMap()
             .ForMember(dest => dest.Password, opt => opt.Ignore());
 
