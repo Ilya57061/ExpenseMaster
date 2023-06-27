@@ -22,7 +22,7 @@ namespace ExpenseMaster.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("ExpenseMaster.Model.Models.Budget", b =>
+            modelBuilder.Entity("ExpenseMaster.DAL.Models.Budget", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -51,7 +51,7 @@ namespace ExpenseMaster.Migrations
                     b.ToTable("Budgets", (string)null);
                 });
 
-            modelBuilder.Entity("ExpenseMaster.Model.Models.Category", b =>
+            modelBuilder.Entity("ExpenseMaster.DAL.Models.Category", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -67,9 +67,36 @@ namespace ExpenseMaster.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Category 1"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Category 2"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Category 3"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Category 4"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Category 5"
+                        });
                 });
 
-            modelBuilder.Entity("ExpenseMaster.Model.Models.Expense", b =>
+            modelBuilder.Entity("ExpenseMaster.DAL.Models.Expense", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -78,7 +105,7 @@ namespace ExpenseMaster.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(10,2");
+                        .HasColumnType("decimal(10,2)");
 
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
@@ -96,9 +123,51 @@ namespace ExpenseMaster.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Expenses", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Amount = 100.00m,
+                            CategoryId = 1,
+                            Date = new DateTime(2023, 6, 15, 15, 52, 20, 84, DateTimeKind.Local).AddTicks(2975),
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Amount = 50.00m,
+                            CategoryId = 2,
+                            Date = new DateTime(2023, 6, 15, 15, 52, 20, 84, DateTimeKind.Local).AddTicks(2987),
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Amount = 75.00m,
+                            CategoryId = 1,
+                            Date = new DateTime(2023, 6, 15, 15, 52, 20, 84, DateTimeKind.Local).AddTicks(2988),
+                            UserId = 2
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Amount = 120.00m,
+                            CategoryId = 3,
+                            Date = new DateTime(2023, 6, 15, 15, 52, 20, 84, DateTimeKind.Local).AddTicks(2989),
+                            UserId = 2
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Amount = 200.00m,
+                            CategoryId = 2,
+                            Date = new DateTime(2023, 6, 15, 15, 52, 20, 84, DateTimeKind.Local).AddTicks(2990),
+                            UserId = 3
+                        });
                 });
 
-            modelBuilder.Entity("ExpenseMaster.Model.Models.FinancialGoal", b =>
+            modelBuilder.Entity("ExpenseMaster.DAL.Models.FinancialGoal", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -126,7 +195,7 @@ namespace ExpenseMaster.Migrations
                     b.ToTable("FinancialGoals", (string)null);
                 });
 
-            modelBuilder.Entity("ExpenseMaster.Model.Models.Income", b =>
+            modelBuilder.Entity("ExpenseMaster.DAL.Models.Income", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -153,9 +222,79 @@ namespace ExpenseMaster.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Incomes", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Amount = 1000.00m,
+                            CategoryId = 1,
+                            Date = new DateTime(2023, 6, 15, 15, 52, 20, 84, DateTimeKind.Local).AddTicks(3003),
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Amount = 750.00m,
+                            CategoryId = 2,
+                            Date = new DateTime(2023, 6, 15, 15, 52, 20, 84, DateTimeKind.Local).AddTicks(3004),
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Amount = 500.00m,
+                            CategoryId = 1,
+                            Date = new DateTime(2023, 6, 15, 15, 52, 20, 84, DateTimeKind.Local).AddTicks(3005),
+                            UserId = 2
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Amount = 1200.00m,
+                            CategoryId = 3,
+                            Date = new DateTime(2023, 6, 15, 15, 52, 20, 84, DateTimeKind.Local).AddTicks(3006),
+                            UserId = 2
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Amount = 800.00m,
+                            CategoryId = 2,
+                            Date = new DateTime(2023, 6, 15, 15, 52, 20, 84, DateTimeKind.Local).AddTicks(3006),
+                            UserId = 3
+                        });
                 });
 
-            modelBuilder.Entity("ExpenseMaster.Model.Models.User", b =>
+            modelBuilder.Entity("ExpenseMaster.DAL.Models.Role", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Name")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Roles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = 2
+                        });
+                });
+
+            modelBuilder.Entity("ExpenseMaster.DAL.Models.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -181,20 +320,25 @@ namespace ExpenseMaster.Migrations
                         .IsRequired()
                         .HasColumnType("varbinary(max)");
 
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
 
                     b.ToTable("Users", (string)null);
                 });
 
-            modelBuilder.Entity("ExpenseMaster.Model.Models.Budget", b =>
+            modelBuilder.Entity("ExpenseMaster.DAL.Models.Budget", b =>
                 {
-                    b.HasOne("ExpenseMaster.Model.Models.Category", "Category")
+                    b.HasOne("ExpenseMaster.DAL.Models.Category", "Category")
                         .WithMany()
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ExpenseMaster.Model.Models.User", "User")
+                    b.HasOne("ExpenseMaster.DAL.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -205,15 +349,15 @@ namespace ExpenseMaster.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("ExpenseMaster.Model.Models.Expense", b =>
+            modelBuilder.Entity("ExpenseMaster.DAL.Models.Expense", b =>
                 {
-                    b.HasOne("ExpenseMaster.Model.Models.Category", "Category")
+                    b.HasOne("ExpenseMaster.DAL.Models.Category", "Category")
                         .WithMany()
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ExpenseMaster.Model.Models.User", "User")
+                    b.HasOne("ExpenseMaster.DAL.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -224,9 +368,9 @@ namespace ExpenseMaster.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("ExpenseMaster.Model.Models.FinancialGoal", b =>
+            modelBuilder.Entity("ExpenseMaster.DAL.Models.FinancialGoal", b =>
                 {
-                    b.HasOne("ExpenseMaster.Model.Models.User", "User")
+                    b.HasOne("ExpenseMaster.DAL.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -235,15 +379,15 @@ namespace ExpenseMaster.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("ExpenseMaster.Model.Models.Income", b =>
+            modelBuilder.Entity("ExpenseMaster.DAL.Models.Income", b =>
                 {
-                    b.HasOne("ExpenseMaster.Model.Models.Category", "Category")
+                    b.HasOne("ExpenseMaster.DAL.Models.Category", "Category")
                         .WithMany()
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ExpenseMaster.Model.Models.User", "User")
+                    b.HasOne("ExpenseMaster.DAL.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -252,6 +396,22 @@ namespace ExpenseMaster.Migrations
                     b.Navigation("Category");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("ExpenseMaster.DAL.Models.User", b =>
+                {
+                    b.HasOne("ExpenseMaster.DAL.Models.Role", "Role")
+                        .WithMany("Users")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("ExpenseMaster.DAL.Models.Role", b =>
+                {
+                    b.Navigation("Users");
                 });
 #pragma warning restore 612, 618
         }

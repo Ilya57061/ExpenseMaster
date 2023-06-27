@@ -1,8 +1,11 @@
-﻿namespace ExpenseMaster.BusinessLogic.Dto
+﻿using ExpenseMaster.BusinessLogic.AbstractDto;
+
+namespace ExpenseMaster.BusinessLogic.Dto
 {
-    public class UserDto
+    public class UserDto : BaseUserDto
     {
-        public string Login { get; set; } = string.Empty;
+        public int Id { get; set; }
         public string Email { get; set; } = string.Empty;
+        public int RoleId { get; set; }
     }
 }

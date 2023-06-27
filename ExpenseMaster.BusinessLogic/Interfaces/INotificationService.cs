@@ -2,6 +2,6 @@
 {
     public interface INotificationService
     {
-        Task SendBalanceLowNotification(string userEmail);
+        Task SendExpenseExceededNotification(string userEmail);
     }
 }

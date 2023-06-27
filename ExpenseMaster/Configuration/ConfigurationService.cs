@@ -1,11 +1,12 @@
-﻿using ExpenseMaster.BusinessLogic.Implementations;
-using ExpenseMaster.BusinessLogic.Interfaces;
-using ExpenseMaster.DAL.Repository;
-using ExpenseMaster.BusinessLogic.Mapper;
-using ExpenseMaster.Middlewares;
+﻿using ExpenseMaster.Middlewares;
 using ExpenseMaster.DAL.DatabaseContext;
-using ExpenseMaster.DAL.Models;
+using ExpenseMaster.DAL.Seed;
+using ExpenseMaster.BusinessLogic.Infrastructure.Mapper;
+using ExpenseMaster.BusinessLogic.Interfaces;
+using ExpenseMaster.BusinessLogic.Implementations;
 using ExpenseMaster.DAL.Interfaces;
+using ExpenseMaster.DAL.Repository;
+using ExpenseMaster.DAL.Models;
 
 namespace ExpenseMaster.Configuration
 {
@@ -19,20 +20,29 @@ namespace ExpenseMaster.Configuration
             services.AddScoped<IRepositoryBase<User>, UserRepository>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IProfileService, ProfileService>();
             services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
+            services.AddScoped<IProfileService, ProfileService>();
+            services.AddScoped<DataSeeder>();
             services.AddTransient<IUserRegistrationService, UserRegistrationService>();
             services.AddTransient<IIncomeService, IncomeService>();
+            services.AddTransient<IExpenseService, ExpenseService>();
             services.AddTransient<IBudgetService, BudgetService>();
             services.AddTransient<IFinancialGoalService, FinancialGoalService>();
 
-            services.AddAutoMapper(typeof(MappingProfile).Assembly);
 
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+            services.AddAutoMapper(typeof(UserMappingProfile).Assembly);
+            services.AddAutoMapper(typeof(RoleMappingProfile).Assembly);
+
+            services.AddCustomServices();
+            services.AddCustomAutoMapper();
             services.AddEndpointsApiExplorer();
-            services.AddSwaggerGen();
+            services.AddCustomSwagger();
+            services.AddCustomLogging();
         }
 
-        public static void Configure(WebApplication app)
+        public static void Configure(WebApplication app, IServiceProvider serviceProvider)
         {
             if (app.Environment.IsDevelopment())
             {
@@ -47,7 +57,18 @@ namespace ExpenseMaster.Configuration
 
             app.MapControllers();
 
+            ConfigureDataSeeder(serviceProvider);
+
             app.UseMiddleware<ExceptionHandlingMiddleware>();
+        }
+        public static void ConfigureDataSeeder(IServiceProvider serviceProvider)
+        {
+            using (var scope = serviceProvider.CreateScope())
+            {
+                var context = scope.ServiceProvider.GetRequiredService<ApplicationDatabaseContext>();
+                var dataSeeder = new DataSeeder(context);
+                dataSeeder.Initialize();
+            }
         }
     }
 }
