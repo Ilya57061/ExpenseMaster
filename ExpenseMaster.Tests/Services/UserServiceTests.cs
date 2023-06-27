@@ -54,7 +54,7 @@ namespace ExpenseMaster.Tests.Services
         public async Task GetUsersByLoginAsync_ValidLogin_ReturnsMatchingUsers()
         {
             // Arrange
-            var login = "user";
+            string login = "user";
 
             var users = new List<User>
         {
@@ -85,7 +85,7 @@ namespace ExpenseMaster.Tests.Services
         public async Task GetUsersByLoginAsync_NonExistingLogin_ThrowsInvalidOperationException()
         {
             // Arrange
-            var login = "nonexistinguser";
+            string login = "nonexistinguser";
 
             _repositoryWrapperMock.Setup(repo => repo.User.FindByConditionAsync(u => u.Login.ToLower().Contains(login.ToLower()))).ReturnsAsync(new List<User>().AsQueryable());
 
@@ -97,7 +97,7 @@ namespace ExpenseMaster.Tests.Services
         public async Task GetUserByIdAsync_ValidId_ReturnsMatchingUser()
         {
             // Arrange
-            var id = 1;
+            int id = 1;
 
             var user = new User { Id = id, Login = "user1", Email = "user1@example.com", RoleId = 1 };
             var userDto = new UserDto { Id = user.Id, Login = user.Login, Email = user.Email, RoleId = user.RoleId };
@@ -116,7 +116,7 @@ namespace ExpenseMaster.Tests.Services
         public async Task GetUserByIdAsync_NonExistingId_ThrowsInvalidOperationException()
         {
             // Arrange
-            var id = 999;
+            int id = 999;
 
             _repositoryWrapperMock.Setup(repo => repo.User.FindByConditionAsync(u => u.Id == id)).ReturnsAsync(new List<User>().AsQueryable());
 
@@ -147,7 +147,7 @@ namespace ExpenseMaster.Tests.Services
         public async Task DeleteUserAsync_NonExistingUserId_ThrowsInvalidOperationException()
         {
             // Arrange
-            var userId = 999;
+            int userId = 999;
 
             _repositoryWrapperMock.Setup(repo => repo.User.FindByConditionAsync(x => x.Id == userId)).ReturnsAsync(new List<User>().AsQueryable());
 
@@ -175,7 +175,6 @@ namespace ExpenseMaster.Tests.Services
             _repositoryWrapperMock.Setup(repo => repo.User.FindByConditionAsync(u => u.Id == userUpdateDto.Id)).ReturnsAsync(new List<User> { existingUser }.AsQueryable());
             _repositoryWrapperMock.Setup(repo => repo.User.UpdateAsync(updatedUser)).Returns(Task.CompletedTask);
             _repositoryWrapperMock.Setup(repo => repo.SaveAsync()).Returns(Task.CompletedTask);
-
             _mapperMock.Setup(mapper => mapper.Map<User>(userUpdateDto)).Returns(updatedUser);
             _mapperMock.Setup(mapper => mapper.Map<UserDto>(updatedUser)).Returns(userDto);
 
