@@ -1,0 +1,33 @@
+2023-06-27 17:58:22.151 +03:00 [INF] Executed DbCommand (55ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Categories] AS [c]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2023-06-27 17:58:22.251 +03:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Expenses] AS [e]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2023-06-27 17:58:22.257 +03:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Incomes] AS [i]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2023-06-27 17:58:22.303 +03:00 [INF] User profile is available. Using 'C:\Users\stasd\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2023-06-27 17:58:22.596 +03:00 [INF] Now listening on: https://localhost:7124
+2023-06-27 17:58:22.597 +03:00 [INF] Now listening on: http://localhost:5205
+2023-06-27 17:58:22.605 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2023-06-27 17:58:22.609 +03:00 [INF] Hosting environment: Development
+2023-06-27 17:58:22.610 +03:00 [INF] Content root path: C:\Users\stasd\Git\ExpenseMaster\ExpenseMaster\
+2023-06-27 17:58:24.191 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7124/swagger/index.html - -
+2023-06-27 17:58:24.819 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7124/swagger/index.html - - - 200 - text/html;charset=utf-8 632.8849ms
+2023-06-27 17:58:25.247 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7124/_vs/browserLink - -
+2023-06-27 17:58:25.247 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7124/_framework/aspnetcore-browser-refresh.js - -
+2023-06-27 17:58:25.293 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7124/_framework/aspnetcore-browser-refresh.js - - - 200 11996 application/javascript;+charset=utf-8 45.4203ms
+2023-06-27 17:58:25.367 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7124/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 119.8990ms
