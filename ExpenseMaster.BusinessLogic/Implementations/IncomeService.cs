@@ -1,7 +1,11 @@
 ﻿using AutoMapper;
 using ExpenseMaster.BusinessLogic.Dto;
 using ExpenseMaster.BusinessLogic.Interfaces;
+using ExpenseMaster.BusinessLogic.Validators;
+using ExpenseMaster.BusinessLogic.Validators.Interfaces;
 using ExpenseMaster.DAL.Models;
+using FluentValidation;
+using FluentValidation.Results;
 using Microsoft.EntityFrameworkCore;
 
 namespace ExpenseMaster.BusinessLogic.Implementations
@@ -10,11 +14,13 @@ namespace ExpenseMaster.BusinessLogic.Implementations
     {
         private readonly IRepositoryWrapper _repositoryWrapper;
         private readonly IMapper _mapper;
+        private readonly IValidatorWrapper _validatorWrapper;
 
-        public IncomeService(IRepositoryWrapper repositoryWrapper, IMapper mapper)
+        public IncomeService(IRepositoryWrapper repositoryWrapper, IMapper mapper, IValidatorWrapper validatorWrapper)
         {
             _repositoryWrapper = repositoryWrapper;
             _mapper = mapper;
+            _validatorWrapper = validatorWrapper;
         }
 
         public async Task<IEnumerable<IncomeItemDto>> GetAllIncomes()
@@ -36,10 +42,7 @@ namespace ExpenseMaster.BusinessLogic.Implementations
 
         public async Task<IncomeItemDto> CreateIncome(IncomeDto incomeDto)
         {
-            if (incomeDto == null)
-            {
-                throw new ArgumentNullException(nameof(incomeDto));
-            }
+            ValidateDto(incomeDto);
 
             var income = _mapper.Map<Income>(incomeDto);
 
@@ -53,10 +56,7 @@ namespace ExpenseMaster.BusinessLogic.Implementations
 
         public async Task<IncomeItemDto> UpdateIncome(IncomeItemDto incomeItemDto)
         {
-            if (incomeItemDto == null)
-            {
-                throw new ArgumentNullException(nameof(incomeItemDto));
-            }
+            ValidateDto(incomeItemDto);
 
             var existingIncome = await _repositoryWrapper.Income.FindByConditionAsync(x => x.Id == incomeItemDto.Id);
 
@@ -77,10 +77,7 @@ namespace ExpenseMaster.BusinessLogic.Implementations
 
         public async Task DeleteIncome(IncomeItemDto incomeItemDto)
         {
-            if (incomeItemDto == null)
-            {
-                throw new ArgumentNullException(nameof(incomeItemDto));
-            }
+            ValidateDto(incomeItemDto);
 
             var existingIncome = await _repositoryWrapper.Income.FindByConditionAsync(x => x.Id == incomeItemDto.Id);
             var incomeToDelete = await existingIncome.FirstOrDefaultAsync();
@@ -110,6 +107,16 @@ namespace ExpenseMaster.BusinessLogic.Implementations
             var totalIncomes = await _repositoryWrapper.Income.CalculateTotalIncomeByUserId(userId);
 
             return totalIncomes;
+        }
+
+        private void ValidateDto<T>(T dto)
+        {
+            ValidationResult validationResult = _validatorWrapper.Validate(dto);
+
+            if (!validationResult.IsValid)
+            {
+                throw new ValidationException(validationResult.Errors);
+            }
         }
     }
 }

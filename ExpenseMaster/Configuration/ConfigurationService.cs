@@ -1,6 +1,7 @@
 ﻿using ExpenseMaster.Middlewares;
 using ExpenseMaster.DAL.DatabaseContext;
 
+
 namespace ExpenseMaster.Configuration
 {
     public static class ConfigurationService
@@ -15,6 +16,8 @@ namespace ExpenseMaster.Configuration
             services.AddCustomSwagger();
             services.AddCustomLogging();
             services.AddCustomAuthentication(configuration);
+
+            services.AddValidators();
         }
 
         public static void Configure(WebApplication app, IServiceProvider serviceProvider)
