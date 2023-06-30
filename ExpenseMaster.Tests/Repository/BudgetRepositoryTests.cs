@@ -1,6 +1,7 @@
 ﻿using ExpenseMaster.DAL.DatabaseContext;
 using ExpenseMaster.DAL.Models;
 using ExpenseMaster.DAL.Repository;
+using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using Xunit;
@@ -9,88 +10,82 @@ namespace ExpenseMaster.Tests.Repository
 {
     public class BudgetRepositoryTests
     {
-        [Fact]
-        public async Task GetByIdAsync_ReturnsBudget()
+        private readonly Mock<ApplicationDatabaseContext> mockContext;
+        private readonly BudgetRepository repository;
+        private readonly List<Budget> budgets;
+
+        public BudgetRepositoryTests()
         {
-            var budgets = new List<Budget>
-            {
-                new Budget { Id = 1, UserId = 1 },
-                new Budget { Id = 2, UserId = 1 },
-                new Budget { Id = 3, UserId = 2 }
-            };
+            mockContext = new Mock<ApplicationDatabaseContext>();
+            repository = new BudgetRepository(mockContext.Object);
+            budgets = InitializeBudgets();
+        }
+
+
+
+        [Fact]
+        public async Task GetByIdAsync_ExistingId_ReturnsBudget()
+        {
+            // Arrange
             var mockDbSet = GetMockDbSet(budgets);
-            var mockContext = new Mock<ApplicationDatabaseContext>();
             mockContext.Setup(c => c.Set<Budget>()).Returns(mockDbSet.Object);
 
-            var repository = new BudgetRepository(mockContext.Object);
-
+            // Act
             var result = await repository.GetByIdAsync(2);
 
-            Assert.NotNull(result);
-            Assert.Equal(2, result.Id);
+            // Assert
+            result.Should().NotBeNull();
+            result.Id.Should().Be(2);
         }
 
         [Fact]
-        public async Task GetBudgetsByUserIdAsync_ReturnsBudgets()
+        public async Task GetBudgetsByUserIdAsync_ExistingUserId_ReturnsBudgets()
         {
-            var budgets = new List<Budget>
-            {
-                new Budget { Id = 1, UserId = 1 },
-                new Budget { Id = 2, UserId = 1 },
-                new Budget { Id = 3, UserId = 2 }
-            };
+            // Arrange
             var mockDbSet = GetMockDbSet(budgets);
-            var mockContext = new Mock<ApplicationDatabaseContext>();
             mockContext.Setup(c => c.Set<Budget>()).Returns(mockDbSet.Object);
 
-            var repository = new BudgetRepository(mockContext.Object);
+            // Act
+            var result = await repository.GetByIdAsync(2);
 
-            var result = await repository.GetBudgetsByUserIdAsync(1);
-
-            Assert.NotNull(result);
-            Assert.Equal(2, result.Count());
+            // Assert
+            result.Should().NotBeNull();
+            result.Id.Should().Be(2);
         }
 
         [Fact]
-        public async Task GetBudgetByCategoryIdAsync_ReturnsBudget()
+        public async Task GetBudgetByCategoryIdAsync_ExistingUserIdAndCategoryId_ReturnsBudget()
         {
-            var budgets = new List<Budget>
-            {
-                new Budget { Id = 1, UserId = 1, CategoryId = 1 },
-                new Budget { Id = 2, UserId = 1, CategoryId = 2 },
-                new Budget { Id = 3, UserId = 2, CategoryId = 1 }
-            };
+            // Arrange
             var mockDbSet = GetMockDbSet(budgets);
-            var mockContext = new Mock<ApplicationDatabaseContext>();
             mockContext.Setup(c => c.Set<Budget>()).Returns(mockDbSet.Object);
 
-            var repository = new BudgetRepository(mockContext.Object);
-
+            // Act
             var result = await repository.GetBudgetByCategoryIdAsync(1, 2);
 
-            Assert.NotNull(result);
-            Assert.Equal(2, result.Id);
+            // Assert
+            result.Should().NotBeNull();
+            result.Id.Should().Be(2);
         }
 
-        [Fact]
-        public async Task GetBudgetsExceedingThresholdAsync_ReturnsBudgets()
+        public async Task GetBudgetsExceedingThresholdAsync_ExistingUserId_ReturnsBudgets()
         {
-            var budgets = new List<Budget>
-            {
-                new Budget { Id = 1, UserId = 1, WarningThreshold = 100, Limit = 200 },
-                new Budget { Id = 2, UserId = 1, WarningThreshold = 50, Limit = 100 },
-                new Budget { Id = 3, UserId = 2, WarningThreshold = 100, Limit = 100 }
-            };
+            // Arrange
             var mockDbSet = GetMockDbSet(budgets);
-            var mockContext = new Mock<ApplicationDatabaseContext>();
             mockContext.Setup(c => c.Set<Budget>()).Returns(mockDbSet.Object);
 
-            var repository = new BudgetRepository(mockContext.Object);
+            var threshold = 100;
+            var expectedBudgets = budgets
+                .Where(b => b.UserId == 1 && b.Limit > threshold)
+                .ToList();
 
+            // Act
             var result = await repository.GetBudgetsExceedingThresholdAsync(1);
 
-            Assert.NotNull(result);
-            Assert.Equal(2, result.Count());
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().HaveCount(expectedBudgets.Count);
+            result.Should().BeEquivalentTo(expectedBudgets);
         }
 
         private static Mock<DbSet<T>> GetMockDbSet<T>(List<T> data) where T : class
@@ -103,6 +98,16 @@ namespace ExpenseMaster.Tests.Repository
             mockDbSet.As<IQueryable<T>>().Setup(m => m.GetEnumerator()).Returns(queryableData.GetEnumerator());
 
             return mockDbSet;
+        }
+
+        private List<Budget> InitializeBudgets()
+        {
+            return new List<Budget> 
+            { 
+                new Budget { Id = 1, UserId = 1, CategoryId = 1 }, 
+                new Budget { Id = 2, UserId = 1, CategoryId = 2 }, 
+                new Budget { Id = 3, UserId = 2, CategoryId = 1 } 
+            };
         }
     }
 }

@@ -4,6 +4,7 @@ using ExpenseMaster.BusinessLogic.Implementations;
 using ExpenseMaster.BusinessLogic.Interfaces;
 using ExpenseMaster.DAL.Interfaces;
 using ExpenseMaster.DAL.Models;
+using FluentAssertions;
 using Moq;
 using Xunit;
 
@@ -11,13 +12,23 @@ namespace ExpenseMaster.Tests.Services
 {
     public class BudgetServiceTests
     {
+        private Mock<IRepositoryWrapper> mockRepositoryWrapper;
+        private Mock<IMapper> mockMapper;
+
+        public BudgetServiceTests()
+        {
+            mockRepositoryWrapper = new Mock<IRepositoryWrapper>();
+            mockMapper = new Mock<IMapper>();
+        }
+
+
+
         [Fact]
         public async Task GetByIdAsync_ExistingId_ReturnsBudgetDto()
         {
             // Arrange
             var budgetId = 1;
-            var mockRepositoryWrapper = new Mock<IRepositoryWrapper>();
-            var mockMapper = new Mock<IMapper>();
+            SetupMocks();
 
             var budget = new Budget { Id = budgetId };
             var returnBudgetDto = new ReturnBudgetDto();
@@ -35,8 +46,8 @@ namespace ExpenseMaster.Tests.Services
             var result = await budgetService.GetByIdAsync(budgetId);
 
             // Assert
-            Assert.NotNull(result);
-            Assert.Equal(returnBudgetDto, result);
+            result.Should().NotBeNull();
+            result.Should().BeEquivalentTo(returnBudgetDto);
         }
 
         [Fact]
@@ -44,8 +55,7 @@ namespace ExpenseMaster.Tests.Services
         {
             // Arrange
             var budgetId = 1;
-            var mockRepositoryWrapper = new Mock<IRepositoryWrapper>();
-            var mockMapper = new Mock<IMapper>();
+            SetupMocks();
 
             mockRepositoryWrapper
                 .Setup(r => r.Budget.GetByIdAsync(budgetId))
@@ -54,7 +64,8 @@ namespace ExpenseMaster.Tests.Services
             var budgetService = new BudgetService(mockRepositoryWrapper.Object, mockMapper.Object);
 
             // Act and Assert
-            await Assert.ThrowsAsync<InvalidOperationException>(() => budgetService.GetByIdAsync(budgetId));
+            await budgetService.Invoking(s => s.GetByIdAsync(budgetId))
+                .Should().ThrowAsync<InvalidOperationException>();
         }
 
         [Fact]
@@ -62,16 +73,12 @@ namespace ExpenseMaster.Tests.Services
         {
             // Arrange
             var createBudgetDto = new CreateBudgetDto();
-            var mockRepositoryWrapper = new Mock<IRepositoryWrapper>();
-            var mockBudgetRepository = new Mock<IBudgetRepository>();
-            var mockMapper = new Mock<IMapper>();
+            SetupMocks();
 
             var budget = new Budget();
             mockMapper
                 .Setup(m => m.Map<Budget>(createBudgetDto))
                 .Returns(budget);
-
-            mockRepositoryWrapper.Setup(r => r.Budget).Returns(mockBudgetRepository.Object);
 
             var budgetService = new BudgetService(mockRepositoryWrapper.Object, mockMapper.Object);
 
@@ -79,7 +86,7 @@ namespace ExpenseMaster.Tests.Services
             await budgetService.CreateAsync(createBudgetDto);
 
             // Assert
-            mockBudgetRepository.Verify(r => r.CreateAsync(budget), Times.Once);
+            mockRepositoryWrapper.Verify(r => r.Budget.CreateAsync(budget), Times.Once);
             mockRepositoryWrapper.Verify(r => r.SaveAsync(), Times.Once);
         }
 
@@ -88,16 +95,12 @@ namespace ExpenseMaster.Tests.Services
         {
             // Arrange
             var updateBudgetDto = new UpdateBudgetDto();
-            var mockRepositoryWrapper = new Mock<IRepositoryWrapper>();
-            var mockBudgetRepository = new Mock<IBudgetRepository>();
-            var mockMapper = new Mock<IMapper>();
+            SetupMocks();
 
             var budget = new Budget();
             mockMapper
                 .Setup(m => m.Map<Budget>(updateBudgetDto))
                 .Returns(budget);
-
-            mockRepositoryWrapper.Setup(r => r.Budget).Returns(mockBudgetRepository.Object);
 
             var budgetService = new BudgetService(mockRepositoryWrapper.Object, mockMapper.Object);
 
@@ -105,7 +108,7 @@ namespace ExpenseMaster.Tests.Services
             await budgetService.UpdateAsync(updateBudgetDto);
 
             // Assert
-            mockBudgetRepository.Verify(r => r.UpdateAsync(budget), Times.Once);
+            mockRepositoryWrapper.Verify(r => r.Budget.UpdateAsync(budget), Times.Once);
             mockRepositoryWrapper.Verify(r => r.SaveAsync(), Times.Once);
         }
 
@@ -114,18 +117,12 @@ namespace ExpenseMaster.Tests.Services
         {
             // Arrange
             var budgetId = 1;
-            var mockRepositoryWrapper = new Mock<IRepositoryWrapper>();
-            var mockBudgetRepository = new Mock<IBudgetRepository>();
-            var mockMapper = new Mock<IMapper>();
+            SetupMocks();
 
             var budget = new Budget { Id = budgetId };
             mockRepositoryWrapper
                 .Setup(r => r.Budget.GetByIdAsync(budgetId))
                 .ReturnsAsync(budget);
-
-            mockBudgetRepository.Setup(r => r.GetByIdAsync(budgetId)).ReturnsAsync(budget);
-
-            mockRepositoryWrapper.Setup(r => r.Budget).Returns(mockBudgetRepository.Object);
 
             var budgetService = new BudgetService(mockRepositoryWrapper.Object, mockMapper.Object);
 
@@ -133,7 +130,7 @@ namespace ExpenseMaster.Tests.Services
             await budgetService.DeleteAsync(budgetId);
 
             // Assert
-            mockBudgetRepository.Verify(r => r.DeleteAsync(budget), Times.Once);
+            mockRepositoryWrapper.Verify(r => r.Budget.DeleteAsync(budget), Times.Once);
             mockRepositoryWrapper.Verify(r => r.SaveAsync(), Times.Once);
         }
 
@@ -142,8 +139,7 @@ namespace ExpenseMaster.Tests.Services
         {
             // Arrange
             var budgetId = 1;
-            var mockRepositoryWrapper = new Mock<IRepositoryWrapper>();
-            var mockMapper = new Mock<IMapper>();
+            SetupMocks();
 
             mockRepositoryWrapper
                 .Setup(r => r.Budget.GetByIdAsync(budgetId))
@@ -152,7 +148,8 @@ namespace ExpenseMaster.Tests.Services
             var budgetService = new BudgetService(mockRepositoryWrapper.Object, mockMapper.Object);
 
             // Act and Assert
-            await Assert.ThrowsAsync<InvalidOperationException>(() => budgetService.DeleteAsync(budgetId));
+            await budgetService.Invoking(s => s.DeleteAsync(budgetId))
+                .Should().ThrowAsync<InvalidOperationException>();
         }
 
         [Fact]
@@ -160,8 +157,7 @@ namespace ExpenseMaster.Tests.Services
         {
             // Arrange
             var userId = 1;
-            var mockRepositoryWrapper = new Mock<IRepositoryWrapper>();
-            var mockMapper = new Mock<IMapper>();
+            SetupMocks();
 
             var budgets = new List<Budget> { new Budget(), new Budget() };
             var returnBudgetDtos = new List<ReturnBudgetDto> { new ReturnBudgetDto(), new ReturnBudgetDto() };
@@ -179,8 +175,8 @@ namespace ExpenseMaster.Tests.Services
             var result = await budgetService.GetByUserIdAsync(userId);
 
             // Assert
-            Assert.NotNull(result);
-            Assert.Equal(returnBudgetDtos.Count, result.Count());
+            result.Should().NotBeNull();
+            result.Should().HaveCount(returnBudgetDtos.Count);
         }
 
         [Fact]
@@ -188,8 +184,7 @@ namespace ExpenseMaster.Tests.Services
         {
             // Arrange
             var userId = 1;
-            var mockRepositoryWrapper = new Mock<IRepositoryWrapper>();
-            var mockMapper = new Mock<IMapper>();
+            SetupMocks();
 
             mockRepositoryWrapper
                 .Setup(r => r.Budget.GetBudgetsByUserIdAsync(userId))
@@ -198,7 +193,8 @@ namespace ExpenseMaster.Tests.Services
             var budgetService = new BudgetService(mockRepositoryWrapper.Object, mockMapper.Object);
 
             // Act and Assert
-            await Assert.ThrowsAsync<InvalidOperationException>(() => budgetService.GetByUserIdAsync(userId));
+            await budgetService.Invoking(s => s.GetByUserIdAsync(userId))
+                .Should().ThrowAsync<InvalidOperationException>();
         }
 
         [Fact]
@@ -206,8 +202,7 @@ namespace ExpenseMaster.Tests.Services
         {
             // Arrange
             var userId = 1;
-            var mockRepositoryWrapper = new Mock<IRepositoryWrapper>();
-            var mockMapper = new Mock<IMapper>();
+            SetupMocks();
 
             var budgets = new List<Budget> { new Budget(), new Budget() };
             var returnBudgetDtos = new List<ReturnBudgetDto> { new ReturnBudgetDto(), new ReturnBudgetDto() };
@@ -225,8 +220,14 @@ namespace ExpenseMaster.Tests.Services
             var result = await budgetService.GetBudgetsExceedingThresholdAsync(userId);
 
             // Assert
-            Assert.NotNull(result);
-            Assert.Equal(returnBudgetDtos.Count, result.Count());
+            result.Should().NotBeNull();
+            result.Should().HaveCount(returnBudgetDtos.Count);
+        }
+
+        private void SetupMocks()
+        {
+            var mockBudgetRepository = new Mock<IBudgetRepository>();
+            mockRepositoryWrapper.Setup(r => r.Budget).Returns(mockBudgetRepository.Object);
         }
     }
 }
