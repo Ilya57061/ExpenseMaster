@@ -20,15 +20,7 @@ namespace ExpenseMaster.Tests.Repository
             budgets = InitializeBudgets();
         }
 
-        private List<Budget> InitializeBudgets()
-        {
-            return new List<Budget>
-        {
-            new Budget { Id = 1, UserId = 1, CategoryId = 1 },
-            new Budget { Id = 2, UserId = 1, CategoryId = 2 },
-            new Budget { Id = 3, UserId = 2, CategoryId = 1 }
-        };
-        }
+
 
         [Fact]
         public async Task GetByIdAsync_ExistingId_ReturnsBudget()
@@ -106,6 +98,16 @@ namespace ExpenseMaster.Tests.Repository
             mockDbSet.As<IQueryable<T>>().Setup(m => m.GetEnumerator()).Returns(queryableData.GetEnumerator());
 
             return mockDbSet;
+        }
+
+        private List<Budget> InitializeBudgets()
+        {
+            return new List<Budget> 
+            { 
+                new Budget { Id = 1, UserId = 1, CategoryId = 1 }, 
+                new Budget { Id = 2, UserId = 1, CategoryId = 2 }, 
+                new Budget { Id = 3, UserId = 2, CategoryId = 1 } 
+            };
         }
     }
 }
