@@ -3,6 +3,7 @@ using ExpenseMaster.BusinessLogic.Dto;
 using ExpenseMaster.BusinessLogic.Implementations;
 using ExpenseMaster.BusinessLogic.Interfaces;
 using ExpenseMaster.DAL.Models;
+using FluentAssertions;
 using Moq;
 using Xunit;
 
@@ -26,10 +27,10 @@ namespace ExpenseMaster.Tests.Services
         {
             // Arrange
             var users = new List<User>
-    {
-        new User { Id = 1, Login = "user1", Email = "user1@example.com", RoleId = 1 },
-        new User { Id = 2, Login = "user2", Email = "user2@example.com", RoleId = 2 }
-    };
+            {
+                new User { Id = 1, Login = "user1", Email = "user1@example.com", RoleId = 1 },
+                new User { Id = 2, Login = "user2", Email = "user2@example.com", RoleId = 2 }
+            };
 
             var usersDto = users.Select(u => new UserDto { Id = u.Id, Login = u.Login, Email = u.Email, RoleId = u.RoleId });
 
@@ -40,14 +41,9 @@ namespace ExpenseMaster.Tests.Services
             var result = await _userService.GetAllUsersAsync();
 
             // Assert
-            Assert.Equal(usersDto.Count(), result.Count());
-            for (int i = 0; i < usersDto.Count(); i++)
-            {
-                Assert.Equal(usersDto.ElementAt(i).Id, result.ElementAt(i).Id);
-                Assert.Equal(usersDto.ElementAt(i).Login, result.ElementAt(i).Login);
-                Assert.Equal(usersDto.ElementAt(i).Email, result.ElementAt(i).Email);
-                Assert.Equal(usersDto.ElementAt(i).RoleId, result.ElementAt(i).RoleId);
-            }
+            result.Should().HaveCount(usersDto.Count());
+            result.Should().BeEquivalentTo(usersDto, options =>
+    options.ExcludingMissingMembers());
         }
 
         [Fact]
@@ -57,10 +53,10 @@ namespace ExpenseMaster.Tests.Services
             string login = "user";
 
             var users = new List<User>
-        {
-            new User { Id = 1, Login = "user1", Email = "user1@example.com", RoleId = 1 },
-            new User { Id = 2, Login = "user2", Email = "user2@example.com", RoleId = 2 }
-        };
+            {
+                new User { Id = 1, Login = "user1", Email = "user1@example.com", RoleId = 1 },
+                new User { Id = 2, Login = "user2", Email = "user2@example.com", RoleId = 2 }
+            };
 
             var usersDto = users.Select(u => new UserDto { Id = u.Id, Login = u.Login, Email = u.Email, RoleId = u.RoleId });
 
@@ -71,14 +67,9 @@ namespace ExpenseMaster.Tests.Services
             var result = await _userService.GetUsersByLoginAsync(login);
 
             // Assert
-            Assert.Equal(usersDto.Count(), result.Count());
-            for (int i = 0; i < usersDto.Count(); i++)
-            {
-                Assert.Equal(usersDto.ElementAt(i).Id, result.ElementAt(i).Id);
-                Assert.Equal(usersDto.ElementAt(i).Login, result.ElementAt(i).Login);
-                Assert.Equal(usersDto.ElementAt(i).Email, result.ElementAt(i).Email);
-                Assert.Equal(usersDto.ElementAt(i).RoleId, result.ElementAt(i).RoleId);
-            }
+            result.Should().HaveCount(usersDto.Count());
+            result.Should().BeEquivalentTo(usersDto, options =>
+    options.ExcludingMissingMembers());
         }
 
         [Fact]
@@ -109,7 +100,7 @@ namespace ExpenseMaster.Tests.Services
             var result = await _userService.GetUserByIdAsync(id);
 
             // Assert
-            Assert.Equal(userDto, result);
+            result.Should().BeEquivalentTo(userDto);
         }
 
         [Fact]
@@ -121,7 +112,8 @@ namespace ExpenseMaster.Tests.Services
             _repositoryWrapperMock.Setup(repo => repo.User.FindByConditionAsync(u => u.Id == id)).ReturnsAsync(new List<User>().AsQueryable());
 
             // Act & Assert
-            Assert.ThrowsAsync<InvalidOperationException>(async () => await _userService.GetUserByIdAsync(id));
+            await _userService.Invoking(async x => await x.GetUserByIdAsync(id))
+    .Should().ThrowAsync<InvalidOperationException>();
         }
 
         [Fact]
@@ -152,7 +144,8 @@ namespace ExpenseMaster.Tests.Services
             _repositoryWrapperMock.Setup(repo => repo.User.FindByConditionAsync(x => x.Id == userId)).ReturnsAsync(new List<User>().AsQueryable());
 
             // Act & Assert
-            Assert.ThrowsAsync<InvalidOperationException>(async () => await _userService.DeleteUserAsync(userId));
+            await _userService.Invoking(async x => await x.DeleteUserAsync(userId))
+    .Should().ThrowAsync<InvalidOperationException>();
         }
 
         [Fact]
@@ -182,7 +175,7 @@ namespace ExpenseMaster.Tests.Services
             var result = await _userService.UpdateUserAsync(userUpdateDto);
 
             // Assert
-            Assert.Equal(userDto, result);
+            result.Should().BeEquivalentTo(userDto);
         }
 
         [Fact]
