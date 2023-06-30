@@ -6,6 +6,7 @@ using ExpenseMaster.DAL.Models;
 using Moq;
 using System.Linq.Expressions;
 using Xunit;
+using FluentAssertions;
 
 namespace ExpenseMaster.Tests.Services
 {
@@ -45,8 +46,8 @@ namespace ExpenseMaster.Tests.Services
             var result = await _expenseService.GetAllExpenses();
 
             // Assert
-            Assert.NotNull(result);
-            Assert.Equal(expenseItemDtos, result);
+            result.Should().NotBeNull();
+            result.Should().BeEquivalentTo(expenseItemDtos);
         }
 
         [Fact]
@@ -58,8 +59,11 @@ namespace ExpenseMaster.Tests.Services
             _mockRepositoryWrapper.Setup(r => r.Expence.FindByConditionAsync(It.IsAny<Expression<Func<Expense, bool>>>()))
                 .ReturnsAsync(result);
 
-            // Act and Assert
-            await Assert.ThrowsAsync<InvalidOperationException>(() => _expenseService.GetExpenseById(id));
+            // Act
+            var exception = await Assert.ThrowsAsync<InvalidOperationException>(() => _expenseService.GetExpenseById(id));
+
+            // Assert
+            Assert.NotNull(exception);
         }
 
         [Fact]
@@ -88,12 +92,9 @@ namespace ExpenseMaster.Tests.Services
             var result = await _expenseService.UpdateExpense(expenseItemDto);
 
             // Assert
-            Assert.NotNull(result);
-            Assert.IsType<ExpenseItemDto>(result);
-            Assert.Equal(expenseItemDto.Id, result.Id);
-            Assert.Equal(expenseItemDto.Amount, result.Amount);
-            Assert.Equal(expenseItemDto.UserId, result.UserId);
-            Assert.Equal(expenseItemDto.CategoryId, result.CategoryId);
+            result.Should().NotBeNull()
+                .And.BeOfType<ExpenseItemDto>()
+                .And.BeEquivalentTo(expenseItemDto);
 
             _mockRepositoryWrapper.Verify(r => r.Expence.FindByConditionAsync(It.IsAny<Expression<Func<Expense, bool>>>()), Times.Once);
             _mockMapper.Verify(m => m.Map<Expense>(expenseItemDto), Times.Once);
@@ -152,9 +153,8 @@ namespace ExpenseMaster.Tests.Services
             var result = await _expenseService.GetExpensesByCategory(categoryId);
 
             // Assert
-            Assert.NotNull(result);
-            Assert.IsAssignableFrom<IEnumerable<ExpenseDto>>(result);
-            Assert.Equal(expensesDto, result);
+            result.Should().NotBeNull()
+                .And.BeEquivalentTo(expensesDto);
         }
 
         [Fact]
