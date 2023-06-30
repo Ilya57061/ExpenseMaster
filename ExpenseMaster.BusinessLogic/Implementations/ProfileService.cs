@@ -20,7 +20,7 @@ namespace ExpenseMaster.BusinessLogic.Implementations
         public async Task<ProfileDto> UpdateProfileAsync(ProfileDto profileDto, int userId)
         {
             var result = await _repositoryWrapper.User.FindByConditionAsync(u => u.Id == userId);
-            var existingUser = await result.FirstOrDefaultAsync();
+            var existingUser = result.FirstOrDefault();
 
             if (existingUser == null)
             {
@@ -58,7 +58,7 @@ namespace ExpenseMaster.BusinessLogic.Implementations
         public async Task DeleteProfileAsync(int userId)
         {
             var existingUser = await _repositoryWrapper.User.FindByConditionAsync(x => x.Id == userId);
-            var userToDelete = await existingUser.FirstOrDefaultAsync();
+            var userToDelete = existingUser.FirstOrDefault();
 
             if (userToDelete == null)
             {
@@ -72,7 +72,7 @@ namespace ExpenseMaster.BusinessLogic.Implementations
         public async Task<ProfileDto> GetUserByIdAsync(int id)
         {
             var result = await _repositoryWrapper.User.FindByConditionAsync(u => u.Id == id);
-            var user = await result.FirstOrDefaultAsync();
+            var user = result.FirstOrDefault();
 
             if (user == null)
             {

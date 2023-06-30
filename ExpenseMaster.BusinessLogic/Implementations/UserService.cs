@@ -2,7 +2,6 @@
 using ExpenseMaster.BusinessLogic.Dto;
 using ExpenseMaster.BusinessLogic.Interfaces;
 using ExpenseMaster.DAL.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace ExpenseMaster.BusinessLogic.Implementations
 {
@@ -41,7 +40,7 @@ namespace ExpenseMaster.BusinessLogic.Implementations
         public async Task<UserDto> GetUserByIdAsync(int id)
         {
             var result = await _repositoryWrapper.User.FindByConditionAsync(u => u.Id == id);
-            var user = await result.FirstOrDefaultAsync();
+            var user = result.FirstOrDefault();
             var userDto = _mapper.Map<UserDto>(user);
 
             if (user == null)
@@ -55,7 +54,7 @@ namespace ExpenseMaster.BusinessLogic.Implementations
         public async Task DeleteUserAsync(int userId)
         {
             var existingUser = await _repositoryWrapper.User.FindByConditionAsync(x => x.Id == userId);
-            var userToDelete = await existingUser.FirstOrDefaultAsync();
+            var userToDelete = existingUser.FirstOrDefault();
 
             if (userToDelete == null)
             {
