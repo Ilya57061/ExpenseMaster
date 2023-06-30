@@ -28,7 +28,11 @@ namespace ExpenseMaster.BusinessLogic.Implementations
         public async Task<IncomeItemDto> GetIncomeById(int id)
         {
             var result = await _repositoryWrapper.Income.FindByConditionAsync(x => x.Id == id);
-            var income = await result.FirstOrDefaultAsync();
+            var income = result.FirstOrDefault();
+            if (income == null)
+            {
+                throw new InvalidOperationException($"Income with id - {id} not found");
+            }
             var incomeItemDto = _mapper.Map<IncomeItemDto>(income);
 
             return incomeItemDto;
@@ -83,7 +87,7 @@ namespace ExpenseMaster.BusinessLogic.Implementations
             }
 
             var existingIncome = await _repositoryWrapper.Income.FindByConditionAsync(x => x.Id == incomeItemDto.Id);
-            var incomeToDelete = await existingIncome.FirstOrDefaultAsync();
+            var incomeToDelete = existingIncome.FirstOrDefault();
 
             if (incomeToDelete != null)
             {

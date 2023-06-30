@@ -31,6 +31,12 @@ namespace ExpenseMaster.BusinessLogic.Implementations
         {
             var result = await _repositoryWrapper.Expence.FindByConditionAsync(x => x.Id == id);
             var expense = await result.FirstOrDefaultAsync();
+
+            if (expense == null)
+            {
+                throw new InvalidOperationException($"Expense with id - {id} not found");
+            }
+
             var expenseItemDto = _mapper.Map<ExpenseItemDto>(expense);
 
             if (expenseItemDto == null)
@@ -107,7 +113,7 @@ namespace ExpenseMaster.BusinessLogic.Implementations
             }
 
             var existingExpense = await _repositoryWrapper.Expence.FindByConditionAsync(x => x.Id == expenseItemDto.Id);
-            var expenseToDelete = await existingExpense.FirstOrDefaultAsync();
+            var expenseToDelete = existingExpense.FirstOrDefault();
 
             if (expenseToDelete == null)
             {
