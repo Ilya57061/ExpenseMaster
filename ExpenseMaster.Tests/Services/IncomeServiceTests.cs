@@ -3,6 +3,7 @@ using ExpenseMaster.BusinessLogic.Dto;
 using ExpenseMaster.BusinessLogic.Implementations;
 using ExpenseMaster.BusinessLogic.Interfaces;
 using ExpenseMaster.DAL.Models;
+using FluentAssertions;
 using Moq;
 using System.Linq.Expressions;
 using Xunit;
@@ -43,8 +44,8 @@ namespace ExpenseMaster.Tests.Services
             var result = await _incomeService.GetAllIncomes();
 
             // Assert
-            Assert.NotNull(result);
-            Assert.Equal(incomeItemDtos, result);
+            result.Should().NotBeNull();
+            result.Should().BeEquivalentTo(incomeItemDtos);
         }
 
         [Fact]
@@ -63,9 +64,9 @@ namespace ExpenseMaster.Tests.Services
             var returnedIncomeItemDto = await _incomeService.GetIncomeById(id);
 
             // Assert
-            Assert.NotNull(returnedIncomeItemDto);
-            Assert.IsType<IncomeItemDto>(returnedIncomeItemDto);
-            Assert.Equal(incomeItemDto, returnedIncomeItemDto);
+            returnedIncomeItemDto.Should().NotBeNull();
+            returnedIncomeItemDto.Should().BeOfType<IncomeItemDto>();
+            returnedIncomeItemDto.Should().BeEquivalentTo(incomeItemDto);
         }
 
         [Fact]
@@ -97,12 +98,9 @@ namespace ExpenseMaster.Tests.Services
             var result = await _incomeService.CreateIncome(incomeDto);
 
             // Assert
-            Assert.NotNull(result);
-            Assert.IsType<IncomeItemDto>(result);
-            Assert.Equal(createdIncomeItemDto.Id, result.Id);
-            Assert.Equal(createdIncomeItemDto.Amount, result.Amount);
-            Assert.Equal(createdIncomeItemDto.UserId, result.UserId);
-            Assert.Equal(createdIncomeItemDto.CategoryId, result.CategoryId);
+            result.Should().NotBeNull();
+            result.Should().BeOfType<IncomeItemDto>();
+            result.Should().BeEquivalentTo(createdIncomeItemDto);
         }
 
         [Fact]
@@ -134,9 +132,8 @@ namespace ExpenseMaster.Tests.Services
             var result = await _incomeService.GetIncomesByCategory(categoryId);
 
             // Assert
-            Assert.NotNull(result);
-            Assert.IsAssignableFrom<IEnumerable<IncomeDto>>(result);
-            Assert.Equal(incomesDto, result);
+            result.Should().NotBeNull();
+            result.Should().BeEquivalentTo(incomesDto);
         }
 
         [Fact]
@@ -161,7 +158,7 @@ namespace ExpenseMaster.Tests.Services
             var result = await _incomeService.CalculateTotalIncomeByUserId(userId);
 
             // Assert
-            Assert.Equal(totalIncome, result);
+            result.Should().Be(totalIncome);
         }
     }
 }
