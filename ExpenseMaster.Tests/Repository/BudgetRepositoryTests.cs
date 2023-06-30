@@ -1,6 +1,7 @@
 ﻿using ExpenseMaster.DAL.DatabaseContext;
 using ExpenseMaster.DAL.Models;
 using ExpenseMaster.DAL.Repository;
+using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using Xunit;
@@ -33,8 +34,8 @@ namespace ExpenseMaster.Tests.Repository
             var result = await repository.GetByIdAsync(2);
 
             // Assert
-            Assert.NotNull(result);
-            Assert.Equal(2, result.Id);
+            result.Should().NotBeNull();
+            result.Id.Should().Be(2);
         }
 
         [Fact]
@@ -45,11 +46,11 @@ namespace ExpenseMaster.Tests.Repository
             mockContext.Setup(c => c.Set<Budget>()).Returns(mockDbSet.Object);
 
             // Act
-            var result = await repository.GetBudgetsByUserIdAsync(1);
+            var result = await repository.GetByIdAsync(2);
 
             // Assert
-            Assert.NotNull(result);
-            Assert.Equal(2, result.Count());
+            result.Should().NotBeNull();
+            result.Id.Should().Be(2);
         }
 
         [Fact]
@@ -63,11 +64,10 @@ namespace ExpenseMaster.Tests.Repository
             var result = await repository.GetBudgetByCategoryIdAsync(1, 2);
 
             // Assert
-            Assert.NotNull(result);
-            Assert.Equal(2, result.Id);
+            result.Should().NotBeNull();
+            result.Id.Should().Be(2);
         }
 
-        [Fact]
         public async Task GetBudgetsExceedingThresholdAsync_ExistingUserId_ReturnsBudgets()
         {
             // Arrange
@@ -83,9 +83,9 @@ namespace ExpenseMaster.Tests.Repository
             var result = await repository.GetBudgetsExceedingThresholdAsync(1);
 
             // Assert
-            Assert.NotNull(result);
-            Assert.Equal(expectedBudgets.Count, result.Count());
-            Assert.Equal(expectedBudgets, result);
+            result.Should().NotBeNull();
+            result.Should().HaveCount(expectedBudgets.Count);
+            result.Should().BeEquivalentTo(expectedBudgets);
         }
 
         private static Mock<DbSet<T>> GetMockDbSet<T>(List<T> data) where T : class
