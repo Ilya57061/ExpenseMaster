@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
 using ExpenseMaster.BusinessLogic.Dto;
 using ExpenseMaster.BusinessLogic.Interfaces;
+using ExpenseMaster.BusinessLogic.Validators.Interfaces;
 using ExpenseMaster.DAL.Models;
+using FluentValidation;
+using FluentValidation.Results;
 using Microsoft.EntityFrameworkCore;
 
 namespace ExpenseMaster.BusinessLogic.Implementations
@@ -11,12 +14,14 @@ namespace ExpenseMaster.BusinessLogic.Implementations
         private readonly IMapper _mapper;
         private readonly IRepositoryWrapper _repositoryWrapper;
         private readonly INotificationService _notificationService;
+        private readonly IValidatorWrapper _validatorWrapper;
 
-        public ExpenseService(IRepositoryWrapper repositoryWrapper, IMapper mapper, INotificationService notificationService)
+        public ExpenseService(IRepositoryWrapper repositoryWrapper, IMapper mapper, INotificationService notificationService, IValidatorWrapper validatorWrapper)
         {
             _repositoryWrapper = repositoryWrapper;
             _mapper = mapper;
             _notificationService = notificationService;
+            _validatorWrapper = validatorWrapper;
         }
 
         public async Task<IEnumerable<ExpenseItemDto>> GetAllExpenses()
@@ -49,10 +54,7 @@ namespace ExpenseMaster.BusinessLogic.Implementations
 
         public async Task<ExpenseItemDto> CreateExpense(ExpenseDto expenseDto)
         {
-            if (expenseDto == null)
-            {
-                throw new ArgumentNullException(nameof(expenseDto));
-            }
+            ValidateDto(expenseDto);
 
             var expense = _mapper.Map<Expense>(expenseDto);
 
@@ -83,10 +85,7 @@ namespace ExpenseMaster.BusinessLogic.Implementations
 
         public async Task<ExpenseItemDto> UpdateExpense(ExpenseItemDto expenseItemDto)
         {
-            if (expenseItemDto == null)
-            {
-                throw new ArgumentNullException(nameof(expenseItemDto));
-            }
+            ValidateDto(expenseItemDto);
 
             var existingExpense = await _repositoryWrapper.Expence.FindByConditionAsync(x=> x.Id == expenseItemDto.Id);
 
@@ -107,10 +106,7 @@ namespace ExpenseMaster.BusinessLogic.Implementations
 
         public async Task DeleteExpense(ExpenseItemDto expenseItemDto)
         {
-            if (expenseItemDto == null)
-            {
-                throw new ArgumentNullException(nameof(expenseItemDto));
-            }
+            ValidateDto(expenseItemDto);
 
             var existingExpense = await _repositoryWrapper.Expence.FindByConditionAsync(x => x.Id == expenseItemDto.Id);
             var expenseToDelete = existingExpense.FirstOrDefault();
@@ -142,6 +138,16 @@ namespace ExpenseMaster.BusinessLogic.Implementations
             var totalExpenses = await _repositoryWrapper.Expence.CalculateTotalExpensesByUserId(userId);
 
             return totalExpenses;
+        }
+
+        private void ValidateDto<T>(T dto)
+        {
+            ValidationResult validationResult = _validatorWrapper.Validate(dto);
+
+            if (!validationResult.IsValid)
+            {
+                throw new ValidationException(validationResult.Errors);
+            }
         }
     }
 }
